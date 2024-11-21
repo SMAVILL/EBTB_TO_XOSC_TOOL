@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase descr="ebtb_training_01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" defaultStateTimeout="200" xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/ebtb_latest.xsd">
+    <ParameterList>
+        <SysP_Vehicle>
+            <WheelBase value="3.035" unit="m" type="float" />
+            <VehicleLength value="5.289" unit="m" type="float" />
+            <VehicleWidth value="1.899" unit="m" type="float" />
+        </SysP_Vehicle>
+        <EnvP_RoadNetwork>
+            <RoadNetworkFile value="/opt/maps/germany/highway/minerva_test_street/minerva_test_street.xodr" unit="-" type="string" />
+            <XlmrFile value="minerva_test_street.xlmr" unit="-" type="string" />
+            <Route value="path_1" unit="-" type="string" />
+            <LandmarkStart value="curve_start" unit="-" type="string" />
+            <LaneSelection type="enum" value="Right4" unit="-" />
+            <LaneAlignment value="Right" unit="-" type="enum" />
+            <LandmarkOffset value="-10.0" unit="m" type="float" />
+            <LaneOffset value="0.3" unit="m" type="float" />
+            <SideAxis value="Right" unit="-" type="enum" />
+        </EnvP_RoadNetwork>
+    </ParameterList>
+    <State id="1">
+        <E_Time>
+            <StateTime value="20" unit="s" type="float" />
+        </E_Time>
+    </State>
+    <State id="99" final="true" />
+</Testcase>
