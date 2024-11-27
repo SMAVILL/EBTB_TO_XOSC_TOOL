@@ -1,0 +1,3 @@
+[submodule "EBTB_TO_XOSC_TOOL"]
+	path = EBTB_TO_XOSC_TOOL
+	url = https://github.com/SMAVILL/EBTB_TO_XOSC_TOOL.git
