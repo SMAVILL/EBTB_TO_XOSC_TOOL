@@ -1,0 +1,7 @@
+esmini GIT REV: N/A
+esmini GIT TAG: N/A
+esmini GIT BRANCH: N/A
+esmini BUILD VERSION: 3770
+No fixed timestep specified - running in realtime speed
+Generated seed 3317712399
+Error: Missing required OpenSCENARIO filename argument or XML string

@@ -1,0 +1,187 @@
+esmini GIT REV: N/A
+esmini GIT TAG: N/A
+esmini GIT BRANCH: N/A
+esmini BUILD VERSION: 3770
+Run simulation decoupled from realtime, with fixed timestep: 0.01
+Added path /home/ubuntu/Downloads/E2X_Workspace/e2xstreamline/e2xostream/stk/simulator_tools/esmini_linux/esmini/resources/xosc
+Generated seed 2905856347
+Loading /home/ubuntu/Downloads/E2X_Workspace/e2xstreamline/Report/xosc/./XOSCScenarioDevelop0.xosc (v1.0)
+0 variables
+Unsupported geo reference attr: +no_defs
+Loaded OpenDRIVE: /home/ubuntu/Downloads/E2X_Workspace/e2xstreamline/Report/xosc/./../../e2xostream/stk/simulator_tools/esmini_linux/resources/xodr/straight_500m.xodr
+Catalog Directory missing filename - ignoring
+Parsing global action EnvironmentAction
+Unsupported global action: EnvironmentAction
+Parsing global action EnvironmentAction
+Unsupported global action: EnvironmentAction
+0 value is not within range and is modified from 5.000000 to 1.0.
+1 value 0.00 is within range.
+2 value 0.00 is within range.
+3 value 0.00 is within range.
+4 value 0.00 is within range.
+No orientation type specified - using absolute
+0 value is not within range and is modified from 5.000000 to 1.0.
+1 value 0.00 is within range.
+2 value 0.00 is within range.
+3 value 0.00 is within range.
+4 value 0.00 is within range.
+No orientation type specified - using absolute
+0 value is not within range and is modified from 5.000000 to 1.0.
+1 value 0.00 is within range.
+2 value 0.00 is within range.
+3 value 0.00 is within range.
+4 value 0.00 is within range.
+No orientation type specified - using absolute
+0 parameters
+0.000: No scenegraph 3D model loaded. Generating a simplistic one...
+0.000: Init Ego TeleportAction initState -> startTransition -> runningState
+0.000: Starting teleport Action
+0.000: Ego New position:
+0.000: Pos(10.00, -4.62, 0.00) Rot(0.00, 0.00, 0.00) roadId 1 laneId -1 offset -3.09 t -4.62
+0.000: Init Ego LongitudinalAction initState -> startTransition -> runningState
+0.000: No controller assigned to object Ego!
+0.000: Init Ego TeleportAction initState -> startTransition -> runningState
+0.000: Starting teleport Action
+0.000: Ego New position:
+0.000: Pos(10.00, -4.62, 0.00) Rot(0.00, 0.00, 0.00) roadId 1 laneId -1 offset -3.09 t -4.62
+0.000: Init Ego LongitudinalAction initState -> startTransition -> runningState
+0.000: No controller assigned to object Ego!
+0.000: Init Obj1 TeleportAction initState -> startTransition -> runningState
+0.000: Starting teleport Action
+0.000: Obj1 New position:
+0.000: Pos(90.00, -4.62, 0.00) Rot(0.00, 0.00, 0.00) roadId 1 laneId -1 offset -3.09 t -4.62
+0.000: Init Obj1 LongitudinalAction initState -> startTransition -> runningState
+0.000: No controller assigned to object Obj1!
+0.000: Init Obj1 TeleportAction initState -> startTransition -> runningState
+0.000: Starting teleport Action
+0.000: Obj1 New position:
+0.000: Pos(90.00, -4.62, 0.00) Rot(0.00, 0.00, 0.00) roadId 1 laneId -1 offset -3.09 t -4.62
+0.000: Init Obj1 LongitudinalAction initState -> startTransition -> runningState
+0.000: No controller assigned to object Obj1!
+0.000: storyBoard initState -> startTransition -> runningState
+0.000: story_act initState -> startTransition -> runningState
+0.000: act initState -> initToStandbyTransition -> standbyState
+0.000: Init Ego TeleportAction runningState -> endTransition -> completeState
+0.000: Init Ego LongitudinalAction runningState -> endTransition -> completeState
+0.000: Init Ego TeleportAction runningState -> endTransition -> completeState
+0.000: Init Ego LongitudinalAction runningState -> endTransition -> completeState
+0.000: Init Obj1 TeleportAction runningState -> endTransition -> completeState
+0.000: Init Obj1 LongitudinalAction runningState -> endTransition -> completeState
+0.000: Init Obj1 TeleportAction runningState -> endTransition -> completeState
+0.000: Init Obj1 LongitudinalAction runningState -> endTransition -> completeState
+10.010: Trigger /------------------------------------------------
+10.010: starttrigger == true, 10.0100 > 10.00 edge: rising
+10.010: Trigger  ------------------------------------------------/
+10.010: act standbyState -> startTransition -> runningState
+10.010: Ego initState -> startTransition -> runningState
+10.010: EgoManeuver initState -> startTransition -> runningState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+10.010: Obj1 initState -> startTransition -> runningState
+10.010: targetManeuver initState -> startTransition -> runningState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+10.010: Ego initState -> startTransition -> runningState
+10.010: EgoManeuver initState -> startTransition -> runningState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+10.010: Obj1 initState -> startTransition -> runningState
+10.010: targetManeuver initState -> startTransition -> runningState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+10.010: startevent initState -> initToStandbyTransition -> standbyState
+15.010: Trigger /------------------------------------------------
+15.010: start_trigger_ego == true, 15.0100 > 15.00 edge: none
+15.010: Trigger  ------------------------------------------------/
+15.010: startevent standbyState -> startTransition -> runningState
+15.010: start_action initState -> startTransition -> runningState
+15.010: Trigger /------------------------------------------------
+15.010: target_acc == true, 15.0100 > 15.00 edge: none
+15.010: Trigger  ------------------------------------------------/
+15.010: startevent standbyState -> startTransition -> runningState
+15.010: start_action initState -> startTransition -> runningState
+15.010: Trigger /------------------------------------------------
+15.010: start_trigger_ego == true, 15.0100 > 15.00 edge: none
+15.010: Trigger  ------------------------------------------------/
+15.010: startevent standbyState -> startTransition -> runningState
+15.010: Stopping object Ego start_action on conflicting longitudinal domain(s)
+15.010: start_action runningState -> endTransition -> completeState
+15.010: startevent complete after 1 execution
+15.010: startevent runningState -> endTransition -> completeState
+15.010: start_action initState -> startTransition -> runningState
+15.010: Trigger /------------------------------------------------
+15.010: start_trigger_ego == true, 15.0100 > 15.00 edge: none
+15.010: Trigger  ------------------------------------------------/
+15.010: start_action runningState -> endTransition -> completeState
+15.010: startevent complete after 1 execution
+15.010: startevent runningState -> endTransition -> completeState
+15.010: Event startevent ended, overwritten by event startevent
+15.010: startevent standbyState -> startTransition -> runningState
+15.010: start_action initState -> startTransition -> runningState
+15.010: Trigger /------------------------------------------------
+15.010: target_acc == true, 15.0100 > 15.00 edge: none
+15.010: Trigger  ------------------------------------------------/
+15.010: startevent standbyState -> startTransition -> runningState
+15.010: Stopping object Obj1 start_action on conflicting longitudinal domain(s)
+15.010: start_action runningState -> endTransition -> completeState
+15.010: startevent complete after 1 execution
+15.010: startevent runningState -> endTransition -> completeState
+15.010: targetManeuver runningState -> endTransition -> completeState
+15.010: Obj1 complete after 1 execution
+15.010: Obj1 runningState -> endTransition -> completeState
+15.010: start_action initState -> startTransition -> runningState
+15.010: Trigger /------------------------------------------------
+15.010: target_acc == true, 15.0100 > 15.00 edge: none
+15.010: Trigger  ------------------------------------------------/
+15.010: start_action runningState -> endTransition -> completeState
+15.010: startevent complete after 1 execution
+15.010: startevent runningState -> endTransition -> completeState
+15.010: Event startevent ended, overwritten by event startevent
+15.010: startevent standbyState -> startTransition -> runningState
+15.010: start_action initState -> startTransition -> runningState
+15.010: start_action runningState -> endTransition -> completeState
+15.010: startevent complete after 1 execution
+15.010: startevent runningState -> endTransition -> completeState
+15.010: start_action runningState -> endTransition -> completeState
+15.010: startevent complete after 1 execution
+15.010: startevent runningState -> endTransition -> completeState
+15.010: targetManeuver runningState -> endTransition -> completeState
+15.010: Obj1 complete after 1 execution
+15.010: Obj1 runningState -> endTransition -> completeState
+27.430: Trigger /------------------------------------------------
+27.430: DistanceCondition == true, dist: 6.96 < 6.99, edge: none
+27.430: Triggering entity 0: Ego
+27.430: Trigger  ------------------------------------------------/
+27.430: startevent standbyState -> startTransition -> runningState
+27.430: start_action initState -> startTransition -> runningState
+27.430: Trigger /------------------------------------------------
+27.430: DistanceCondition == true, dist: 6.96 < 6.99, edge: none
+27.430: Triggering entity 0: Ego
+27.430: Trigger  ------------------------------------------------/
+27.430: startevent standbyState -> startTransition -> runningState
+27.430: start_action initState -> startTransition -> runningState
+27.430: Trigger /------------------------------------------------
+27.430: DistanceCondition == true, dist: 6.96 < 6.99, edge: none
+27.430: Triggering entity 0: Ego
+27.430: Trigger  ------------------------------------------------/
+27.430: start_action runningState -> endTransition -> completeState
+27.430: startevent complete after 1 execution
+27.430: startevent runningState -> endTransition -> completeState
+27.430: Event startevent ended, overwritten by event startevent
+27.430: startevent standbyState -> startTransition -> runningState
+27.430: start_action initState -> startTransition -> runningState
+27.430: start_action runningState -> endTransition -> completeState
+27.430: startevent complete after 1 execution
+27.430: startevent runningState -> endTransition -> completeState
+27.430: EgoManeuver runningState -> endTransition -> completeState
+27.430: Ego complete after 1 execution
+27.430: Ego runningState -> endTransition -> completeState
+27.430: start_action runningState -> endTransition -> completeState
+27.430: startevent complete after 1 execution
+27.430: startevent runningState -> endTransition -> completeState
+27.430: EgoManeuver runningState -> endTransition -> completeState
+27.430: Ego complete after 1 execution
+27.430: Ego runningState -> endTransition -> completeState
+27.430: act runningState -> endTransition -> completeState
+27.430: story_act runningState -> endTransition -> completeState
+Closing

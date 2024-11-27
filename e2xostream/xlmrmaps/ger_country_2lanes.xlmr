@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_country_2lanes" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_v1.1.1.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1672744261</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_2lanes/ger_country_2lanes.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_2lanes/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="DashedCenterMarking" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="SolidCenterMarking" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="SolidStart" startRoadId="0">
+            <road id="0" successor="0" />
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.00310792433710957994e+01" t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="9.99000476131733194052e+03" t="0.00000000000000000000e+00" />
+        <landmark name="DashedCenterMarking_start" type="none" roadId="0" ds="1.00715331454775878228e+01" t="0.00000000000000000000e+00" />
+        <landmark name="DashedCenterMarking_end" type="none" roadId="0" ds="4.99007768029462840786e+03" t="0.00000000000000000000e+00" />
+        <landmark name="SolidCenterMarking_start" type="none" roadId="0" ds="5.01000233841267254320e+03" t="0.00000000000000000000e+00" />
+        <landmark name="SolidCenterMarking_end" type="none" roadId="0" ds="9.99004660602156945970e+03" t="0.00000000000000000000e+00" />
+        <landmark name="SolidStart_start" type="none" roadId="0" ds="4.99965363439250904776e+03" t="0.00000000000000000000e+00" />
+        <landmark name="SolidStart_end" type="none" roadId="0" ds="5.00000000000000000000e+03" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

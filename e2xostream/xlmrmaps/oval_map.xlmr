@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="oval_map" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>jtschea</author>
+        <timestamp>1611914022</timestamp>
+        <xodrFile>/opt/maps/usa/highway/oval_map/oval_map.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/usa/scene_oval/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="Route" startRoadId="1">
+            <road id="1" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="Route_start" type="none" roadId="1" ds="1.00000000000000000000e+00" t="0.00000000000000000000e+00" />
+        <landmark name="Route_end" type="none" roadId="1" ds="4.95716543559298224864e+03" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

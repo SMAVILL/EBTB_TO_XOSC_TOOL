@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBTB to XOSC Conversion Status</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { text-align: left; }
+        .data-section { margin-top: 20px; font-size: 18px; display: flex; align-items: center; }
+        .copy-button { margin-left: 10px; padding: 5px 10px; font-size: 14px; cursor: pointer; }
+        table { margin-top: 20px; width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+    </style>
+    <script>
+        function copyToClipboard(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Text copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy text: ", err);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>EBTB to XOSC Conversion Status</h1>
+
+        <div class="data-section">
+            <span id="ebtb_folder">EBTB Folder: C:/Users/prchan/Pictures/ebtbs/EBTB</span>
+            <button class="copy-button" onclick="copyToClipboard('ebtb_folder')">Copy</button>
+        </div>
+        <div class="data-section">
+            <span id="xosc_path">XOSC Path: C:/Users/prchan/Pictures/ebtbs/EBTB/report</span>
+            <button class="copy-button" onclick="copyToClipboard('xosc_path')">Copy</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>XOSC_filename</th>
+                    <th>EBTB_filename</th>
+                    <th>Username</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_PrepareVehicle</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to TBA_WriteEvaluationEvent</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_ConfigureCollisionAvoidanceFunction</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_ConfigureDrivingFunction</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_ConfigurationDrivingFunction</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_SetLongitudinalSpeed</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_TakeHandsOff</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_ADASState</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to TBA_WriteEvaluationEvent</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Sys_SetIgnitionState</td></tr><tr><td>aas_trigger_7113795.xosc</td><td>aas_trigger_7113795.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_PrepareVehicle</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to TBA_WriteEvaluationEvent</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_ConfigureCollisionAvoidanceFunction</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_ConfigureDrivingFunction</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_ConfigurationDrivingFunction</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_SetLongitudinalSpeed</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_ADASState</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_TakeHandsOff</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to TBA_WriteEvaluationEvent</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Sys_SetIgnitionState</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_active_eesf_not_active_7201999.xosc</td><td>absm_active_eesf_not_active_7201999.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Obj_SetLateralReference</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_PrepareVehicle</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to TBA_WriteEvaluationEvent</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Dri_SetLongitudinalSpeed</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to TBA_WriteEvaluationEvent</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Sys_SetIgnitionState</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to E_Time</td></tr><tr><td>absm_no_intervention_no_free_space_available_7590888.xosc</td><td>absm_no_intervention_no_free_space_available_7590888.xebtb</td><td>PRCHAN</td><td>partially converted</td><td>No function mapped to Obj_SetLateralReference</td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
