@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="germany_country_2lanes_rq11_straight_double_lane_marking" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_v1.1.1.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1664179860</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_2lanes_double_lane_marking/germany_country_2lanes_rq11_straight_double_lane_marking.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_2lanes_double_lane_marking/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="WestToEast" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="SolidDashed" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="DoubleSolid" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="DashedSolid" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="DoubleDashed" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.00687707340472343276e+01" t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="1.99011981717654657587e+03" t="0.00000000000000000000e+00" />
+        <landmark name="WestToEast_start" type="none" roadId="0" ds="1.00977132695786622207e+01" t="0.00000000000000000000e+00" />
+        <landmark name="WestToEast_end" type="none" roadId="0" ds="1.99008137316672628003e+03" t="0.00000000000000000000e+00" />
+        <landmark name="SolidDashed_start" type="none" roadId="0" ds="1.00741693930955307223e+01" t="0.00000000000000000000e+00" />
+        <landmark name="SolidDashed_end" type="none" roadId="0" ds="4.90053474692907514054e+02" t="0.00000000000000000000e+00" />
+        <landmark name="DoubleSolid_start" type="none" roadId="0" ds="5.10018471428148814084e+02" t="0.00000000000000000000e+00" />
+        <landmark name="DoubleSolid_end" type="none" roadId="0" ds="9.90047576277038615444e+02" t="0.00000000000000000000e+00" />
+        <landmark name="DashedSolid_start" type="none" roadId="0" ds="1.01001989778210008808e+03" t="0.00000000000000000000e+00" />
+        <landmark name="DashedSolid_end" type="none" roadId="0" ds="1.49003293286037910548e+03" t="0.00000000000000000000e+00" />
+        <landmark name="DoubleDashed_start" type="none" roadId="0" ds="1.51000439486284676605e+03" t="0.00000000000000000000e+00" />
+        <landmark name="DoubleDashed_end" type="none" roadId="0" ds="1.99008137316672628003e+03" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

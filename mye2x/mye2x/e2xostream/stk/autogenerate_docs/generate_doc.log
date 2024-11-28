@@ -1,0 +1,14 @@
+2024-05-03 18:36:27,393 - INFO - Successfully deleted the folder: C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\docs
+2024-05-03 18:36:32,394 - INFO - Directory created successfully at: C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\docs
+2024-05-03 18:36:38,633 - INFO - Required packages installed successfully.
+2024-05-03 18:36:39,243 - INFO - Sphinx project (re)generated at C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\docs.
+2024-05-03 18:36:39,246 - INFO - Sphinx configured successfully.
+2024-05-03 18:36:39,282 - INFO - rst files generated successfully.
+2024-05-03 18:36:40,517 - INFO - Documentation built successfully at C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\docs\_build\html.
+2024-05-03 18:40:48,908 - INFO - Successfully deleted the folder: C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\docs
+2024-05-03 18:40:53,910 - INFO - Directory created successfully at: C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\docs
+2024-05-03 18:41:00,146 - INFO - Required packages installed successfully.
+2024-05-03 18:41:00,756 - INFO - Sphinx project (re)generated at C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\docs.
+2024-05-03 18:41:00,757 - INFO - Sphinx configured successfully.
+2024-05-03 18:41:00,766 - ERROR - Error generating rst files: cannot access local variable 'func' where it is not associated with a value
+2024-05-03 18:41:01,750 - INFO - Documentation built successfully at C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\docs\_build\html.

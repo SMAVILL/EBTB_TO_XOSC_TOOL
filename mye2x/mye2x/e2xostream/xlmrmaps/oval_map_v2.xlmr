@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="oval_map_v2" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1701161782</timestamp>
+        <xodrFile>/opt/maps/usa/highway/oval_map/oval_map_v2.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/usa/scene_oval/levels/main/main.usd</map3DAssetURL>
+        <map3DAssetPayloads></map3DAssetPayloads>
+    </header>
+    <routes>
+        <route name="Route" startRoadId="2">
+            <road id="2" successor="1" />
+            <road id="1" successor="0" />
+            <road id="0" successor="3" />
+            <road id="3" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="default_route" startRoadId="0">
+            <road id="0" successor="1" />
+            <road id="1" successor="2" />
+            <road id="2" successor="3" />
+            <road id="3" successor="0" />
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="Route_start" type="none" roadId="2" ds="7.41950346864508787803e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="Route_end" type="none" roadId="2" ds="6.81331744619887899717e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_start" type="none" roadId="0" ds="7.27708878239144951294e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="7.84091004307430807785e+02"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>
