@@ -1,0 +1,8 @@
+scenariogeneration
+pandas
+setuptools
+wheel
+sphinx
+sphinx-rtd-theme
+pylint
+coverage

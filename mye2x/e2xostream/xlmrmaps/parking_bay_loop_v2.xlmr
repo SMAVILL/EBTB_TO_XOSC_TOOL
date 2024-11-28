@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="parking_bay_loop_v2" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1649251387</timestamp>
+        <xodrFile>/opt/maps/germany/parking/parking_bay_loop/parking_bay_loop_v2.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/parking_bay_loop/levels/main/main.usd</map3DAssetURL>
+        <map3DAssetPayloads></map3DAssetPayloads>
+    </header>
+    <routes>
+        <route name="PerpendicularParkingTop" startRoadId="35">
+            <road id="35" successor="25" />
+            <road id="25" successor="17" />
+            <road id="17" successor="28" />
+            <road id="28" successor="33" />
+            <road id="33" />
+        </route>
+        <route name="ParallelParkingTop" startRoadId="33">
+            <road id="33" successor="37" />
+            <road id="37" successor="7" />
+            <road id="7" successor="3" />
+            <road id="3" successor="16" />
+            <road id="16" />
+        </route>
+        <route name="AngularParkingTop" startRoadId="16">
+            <road id="16" successor="27" />
+            <road id="27" successor="30" />
+            <road id="30" successor="20" />
+            <road id="20" successor="22" />
+            <road id="22" />
+        </route>
+        <route name="PerpendicularParkingCurveTop" startRoadId="22">
+            <road id="22" successor="18" />
+            <road id="18" successor="26" />
+            <road id="26" successor="0" />
+            <road id="0" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="default_route" startRoadId="35">
+            <road id="35" successor="25" />
+            <road id="25" successor="17" />
+            <road id="17" successor="28" />
+            <road id="28" successor="33" />
+            <road id="33" successor="37" />
+            <road id="37" successor="7" />
+            <road id="7" successor="3" />
+            <road id="3" successor="16" />
+            <road id="16" successor="27" />
+            <road id="27" successor="30" />
+            <road id="30" successor="20" />
+            <road id="20" successor="22" />
+            <road id="22" successor="18" />
+            <road id="18" successor="26" />
+            <road id="26" successor="0" />
+            <road id="0" successor="2" />
+            <road id="2" successor="21" />
+            <road id="21" successor="5" />
+            <road id="5" successor="13" />
+            <road id="13" successor="31" />
+            <road id="31" successor="24" />
+            <road id="24" successor="1" />
+            <road id="1" successor="12" />
+            <road id="12" successor="6" />
+            <road id="6" successor="8" />
+            <road id="8" successor="11" />
+            <road id="11" successor="23" />
+            <road id="23" successor="4" />
+            <road id="4" successor="29" />
+            <road id="29" successor="14" />
+            <road id="14" successor="39" />
+            <road id="39" successor="9" />
+            <road id="9" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="PerpendicularParkingTop_start" type="none" roadId="35"
+            ds="5.64902750531359743036e-02" t="6.35000000000000008882e-01" />
+        <landmark name="PerpendicularParkingTop_end" type="none" roadId="33"
+            ds="3.99635259147671604296e+01" t="6.34999999999999786837e-01" />
+        <landmark name="ParallelParkingTop_start" type="none" roadId="33"
+            ds="8.53095128447876049904e-02" t="6.34999999999999786837e-01" />
+        <landmark name="ParallelParkingTop_end" type="none" roadId="16"
+            ds="3.98348610162715601746e+01" t="6.34999999999999786837e-01" />
+        <landmark name="AngularParkingTop_start" type="none" roadId="16"
+            ds="1.23210883455811867626e-01" t="6.34999999999999786837e-01" />
+        <landmark name="AngularParkingTop_end" type="none" roadId="22"
+            ds="3.98609138815150529922e+01" t="6.34999999999999786837e-01" />
+        <landmark name="PerpendicularParkingCurveTop_start" type="none" roadId="22"
+            ds="1.10362781175986413018e-01" t="6.34999999999999786837e-01" />
+        <landmark name="PerpendicularParkingCurveTop_end" type="none" roadId="2"
+            ds="4.77357917822976318689e+01" t="6.34999999999999786837e-01" />
+        <landmark name="default_route_start" type="none" roadId="35" ds="7.01877450158860938245e-01"
+            t="6.35000000000000008882e-01" />
+        <landmark name="default_route_end" type="none" roadId="9" ds="3.97612387175130947981e+01"
+            t="6.35000000000000008882e-01" />
+        <landmark name="perp_dynamic" type="road_segment" roadId="23"
+            ds="2.00000000000000000000e+00" t="6.34999999999999786837e-01" />
+        <landmark name="dynamic_perp_landmark" type="road_segment" roadId="4"
+            ds="4.00000000000000000000e+01" t="6.35000000000000008882e-01" />
+        <landmark name="par_dynamic" type="road_segment" roadId="12" ds="2.00000000000000000000e+00"
+            t="6.34999999999999786837e-01" />
+        <landmark name="dynamic_par_landmark" type="road_segment" roadId="6"
+            ds="4.00000000000000000000e+01" t="6.35000000000000008882e-01" />
+        <landmark name="angle_dynamic" type="road_segment" roadId="13"
+            ds="1.99999999999999822364e+00" t="6.34999999999994457767e-01" />
+        <landmark name="dynamic_angle_landmark" type="road_segment" roadId="31"
+            ds="4.00000000000000000000e+01" t="6.35000000000000008882e-01" />
+    </landmarks>
+    <parkingbays>
+        <parkingbay positionname="ParallelParkingRight1" x="-1.51346000000000003638e+02"
+            y="-2.17139000000000015334e+00" />
+        <parkingbay positionname="ParallelParkingLeft1" x="-1.51000000000000000000e+02"
+            y="7.17358000000000028962e+00" />
+        <parkingbay positionname="ParallelParkingLeft2" x="-1.44500000000000000000e+02"
+            y="7.17358000000000028962e+00" />
+        <parkingbay positionname="ParallelParkingRight2" x="-1.44497000000000014097e+02"
+            y="-2.17139000000000015334e+00" />
+        <parkingbay positionname="ParallelParkingLeft3" x="-1.38000000000000000000e+02"
+            y="7.17358000000000028962e+00" />
+        <parkingbay positionname="ParallelParkingRight3" x="-1.37649000000000000909e+02"
+            y="-2.17139000000000015334e+00" />
+        <parkingbay positionname="PerpendicularParkingRight1" x="-2.22349999999999994316e+02"
+            y="-3.67235999999999984666e+00" />
+        <parkingbay positionname="PerpendicularParkingLeft1" x="-2.22000000000000000000e+02"
+            y="8.67200000000000059686e+00" />
+        <parkingbay positionname="PerpendicularParkingRight2" x="-2.18500000000000000000e+02"
+            y="-3.67235999999999984666e+00" />
+        <parkingbay positionname="PerpendicularParkingLeft2" x="-2.18500000000000000000e+02"
+            y="8.67200000000000059686e+00" />
+        <parkingbay positionname="PerpendicularParkingLeft3" x="-2.15000000000000000000e+02"
+            y="8.67200000000000059686e+00" />
+        <parkingbay positionname="PerpendicularParkingRight3" x="-2.14650000000000005684e+02"
+            y="-3.67235999999999984666e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft1" x="-9.25000000000000000000e+00"
+            y="8.75000000000000000000e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft2" x="-5.74558000000000035357e+00"
+            y="8.74948000000000014609e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft3" x="-2.24882999999999988461e+00"
+            y="8.74968999999999930139e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft4" x="1.25679000000000007375e+00"
+            y="8.74707000000000078899e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft5" x="4.75863000000000013756e+00"
+            y="8.74491000000000084924e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft6" x="8.25979000000000063153e+00"
+            y="8.74268000000000000682e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft7" x="1.37425999999999994827e+01"
+            y="3.25979999999999980886e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft8" x="1.37448999999999994515e+01"
+            y="-2.41386999999999990463e-01" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft9" x="1.37470999999999996533e+01"
+            y="-3.74324000000000012278e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft10" x="1.37497000000000006992e+01"
+            y="-7.24885000000000001563e+00" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft11" x="1.37494999999999993889e+01"
+            y="-1.07455999999999995964e+01" />
+        <parkingbay positionname="PerpendicularParkingCurveLeft12" x="1.37500000000000000000e+01"
+            y="-1.42500000000000000000e+01" />
+        <parkingbay positionname="AngularParkingRight1" x="-7.63023000000000024556e+01"
+            y="-4.27420000000000044338e+00" />
+        <parkingbay positionname="AngularParkingLeft1" x="-7.60020999999999986585e+01"
+            y="9.27176000000000044565e+00" />
+        <parkingbay positionname="AngularParkingRight2" x="-7.10476000000000027512e+01"
+            y="-4.27421000000000006480e+00" />
+        <parkingbay positionname="AngularParkingLeft2" x="-7.10473999999999961119e+01"
+            y="9.27176000000000044565e+00" />
+        <parkingbay positionname="AngularParkingLeft3" x="-6.60927999999999968850e+01"
+            y="9.27176000000000044565e+00" />
+        <parkingbay positionname="AngularParkingRight3" x="-6.57930000000000063665e+01"
+            y="-4.27418999999999993378e+00" />
+        <parkingbay positionname="dynamic_perp_right1" x="-2.18772847055801321403e+02"
+            y="-8.13451414815033331251e+01" />
+        <parkingbay positionname="dynamic_par_right1" x="-1.45105277475400583853e+02"
+            y="-8.28234987389721197815e+01" />
+        <parkingbay positionname="dynamic_angle_right1" x="-7.09510394868548530667e+01"
+            y="-8.13407980410769937407e+01" />
+        <parkingbay positionname="dynamic_par_left1" x="-1.45100759903838365972e+02"
+            y="-9.19908041026810678886e+01" />
+        <parkingbay positionname="dynamic_perp_right2" x="-2.28357766187184978435e+02"
+            y="-8.21976573813120126033e+01" />
+        <parkingbay positionname="dynamic_perp_right3" x="-2.10366528437235416504e+02"
+            y="-8.02330119226220546125e+01" />
+        <parkingbay positionname="dynamic_perp_left1" x="-2.18672181232919683680e+02"
+            y="-9.32894276074752042405e+01" />
+    </parkingbays>
+</lmr>
