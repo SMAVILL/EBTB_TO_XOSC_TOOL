@@ -1,20 +1,20 @@
 import os
 import sys
 import platform
-from mye2x.e2xostream.stk.scenariogeneration import xosc, prettyprint, ScenarioGenerator
-from mye2x.e2xostream.stk.vehicledynamics.VehicleControl import VehicleControlMovements as vehiclecontrol
-from mye2x.e2xostream.stk.vehicledynamics.DataControl import DataControls as datacontrol
-from mye2x.e2xostream.stk.vehicledynamics.VehicleScenarioSetup import VehicleScenario
-from mye2x.e2xostream.src.vehiclestream.ebtb_stream import EBTBAnalyzer, EBTB_API_data
-from mye2x.e2xostream.config import default_properties, global_parameters, settings
-from mye2x.e2xostream.config.api_constants import (api_methods_constants as ApiMethods,
+from e2xostream.stk.scenariogeneration import xosc, prettyprint, ScenarioGenerator
+from e2xostream.stk.vehicledynamics.VehicleControl import VehicleControlMovements as vehiclecontrol
+from e2xostream.stk.vehicledynamics.DataControl import DataControls as datacontrol
+from e2xostream.stk.vehicledynamics.VehicleScenarioSetup import VehicleScenario
+from e2xostream.src.vehiclestream.ebtb_stream import EBTBAnalyzer, EBTB_API_data
+from e2xostream.config import default_properties, global_parameters, settings
+from e2xostream.config.api_constants import (api_methods_constants as ApiMethods,
                                              ego_api_constants as EgoAPI,
                                              obj_api_constants as ObjAPI,
                                              other_api_constants as OtherAPI)
-from mye2x.e2xostream.src.scenario_generator import basescenario as BS
-from mye2x.e2xostream.src.acts_algo import ego_acts, obj_acts
-from mye2x.e2xostream.src.vehiclestream.xosc_stream import ego_mapping_acts, obj_mapping_acts
-from mye2x.e2xostream.stk.scenariogeneration import esmini
+from e2xostream.src.scenario_generator import basescenario as BS
+from e2xostream.src.acts_algo import ego_acts, obj_acts
+from e2xostream.src.vehiclestream.xosc_stream import ego_mapping_acts, obj_mapping_acts
+from e2xostream.stk.scenariogeneration import esmini
 
 MAIN_PATH = os.path.abspath(os.path.join(__file__, "..", "..", "..", ".."))
 CURRENT_WORKING_FILE_DIRECTORY = os.path.abspath(os.path.join(__file__))

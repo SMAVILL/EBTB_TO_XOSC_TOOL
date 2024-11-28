@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict
 import sys
 
-from mye2x.e2xostream.config.api_constants.other_api_constants import E_TimeToCollision
+from e2xostream.config.api_constants.other_api_constants import E_TimeToCollision
 
 MAIN_PATH = os.path.abspath(os.path.join(__file__, "..", "..", "..", ".."))
 CURRENT_WORKING_FILE_DIRECTORY = os.path.abspath(os.path.join(__file__))
@@ -16,7 +16,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 for root, dirs, files in os.walk(dir_path):
     sys.path.append(root)
 
-from mye2x.e2xostream.config.api_constants import (api_methods_constants as ApiMethods,
+from e2xostream.config.api_constants import (api_methods_constants as ApiMethods,
                                              ego_api_constants as EgoAPI,
                                              obj_api_constants as ObjAPI,
                                              other_api_constants as OtherAPI)
