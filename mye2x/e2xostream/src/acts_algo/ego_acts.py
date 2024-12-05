@@ -316,36 +316,39 @@ class Ego_Acts:
 
         if landmark_type is None and landmark_offset is None:
             return "Stop"
+        lane_mapping = {"Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
+                        "Left1": 1, "Left2": 2, "Left3": 3, "Left4": 4, "Left5": 5, "Left6": 6}
+        envp_lane_selection1 = lane_mapping.get(envp_lane_selection)
 
-        if envp_lane_selection == "Right1":
-            envp_lane_selection = -1
-        elif envp_lane_selection == "Right2":
-            envp_lane_selection = -2
-        elif envp_lane_selection == "Right3":
-            envp_lane_selection = -3
-        elif envp_lane_selection == "Right4":
-            envp_lane_selection = -4
-        elif envp_lane_selection == "Right5":
-            envp_lane_selection = -5
-        elif envp_lane_selection == "Right6":
-            envp_lane_selection = -6
-        elif envp_lane_selection == "Left1":
-            envp_lane_selection = 1
-        elif envp_lane_selection == "Left2":
-            envp_lane_selection = 2
-        elif envp_lane_selection == "Left3":
-            envp_lane_selection = 3
-        elif envp_lane_selection == "Left4":
-            envp_lane_selection = 4
-        elif envp_lane_selection == "Left5":
-            envp_lane_selection = 5
-        elif envp_lane_selection == "Left6":
-            envp_lane_selection = 6
+        # if envp_lane_selection == "Right1":
+        #     envp_lane_selection = -1
+        # elif envp_lane_selection == "Right2":
+        #     envp_lane_selection = -2
+        # elif envp_lane_selection == "Right3":
+        #     envp_lane_selection = -3
+        # elif envp_lane_selection == "Right4":
+        #     envp_lane_selection = -4
+        # elif envp_lane_selection == "Right5":
+        #     envp_lane_selection = -5
+        # elif envp_lane_selection == "Right6":
+        #     envp_lane_selection = -6
+        # elif envp_lane_selection == "Left1":
+        #     envp_lane_selection = 1
+        # elif envp_lane_selection == "Left2":
+        #     envp_lane_selection = 2
+        # elif envp_lane_selection == "Left3":
+        #     envp_lane_selection = 3
+        # elif envp_lane_selection == "Left4":
+        #     envp_lane_selection = 4
+        # elif envp_lane_selection == "Left5":
+        #     envp_lane_selection = 5
+        # elif envp_lane_selection == "Left6":
+        #     envp_lane_selection = 6
 
         if shared_data.event_counter == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
-            start_trig = self.VehicleDefines.create_reach_position_condition_trigger(landmark_type, envp_lane_selection,
+            start_trig = self.VehicleDefines.create_reach_position_condition_trigger(landmark_type, envp_lane_selection1,
                                                                                      landmark_offset)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_Landmark")
         all_ego_events.append(
