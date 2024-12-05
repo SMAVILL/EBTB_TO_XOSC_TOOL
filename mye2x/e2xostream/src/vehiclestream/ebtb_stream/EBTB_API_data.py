@@ -271,6 +271,7 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                     landmark_type = (action.get('Parameters')[0]['Landmark'])
                     landmark_offset = (action.get('Parameters')[0]['LandmarkOffset'])
 
+
     current_directory = os.getcwd()
 
     subdirectory = "xlmrmaps"
@@ -290,13 +291,13 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                     continue
                 break
         xlmr_file_path = os.path.basename(xlmr_file)
-        print(xlmr_file_path)
 
     if os.path.exists(xlmr_paths) and os.path.isdir(xlmr_paths):
         # Iterate over files in the folder
         for filename in os.listdir(xlmr_paths):
             # Compare the filename with `xlmr_file_path`
             if filename == xlmr_file_path:
+                print("hi")
                 file_path = os.path.join(xlmr_paths, filename)
 
                 # Read and print the file contents
@@ -308,6 +309,8 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                     if landmark.get('name') == landmark_type:
                         ds_value = landmark.get('ds')
                         ds_value_float = float(ds_value)
+                    else:
+                        return (None,None)
     return ds_value_float,landmark_offset
 
 def extract_lenthoflane(paramlist_analysis):
@@ -623,7 +626,6 @@ def get_landmark_offset_ego(paramlist_analysis):
         parameters = ego_action['Parameters']
         for parameter in parameters:
             envp_landmark_offset = parameter.get(AMC.LandmarkOffset)
-            print("landmark offset",envp_landmark_offset)
     return envp_landmark_offset
 
 def get_lane_selection_ego(paramlist_analysis):
@@ -638,7 +640,6 @@ def get_lane_selection_ego(paramlist_analysis):
         parameters = ego_action['Parameters']
         for parameter in parameters:
             envp_lane_selection = parameter.get(AMC.LaneSelection)
-            print("lane select",envp_lane_selection)
     return envp_lane_selection
 def get_lane_selection_object(states_analysis, target_name):
     extracted_info = {}
@@ -847,8 +848,3 @@ def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
                         ds_value_float = float(ds_value)
 
     return ds_value_float
-
-
-
-
-

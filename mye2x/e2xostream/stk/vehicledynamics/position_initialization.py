@@ -194,6 +194,3 @@ if __name__ == "__main__":
     # Example for initializing another object with GeoPosition
     initialize_position(init, "OtherObject", step_time, init_speed=5, position_types=["GeoPosition"], latitude=52.5200,
                         longitude=13.4050, height=34)
-
-
-

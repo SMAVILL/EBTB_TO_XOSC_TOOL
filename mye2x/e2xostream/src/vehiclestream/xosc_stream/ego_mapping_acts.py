@@ -13,6 +13,7 @@ from e2xostream.config.api_constants import (api_methods_constants as ApiMethods
 from e2xostream.src.scenario_generator import basescenario as BS
 from e2xostream.src.acts_algo import ego_acts, obj_acts
 from e2xostream.stk.fun_register_dispatch import FunctionRegisterDispatcher
+from e2xostream.src.E2X_Convert import E2XOStream
 
 
 MAIN_PATH = os.path.abspath(os.path.join(__file__, "..", "..", "..", ".."))
@@ -29,6 +30,7 @@ for root, dirs, files in os.walk(dir_path):
 
 class EgoScnearioActs:
     def __init__(self, egoname, states_analysis, paramlist_analysis, state_events, param_events, esmini_path):
+
         self.states_analysis = states_analysis
         self.paramlist_analysis = paramlist_analysis
         self.state_events = state_events
@@ -42,6 +44,8 @@ class EgoScnearioActs:
         self.EGO_algo_acts = ego_acts.Ego_Acts(egoname, states_analysis, paramlist_analysis,
                                                state_events, param_events, esmini_path)
         self.register_dispatch = FunctionRegisterDispatcher()
+
+
 
 
     def __call__(self, all_ego_events):
@@ -64,8 +68,8 @@ class EgoScnearioActs:
         self.register_dispatch.register(OtherAPI.E_ObjectCollision,self.ego_Eobjectcollision)
         self.register_dispatch.register(OtherAPI.E_TimeToCollision, self.ego_E_timetocollision)
         self.register_dispatch.register(OtherAPI.E_Landmark,self.ego_E_Landmark)
-        #self.register_dispatch.register(EgoAPI.Dri_SetIndicatorState,self.dri_setIndicatorState)
-        #self.register_dispatch.register(EgoAPI.Dri_SetVehicleDoor,self.ego_dri_SetVehicleDoor)
+        self.register_dispatch.register(EgoAPI.Dri_SetIndicatorState,self.dri_setIndicatorState)
+        self.register_dispatch.register(EgoAPI.Dri_SetVehicleDoor,self.ego_dri_SetVehicleDoor)
         self.register_dispatch.register(EgoAPI.Dri_SwitchGear, self.ego_dri_SwitchGear)
         self.register_dispatch.register(OtherAPI.Ethernet_SetSignal,self.ego_ethernet_setsignal)
         self.register_dispatch.register(OtherAPI.Ethernet_InvalidateE2EProtection, self.ego_ethernet_invalidateE2E)
@@ -118,6 +122,7 @@ class EgoScnearioActs:
         self.register_dispatch.register(OtherAPI.TBA_RunDiagnosticService, self.ego_TBA_RunDiagnosticService)
         self.register_dispatch.register(OtherAPI.TBA_WriteEvaluationEvent, self.ego_TBA_WriteEvaluationEvent)
 
+
     def check_api_dispatch_function(self, all_ego_events):
         for statekey, statevalue in self.states_analysis.items():
             ego_actions = statevalue.get("EgoActions", [])
@@ -137,226 +142,294 @@ class EgoScnearioActs:
                         print(f"Error dispatching action {action}: {e}")
                         continue
 
+    flag = 0
+    print("flag",flag)
     def initial_acceleration(self, all_ego_events,state_key):
+        if EgoScnearioActs.flag == 0:
         # initial Acceleration act
-        self.EGO_algo_acts.ego_accelration_act(all_ego_events,state_key)
+            self.EGO_algo_acts.ego_accelration_act(all_ego_events,state_key)
 
     def prepare_vehicle(self,all_ego_events,state_key):
-        self.EGO_algo_acts.prepare_vehicle(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.prepare_vehicle(all_ego_events,state_key)
 
     def ego_E_Landmark(self,all_ego_events,state_key):
-        self.EGO_algo_acts.E_landmark(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            if self.EGO_algo_acts.E_landmark(all_ego_events,state_key) == "Stop":
+                EgoScnearioActs.flag = 1
+            else:
+                self.EGO_algo_acts.E_landmark(all_ego_events, state_key)
+
 
     def e_time(self,all_ego_events,state_key):
-        self.EGO_algo_acts.e_time(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_time(all_ego_events,state_key)
 
     def throttle_acts(self, all_ego_events,state_key):
         # Ego Throttle act
-        self.EGO_algo_acts.ego_throttle_act(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_throttle_act(all_ego_events,state_key)
 
     def brake_acts(self, all_ego_events,state_key):
         # Ego brake act
-        self.EGO_algo_acts.ego_brake_act(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_brake_act(all_ego_events,state_key)
 
     def dri_setLateralDisplacement(self, all_ego_events,state_key):
         # dri_setLateralDisplacement
-        self.EGO_algo_acts.ego_Dri_SetLateralDisplacement(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetLateralDisplacement(all_ego_events,state_key)
 
     def ego_E_DistanceTimeBased(self, all_ego_events,state_key):
-        self.EGO_algo_acts.ego_E_DistanceTimeBased(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_E_DistanceTimeBased(all_ego_events,state_key)
 
     def dri_setLateralReference(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetLateralReference(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetLateralReference(all_ego_events,state_key)
 
     def ego_ObjectDistanceLaneBased(self, all_ego_events,state_key):
         # E_ObjectDistanceLaneBased
-        self.EGO_algo_acts.ego_E_ObjectDistanceLaneBased(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_E_ObjectDistanceLaneBased(all_ego_events,state_key)
 
     def ego_ObjectCollision(self, all_ego_events,state_key):
-        self.EGO_algo_acts.ego_E_ObjectCollision(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_E_ObjectCollision(all_ego_events,state_key)
 
     def ego_dri_SwitchGear(self, all_ego_events,state_key):
         # Dri_SwitchGear
-        self.EGO_algo_acts.ego_Dri_SwitchGear(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SwitchGear(all_ego_events,state_key)
 
     def ego_dri_SetVehicleDoor(self, all_ego_events,state_key):
         # Dri_SetVehicleDoor
-        self.EGO_algo_acts.ego_Dri_SetVehicleDoor(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetVehicleDoor(all_ego_events,state_key)
 
     def ego_dri_SetParkingBrake(self, all_ego_events,state_key):
         # Dri_SetParkingBrake
-        self.EGO_algo_acts.ego_Dri_SetParkingBrake(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetParkingBrake(all_ego_events,state_key)
 
     def ego_dri_SetSteeringWheelAngle(self, all_ego_events,state_key):
         # Dri_SetSteeringWheelAngle
-        self.EGO_algo_acts.ego_Dri_SetSteeringWheelAngle(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetSteeringWheelAngle(all_ego_events,state_key)
 
     def ego_SetTrafficLightState(self, all_ego_events,state_key):
         # Env_SetTrafficLightState
-        self.EGO_algo_acts.ego_Env_SetTrafficLightState(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Env_SetTrafficLightState(all_ego_events,state_key)
 
     def E_sysvehiclevelocity(self, all_ego_events,state_key):
-        self.EGO_algo_acts.ego_E_SysVehicleVelocity(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_E_SysVehicleVelocity(all_ego_events,state_key)
 
     def dri_setIndicatorState(self,all_ego_events,state_key):
-        self.EGO_algo_acts.Dri_SetIndicatorState(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Dri_SetIndicatorState(all_ego_events,state_key)
 
     def ego_Eobjectcollision(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_E_ObjectCollision(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_E_ObjectCollision(all_ego_events,state_key)
 
     def ego_E_timetocollision(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_E_Timetocollision(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_E_Timetocollision(all_ego_events,state_key)
 
     def ego_ethernet_setsignal(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_ethernet_setsignal(all_ego_events,state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_ethernet_setsignal(all_ego_events,state_key)
 
     def ego_ethernet_invalidateE2E(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_ethernet_invalidateE2E(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_ethernet_invalidateE2E(all_ego_events, state_key)
 
     def ego_ethernet_setsignalinvalid(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_ethernet_setsignalinvalid(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_ethernet_setsignalinvalid(all_ego_events, state_key)
 
     def ego_ethernet_suspendPDUTriggering(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_ethernet_suspendPDUTriggering(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_ethernet_suspendPDUTriggering(all_ego_events, state_key)
 
     def ego_dri_AcknowledgeCPMToastMessage(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_dri_AcknowledgeCPMToastMessage(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_dri_AcknowledgeCPMToastMessage(all_ego_events, state_key)
 
     def ego_Dri_ChangeACCSpeed(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_ChangeACCSpeed(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_ChangeACCSpeed(all_ego_events, state_key)
 
     def ego_Dri_ChangeVSLSpeed(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_ChangeVSLSpeed(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_ChangeVSLSpeed(all_ego_events, state_key)
 
     def ego_Dri_ConfigureCollisionAvoidanceFunction(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_ConfigureCollisionAvoidanceFunction(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_ConfigureCollisionAvoidanceFunction(all_ego_events, state_key)
 
     def ego_Dri_ConfigureDrivingFunction(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_ConfigureDrivingFunction(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_ConfigureDrivingFunction(all_ego_events, state_key)
 
     def ego_Dri_ConfigureParkingFunction(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_ConfigureParkingFunction(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_ConfigureParkingFunction(all_ego_events, state_key)
 
     def ego_Dri_PlaceHandCloseToDoorHandle(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_PlaceHandCloseToDoorHandle(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_PlaceHandCloseToDoorHandle(all_ego_events, state_key)
 
     def ego_Dri_PressAPASoftKey(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_PressAPASoftKey(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_PressAPASoftKey(all_ego_events, state_key)
 
     def ego_Dri_PressRMASoftKey(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_PressRMASoftKey(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_PressRMASoftKey(all_ego_events, state_key)
 
     def ego_Dri_PressSteeringWheelButton(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_PressSteeringWheelButton(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_PressSteeringWheelButton(all_ego_events, state_key)
 
     def ego_Dri_SetACCDistance(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetACCDistance(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetACCDistance(all_ego_events, state_key)
 
     def ego_Dri_SetBeltState(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetBeltState(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetBeltState(all_ego_events, state_key)
 
     def ego_Dri_SetCarwashMode(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetCarwashMode(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetCarwashMode(all_ego_events, state_key)
 
     def ego_Dri_SetDrivingProgram(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetDrivingProgram(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetDrivingProgram(all_ego_events, state_key)
 
     def ego_Dri_SetElectricalTrailerHitchPosition(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetElectricalTrailerHitchPosition(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetElectricalTrailerHitchPosition(all_ego_events, state_key)
 
     def ego_Dri_SetESPMode(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetESPMode(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetESPMode(all_ego_events, state_key)
 
     def ego_Dri_SetHazardWarningLights(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetHazardWarningLights(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetHazardWarningLights(all_ego_events, state_key)
 
     def ego_Dri_SetLockState(self,all_ego_events,state_key):
-        self.EGO_algo_acts.ego_Dri_SetLockState(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetLockState(all_ego_events, state_key)
 
     def ego_Dri_SetMirrorPosition(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_SetMirrorPosition(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetMirrorPosition(all_ego_events, state_key)
 
     def ego_Dri_SetParkDisplayView(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_SetParkDisplayView(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetParkDisplayView(all_ego_events, state_key)
 
     def ego_Dri_SetParkSwitchState(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_SetParkSwitchState(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetParkSwitchState(all_ego_events, state_key)
 
     def ego_Dri_SetVehicleSpeedUnit(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_SetVehicleSpeedUnit(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetVehicleSpeedUnit(all_ego_events, state_key)
 
     def ego_Dri_SetWinterTireSpeedLimiter(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_SetWinterTireSpeedLimiter(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SetWinterTireSpeedLimiter(all_ego_events, state_key)
 
     def ego_Dri_SwitchACCVSLMode(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_SwitchACCVSLMode(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SwitchACCVSLMode(all_ego_events, state_key)
 
     def ego_Dri_SwitchToACCDriving(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_SwitchToACCDriving(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SwitchToACCDriving(all_ego_events, state_key)
 
     def ego_Dri_SwitchToVSLDriving(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_SwitchToVSLDriving(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_SwitchToVSLDriving(all_ego_events, state_key)
 
     def ego_Dri_TakeHandsOff(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Dri_TakeHandsOff(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Dri_TakeHandsOff(all_ego_events, state_key)
 
     def ego_Sys_ReleaseAcceleratorPedalRequest(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_ReleaseAcceleratorPedalRequest(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_ReleaseAcceleratorPedalRequest(all_ego_events, state_key)
 
     def ego_Sys_SetADASISv2Attribute(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetADASISv2Attribute(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetADASISv2Attribute(all_ego_events, state_key)
 
     def ego_Sys_SetAttentionAssist(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetAttentionAssist(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetAttentionAssist(all_ego_events, state_key)
 
     def ego_Sys_SetECOAssistRequest(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetECOAssistRequest(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetECOAssistRequest(all_ego_events, state_key)
 
     def ego_Sys_SetELVIRARecommendation(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetELVIRARecommendation(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetELVIRARecommendation(all_ego_events, state_key)
 
     def ego_Sys_SetEPSHandsOffDetection(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetEPSHandsOffDetection(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetEPSHandsOffDetection(all_ego_events, state_key)
 
     def ego_Sys_SetESPState(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetESPState(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetESPState(all_ego_events, state_key)
 
     def ego_Sys_SetHandsOnCapacitiveSteeringDetection(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetHandsOnCapacitiveSteeringDetection(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetHandsOnCapacitiveSteeringDetection(all_ego_events, state_key)
 
     def ego_Sys_SetIgnitionState(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetIgnitionState(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetIgnitionState(all_ego_events, state_key)
 
     def ego_Sys_SetProductionMode(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetProductionMode(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetProductionMode(all_ego_events, state_key)
 
     def ego_Sys_SetSnowChainMode(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetSnowChainMode(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetSnowChainMode(all_ego_events, state_key)
 
     def ego_Sys_SetTireFriction(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetTireFriction(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetTireFriction(all_ego_events, state_key)
 
     def ego_Sys_SetTireState(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetTireState(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetTireState(all_ego_events, state_key)
 
     def ego_Sys_SetTrailerPlugState(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetTrailerPlugState(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetTrailerPlugState(all_ego_events, state_key)
 
     def ego_Sys_SetTransportMode(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_Sys_SetTransportMode(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_Sys_SetTransportMode(all_ego_events, state_key)
 
     def ego_TBA_RunDiagnosticService(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_TBA_RunDiagnosticService(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_TBA_RunDiagnosticService(all_ego_events, state_key)
 
     def ego_TBA_WriteEvaluationEvent(self, all_ego_events, state_key):
-        self.EGO_algo_acts.ego_TBA_WriteEvaluationEvent(all_ego_events, state_key)
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.ego_TBA_WriteEvaluationEvent(all_ego_events, state_key)
 
     def E_PrepareVehicle(self, all_ego_events, state_key):
-        self.EGO_algo_acts.E_PrepareVehicle(all_ego_events, state_key)
-
-
-
-
-
-
-
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.E_PrepareVehicle(all_ego_events, state_key)

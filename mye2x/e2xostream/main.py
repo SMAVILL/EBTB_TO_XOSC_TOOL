@@ -1,4 +1,3 @@
-
 import os
 import sys
 import argparse
@@ -15,6 +14,9 @@ import re
 from pathlib import Path
 import tkinter as tk
 from tkinter import messagebox
+from e2xostream.src.E2X_Convert import E2XOStream
+from e2xostream.src.vehiclestream.xosc_stream.ego_mapping_acts import EgoScnearioActs
+print("1st",E2XOStream)
 
 username = getpass.getuser()
 print("Username:", username)
@@ -274,10 +276,10 @@ if __name__ == "__main__":
                 sys.exit(1)  # Exit if access to the second path is denied
 
             local_path = Path(os.path.join(ebtb, "report", "xlmrmaps"))
-            # copy_xlmr_share_to_local(sharepath1, local_path)
+            copy_xlmr_share_to_local(sharepath1, local_path)
 
             local_path = Path(os.path.join(ebtb, "report", "xodrmaps"))
-            # copy_xodr_share_to_local(sharepath, local_path)
+            copy_xodr_share_to_local(sharepath, local_path)
 
         except Exception as e:
             logger.error(f"An unexpected error occurred: {str(e)}")
@@ -296,6 +298,7 @@ if __name__ == "__main__":
                               report_path=report_path,
                               esmini_path=esmini_path)
             logger.info(f"Processed file: {xml_file_path}")
+
         elif isinstance(xml_file_path, list):
             for xml_file in xml_file_path:
                 xml_file_path = [os.path.normpath(xml_file)]
@@ -308,7 +311,8 @@ if __name__ == "__main__":
                 time.sleep(1)
 
     except Exception as e:
-        logger.error(f"An error occurred: {str(e)}")
+
+        #logger.error(f"An  occurred: {str(e)}")
         for xml_file in xml_file_path:
             try:
                 E2XObj.XOSCStream(destination_directory=destination_directory,
@@ -316,18 +320,28 @@ if __name__ == "__main__":
                                   xml_file_path=xml_file,
                                   report_path=report_path,
                                   esmini_path=esmini_path)
+
+                if EgoScnearioActs.flag == 1:
+                    print("yesssss")
+                    os.remove(E2XOStream.new_file_path)
+                    EgoScnearioActs.flag = 0
+                    logger.error(f"- mismatch due to XLMR : {E2XOStream.new_file_path}")
+
                 logger.info(f"Processed file in exception handler: {xml_file}")
                 time.sleep(1)
             except Exception as ex:
                 logger.error(f"Failed to process file {xml_file}: {str(ex)}")
+
     import shutil
 
     unwanted_folders = ["xosc", "xodr"]
+
     for folder in unwanted_folders:
         folder_path = os.path.join(report_path, folder)
         if os.path.exists(folder_path):
             shutil.rmtree(folder_path)
             logger.info(f"Removed unwanted folder: {folder_path}")
+
 
     GUI.create_html(ebtb)
 

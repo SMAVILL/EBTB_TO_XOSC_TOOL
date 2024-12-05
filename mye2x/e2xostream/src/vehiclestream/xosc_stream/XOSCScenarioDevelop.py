@@ -30,6 +30,7 @@ for root, dirs, files in os.walk(dir_path):
 
 class FuncScenario(ScenarioGenerator):
     def __init__(self, egoname, states_analysis, paramlist_analysis, state_events, param_events, esmini_path):
+
         super().__init__()
 
         self.states_analysis = states_analysis
@@ -99,14 +100,7 @@ class FuncScenario(ScenarioGenerator):
         -------
 
         """
-        ## create an event for the object
-        # start_trig = self.VehicleDefines.create_target_event(value=5)
-        # start_action = self.VehicleDefines.create_target_action(speed=0)
-        # target_start_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
-        #                                                                     start_action=start_action)
-        # self.all_target_events.append(target_start_event)
 
-        # Object Acceleration
         self.ObjManeuverActs(self.all_target_events, target_name)
 
         target_mangr = self.base_scenario.target_startevent_maneuver_group(target_events=self.all_target_events,
@@ -232,6 +226,7 @@ class FuncScenario(ScenarioGenerator):
 
 
 def execute_sce_proc(xml_file_path, report_path, esmini_path):
+
     """
     execute scenario procedure
     Parameters
@@ -260,6 +255,7 @@ if __name__ == "__main__":
     """
     AEB Scenario start
     """
+
     report_path = r"C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\Report"
     xml_file_path = r"C:\Users\HMOHANK\Desktop\Pangu_dev\e2xstreamline\EBTBs"
     esmini_path = r"C:\Users\jadhavc\Downloads\MBRDI_WorkSpace\EBTB_XOSC_ToolDevelopment\EB2XOStreamline\NewProjectStructureE2X\e2xstreamline\esmini",

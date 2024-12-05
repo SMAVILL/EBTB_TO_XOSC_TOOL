@@ -124,7 +124,7 @@ class Obj_Acts:
         if shared_data.event_counter_obj == 1:
             #start_trig = self.VehicleDefines.create_target_event(value=15)
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                element_name=f"SimOneDriver:{shared_data.count-1}", delay=0)
+                element_name=f"SimOneDriver:event{shared_data.count-1}", delay=0)
 
         else:
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
@@ -141,91 +141,3 @@ class Obj_Acts:
 
         all_target_events.append(target_next_event)
         shared_data.event_counter_obj += 1
-
-    # def Obj_Accelration_act(self, all_target_events, state_key, target_name):
-    #     pass
-    #
-    # def obj_changelane(self, all_target_events, state_key, target_name):
-    #     state_key = int(state_key)
-    #     try:
-    #         event_name = f"event{state_key}"
-    #         action_name = f"Simone Driver:event{state_key}"
-    #
-    #         # start_trig = self.VehicleDefines.create_target_event(value=15)
-    #         start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-    #             element_name=f"Simone Driver:event{state_key - 1}")
-    #
-    #         for state_id, state_info in self.states_analysis.items():
-    #             if 'ObjectActions' in state_info and state_info['ObjectActions']:
-    #                 if target_name in state_info['ObjectActions']:
-    #                     obj1_actions = state_info['ObjectActions'][target_name]
-    #                     for action in obj1_actions:
-    #                         if action['Action'] == 'Obj_ChangeLane':
-    #                             direction = action['Parameters'][0]['Direction']
-    #                             value_of_dist = action['Parameters'][0]['TransitionDistance']
-    #
-    #         for k, v in self.states_analysis.items():
-    #             for obj_id, actions in v.get('ObjectActions', {}).items():
-    #                 for action in actions:
-    #                     if action.get('Action') == ObjAPI.Obj_Initialize:
-    #                         for param in action.get('Parameters', []):
-    #                             if param.get('ObjectId') == target_name:
-    #                                 present_lane = param.get('LaneSelection')
-    #
-    #         start_action = self.VehicleDefines.create_obj_lanechange_action(target_name, direction, present_lane,
-    #                                                                         value_of_dist,
-    #                                                                         state_data=self.states_analysis,
-    #                                                                         param_data=self.paramlist_analysis)
-    #         target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
-    #                                                                            start_action=start_action,
-    #                                                                            event_name=event_name,
-    #                                                                            action_name=action_name)
-    #
-    #         all_target_events.append(target_next_event)
-    #     except Exception as e:
-    #         print(f"Error: {e}")
-    #
-    # def obj_setlateraldisplacement(self, all_target_events, state_key, target_name):
-    #     state_key = int(state_key)
-    #     event_name = f"event{state_key}"
-    #     action_name = f"Simone Driver:event{state_key}"
-    #
-    #     for k, v in self.states_analysis.items():
-    #         for kv, vv in v["ObjectActions"].items():
-    #             if vv[0]['Action'] == "Obj_SetLateralReference":
-    #                 pass
-    #             elif vv[0]['Action'] == "Obj_SetLateralDisplacement":
-    #                 dispvalue = vv[0]['Parameters'][0]['TargetDisplacement']
-    #                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-    #                     element_name=f"Simone Driver:event{state_key - 1}")
-    #                 # start_trig = self.VehicleDefines.create_target_event(value=5)
-    #                 start_action = self.VehicleDefines.create_obj_lateral_distance_action(value=dispvalue,
-    #                                                                                       entity=target_name,
-    #                                                                                       state_data=self.states_analysis)
-    #                 target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
-    #                                                                                    start_action=start_action,
-    #                                                                                    event_name=event_name,
-    #                                                                                    action_name=action_name)
-    #                 all_target_events.append(target_next_event)
-    #
-    #
-    # def obj_set_longitudinal_speed(self, all_target_events, state_key, target_name):
-    #     state_key = int(state_key)
-    #
-    #     event_name = f"event{state_key}"
-    #     action_name = f"Simone Driver:event{state_key}"
-    #     start_trig = self.VehicleDefines.create_ego_event(value=15)
-    #
-    #
-    #     start_action = self.VehicleDefines.obj_acceleration_actions(target_name,
-    #                                                                 state_data=self.states_analysis,
-    #                                                                 param_data=self.paramlist_analysis)
-    #
-    #     target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
-    #                                                                        start_action=start_action,
-    #                                                                        event_name=event_name,
-    #                                                                        action_name=action_name)
-    #
-    #     all_target_events.append(target_next_event)
-    #
-    #

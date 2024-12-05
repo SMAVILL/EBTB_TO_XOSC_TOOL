@@ -18,4 +18,3 @@ class FunctionRegisterDispatcher:
             message = f"No function mapped to {key}"
             logging.warning(message)  # Log the message as a warning
             return None
-

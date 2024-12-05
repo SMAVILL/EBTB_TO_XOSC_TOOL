@@ -885,7 +885,7 @@ class VehicleScenario:
 
     def create_storyboard(self, init, act):
         sb = xosc.StoryBoard(init, xosc.ValueTrigger("stop_simulation", 0, xosc.ConditionEdge.rising,
-                                                     xosc.SimulationTimeCondition(666, xosc.Rule.greaterThan),
+                                                     xosc.SimulationTimeCondition(200, xosc.Rule.greaterThan),
                                                      "stop"))
         sb.add_act(act)
         return sb

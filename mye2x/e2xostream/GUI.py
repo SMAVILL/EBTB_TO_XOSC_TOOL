@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog
@@ -412,31 +411,35 @@ button.custom-button {
 
         # Parse the log file line by line
         for line in log_lines:
-            if "INFO - Processed file in exception handler" in line:
-                file_path = line.split("INFO - Processed file in exception handler: ")[-1].strip()
-                file_name = file_path.split("\\")[-1]
-                log_data_dict[file_name] = current_warnings
-                current_warnings = []
 
-            elif "WARNING - " in line:
-                warning_message = line.split("WARNING - ")[-1].strip()
-                current_warnings.append(warning_message)
-
-            elif "ERROR - Failed to process" in line:
+            if "ERROR - " in line:
                 # Extract EBTB_filename
-                file_match = re.search(r"file\s+(.*?\.xebtb):", line)
+                file_path = line.split("mismatch due to XLMR : ")[-1].strip()
+                file_match = file_path.split("\\")[-1]
                 if file_match:
-                    ebtb_file_path = file_match.group(1)
-                    ebtb_filename = ebtb_file_path.split("\\")[-1]
-                    xosc_filename = ebtb_filename.replace('.xebtb', '.xosc')
+                    xosc_filename = file_match.split("\\")[-1]
+                    ebtb_filename = xosc_filename.replace('.xosc', '.xebtb')
 
                     error_rows.append({
                         "EBTB_filename": ebtb_filename,
                         "XOSC_filename": xosc_filename,
                         "Username": getpass.getuser(),
                         "Status": "Not converted",
-                        "Details": "syntax error: kindly check EBTB"
+                        "Details": "Mismatch in XLMR"
                     })
+                    error_msg = "Error"
+                    current_warnings.append(error_msg)
+
+            elif "WARNING - " in line:
+                warning_message = line.split("WARNING - ")[-1].strip()
+                current_warnings.append(warning_message)
+
+            elif "INFO - Processed file in exception handler" in line:
+                file_path = line.split("INFO - Processed file in exception handler: ")[-1].strip()
+                file_name = file_path.split("\\")[-1]
+                log_data_dict[file_name] = current_warnings
+                current_warnings = []
+
 
     for key in log_data_dict.keys():
         if not log_data_dict[key]:  # If no warnings for this file
@@ -448,8 +451,8 @@ button.custom-button {
     # Generate repeated keys
     repeated_keys = [key for key, values in log_data_dict.items() for _ in values]
     Details = [warn for warnings in log_data_dict.values() for warn in warnings]
+    print("err", len(error_rows))
 
-    # status = ["Partially converted" if "No function mapped" in warn else "Completely converted" for warn in Details]
     status = [
         "Not converted" if "Error" in warn else
         "Partially converted" if "No function mapped" in warn else
@@ -466,10 +469,12 @@ button.custom-button {
 
     # Step 1: Group data by XOSC_filename
     grouped_data = {}
+    print("det",Details)
 
     # Iterate over the data
     for xosc_file, ebtb_file, user, stat, detail in zip(XOSC_filename, EBTB_filename, Username, status, Details):
         # Ensure EBTB_filename appears only once for each XOSC_filename
+
         if xosc_file not in grouped_data:
             grouped_data[xosc_file] = {
                 "EBTB_filename": None,
@@ -492,28 +497,37 @@ button.custom-button {
         grouped_data[xosc_file]["status"] = stat
         grouped_data[xosc_file]["Username"] = user
 
+
         # Add error rows to grouped data
-    for error_row in error_rows:
-        grouped_data[error_row["XOSC_filename"]] = {
-            "EBTB_filename": error_row["EBTB_filename"],
-            "Details": {error_row["Details"]},
-            "status": error_row["Status"],
-            "Username": error_row["Username"]
-        }
+    # for error_row in error_rows:
+    #     print("error rw",error_row)
+    #     grouped_data[error_row["XOSC_filename"]] = {
+    #         "EBTB_filename": error_row["EBTB_filename"],
+    #         "Details": {error_row["Details"]},
+    #         "status": error_row["Status"],
+    #         "Username": error_row["Username"]
+    #     }
+    #     print("enter", grouped_data[error_row["XOSC_filename"]])
+    #     print(grouped_data.items())
 
     # Get the current date and time in the desired format
     current_datetime = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
     # Step 2: Prepare the merged rows for the HTML table
     merged_rows = []
+    # print("grouped",grouped_data['status'])
     for index, (xosc_file, data) in enumerate(grouped_data.items(), start=1):
+
         ebtb_filenames = data["EBTB_filename"]  # EBTB_filename appears only once
 
-        if data["Details"]:
+        if data["status"] == "Partially converted":
             details = "No function mapped to " + ", ".join(
                 data["Details"])  # Join all unique details for the same XOSC_filename
+        elif data["status"] == "Not converted":
+            details = "Error : Check EBTB"
         else:
             details = "All functions mapped for this EBTB"
+
 
         merged_rows.append(
             f"<tr><td>{index}</td><td>{ebtb_filenames}</td><td>{xosc_file}</td><td>{data['Username']}</td><td>{data['status']}</td><td class='left-align'><pre style='white-space: pre-wrap;'>{details}</pre></td></tr>")

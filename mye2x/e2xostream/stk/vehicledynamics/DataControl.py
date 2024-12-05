@@ -74,6 +74,3 @@ class DataControls:
 
         elif displacement == 80 and sideaxis == "Middle":
             return -7.875
-
-
-
