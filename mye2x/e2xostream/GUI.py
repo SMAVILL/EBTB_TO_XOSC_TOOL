@@ -574,7 +574,7 @@ button.custom-button {
         <div class="container">
             <h1>EBTB to XOSC Conversion Status</h1>
 
-            <h2><left> <u>Total : {total_count} EBTB Files are converted to XOSC format, Generated on {current_datetime} </u></left> </h2>
+            <h2><left> <u>Total : {total_count} EBTB Files are found in given folder, Generated on {current_datetime} </u></left> </h2>
             <h3><left> <a href = "{EBTB_paths}"> EBTB Folder </a></left> </h3>
             <h3><left> <a href = "{XOSC_path + '/report'}"> XOSC Path </a></left> </h3>
 

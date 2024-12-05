@@ -297,21 +297,23 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
         for filename in os.listdir(xlmr_paths):
             # Compare the filename with `xlmr_file_path`
             if filename == xlmr_file_path:
-                print("hi")
                 file_path = os.path.join(xlmr_paths, filename)
 
                 # Read and print the file contents
                 tree = ET.parse(file_path)  # Replace 'your_file.xml' with your XML file path
                 root = tree.getroot()
 
-                ds_value = None
+                ds_value_float = None
                 for landmark in root.findall(".//landmark"):
                     if landmark.get('name') == landmark_type:
                         ds_value = landmark.get('ds')
                         ds_value_float = float(ds_value)
-                    else:
-                        return (None,None)
-    return ds_value_float,landmark_offset
+                if ds_value_float:
+                    return ds_value_float, landmark_offset
+                else:
+                    return None,None
+
+
 
 def extract_lenthoflane(paramlist_analysis):
     current_directory = os.getcwd()
