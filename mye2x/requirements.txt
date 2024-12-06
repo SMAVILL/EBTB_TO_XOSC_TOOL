@@ -1,5 +1,0 @@
-scenariogeneration
-setuptools
-wheel
-pylint
-coverage

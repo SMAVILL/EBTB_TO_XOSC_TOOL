@@ -35,7 +35,7 @@ def ebtb_GUI():
 
     # Main GUI setup
     root = tk.Tk()
-    root.title("EBTB_to_XOSC_Tool_ver:1.1")
+    root.title("EBTB_to_XOSC_Tool_ver:1")
 
     # Input label and entry field
     tk.Label(root, text="Select EBTB_Folder:").grid(row=0, column=0, padx=10, pady=10)
