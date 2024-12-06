@@ -1,0 +1,325 @@
+
+
+
+h1{
+  color: rgb(12, 209, 42);
+  font-family: verdana;
+  font-size: 250%;
+  text-align:center;
+  text-underline-position:under;
+}
+
+
+h2{
+  color: rgb(170, 13, 209);
+ font-family: verdana;
+ font-size: 100%;
+ text-align:left;
+ font-size: 22px;
+ text-underline-position:under;
+ font-weight: bold;
+}
+
+
+h3{
+  color: rgb(16, 31, 168);
+  font-family: verdana;
+  font-size: 100%;
+  text-align:left;
+  font-size: 22px;
+  text-underline-position:under;
+  font-weight: bold;
+}
+
+h6{
+  color: rgb(16, 31, 168);
+  font-family: verdana;
+  font-size: 100%;
+  text-align:left;
+  font-size: 14px;
+  text-underline-position:under;
+  font-weight: bold;
+}
+
+td {
+  border: 0.5px solid black;
+  border-collapse:collapse;
+  border-style: double;
+  padding: 15px;
+  border: width 2px;
+  text-align: center;
+  text-size-adjust: 80%;
+  font-weight:lighter;
+  font-size: 19px;;
+  color: rgb(16, 31, 168);
+
+}
+
+
+th {
+  border: 1px solid black;
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 22px;
+  filter: brightness(80%);
+  color: rgb(12, 120, 209);
+}
+
+
+th.th3 {
+  border: 1px solid black;
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 22px;
+  filter: brightness(80%);
+  color: rgb(11, 160, 18);
+}
+
+
+th.th8 {
+  border: 1px solid black;
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  font-weight: bold;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 27px;
+  filter: brightness(80%);
+  color: rgb(0, 1, 8);
+  background-color: rgb(21, 223, 206);
+}
+
+
+th.th6 {
+  border: 1px solid black;
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  font-weight: bold;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 27px;
+  filter: brightness(80%);
+  color: rgb(0, 1, 8);
+  background-color: rgb(135, 206, 235);
+}
+
+th.th7 {
+  border: 1px solid black;
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  font-weight: bold;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 27px;
+  filter: brightness(80%);
+  color: rgb(0, 1, 8);
+  background-color:rgba(255, 99, 71, 0.5)
+}
+
+
+
+th.th4 {
+  border: 1px solid black;
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 22px;
+  filter: brightness(80%);
+  color: rgb(0, 0, 0);
+}
+
+th.th1 {
+  border: 1px solid rgb(9, 65, 150);
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 22px;
+  filter: brightness(80%);
+  color: rgb(130, 12, 209);
+
+
+}
+
+a{
+  color: rgb(16, 20, 236);
+  font-family: verdana;
+  text-align:right;
+  text-underline-position:under;
+  font-size: 27px;
+  font-weight: bold;
+  filter: brightness(150%);
+
+
+
+
+}
+
+
+th.th2 {
+  border: 1px solid rgb(85, 128, 7);
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 22px;
+  filter: brightness(80%);
+  color: rgb(209, 12, 134);
+}
+
+
+
+td.td1 {
+  border: 1px solid rgb(0, 0, 0);
+  border-collapse:collapse;
+  border-style: solid;
+  padding: 15px;
+  border: width 5px;
+  text-align: center;
+  text-size-adjust: 100%;
+  font-size: 22px;
+  filter: brightness(100%);
+  color: rgb(9, 0, 15);
+  font-weight: bold;
+  background-color: rgb(211, 218, 219);
+
+}
+
+
+td.td2{
+  border: 0.5px solid black;
+  border-collapse:collapse;
+  border-style: double;
+  padding: 15px;
+  border: width 2px;
+  text-align: center;
+  text-size-adjust: 80%;
+  color: rgb(224, 35, 145);
+  font-size: 19px;;
+  background-color: rgb(226, 235, 235);
+  font-weight: bold;
+
+}
+
+
+td.td3{
+  border: 0.5px solid black;
+  border-collapse:collapse;
+  border-style: double;
+  padding: 15px;
+  border: width 2px;
+  text-align: center;
+  text-size-adjust: 80%;
+  color: rgb(4, 92, 30);
+  font-weight: bold;
+  font-size: 24px;;
+  background-color: rgb(226, 235, 235);
+
+}
+
+
+td.td4{
+  border: 0.5px solid black;
+  border-collapse:collapse;
+  border-style: double;
+  padding: 15px;
+  border: width 2px;
+  text-align: center;
+  text-size-adjust: 80%;
+  color: rgb(206, 17, 32);
+  font-weight: bold;
+  font-size: 24px;;
+  background-color: rgb(226, 235, 235);
+
+}
+
+td.td5{
+  border: 0.5px solid black;
+  border-collapse:collapse;
+  border-style: double;
+  padding: 15px;
+  border: width 2px;
+  text-align: center;
+  text-size-adjust: 80%;
+  color: rgb(7, 150, 185);
+  font-weight: bold;
+  font-size: 24px;;
+  background-color: rgb(226, 235, 235);
+
+}
+
+.left-align {
+  text-align: left; /* Left-aligns the content in the details column */
+}
+
+
+x{
+
+color: rgb(51, 204, 51)
+
+}
+
+y{
+
+color: #FFA07A
+
+}
+
+z{
+
+color:rgb(255, 51, 0)
+
+}
+
+w{
+
+color:rgb(0, 153, 204)
+}
+
+table {
+
+  background-color: aliceblue;
+
+}
+
+div.button-container {
+            text-align: center; /* Center align the buttons */
+            margin-top: 10px;
+}
+
+button.custom-button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color:rgb(255, 204, 0); /* Green */
+            color: black;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+
+
