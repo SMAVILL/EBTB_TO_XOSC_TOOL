@@ -263,6 +263,7 @@ def xlmr_to_xodr_mapping(paramlist_analysis):
 
 def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
 
+
     global landmark_type
     for key, value in states_analysis.items():
             ego_actions = value.get('EgoActions', [])
@@ -291,27 +292,34 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                     continue
                 break
         xlmr_file_path = os.path.basename(xlmr_file)
+    print(xlmr_file_path)
 
     if os.path.exists(xlmr_paths) and os.path.isdir(xlmr_paths):
         # Iterate over files in the folder
         for filename in os.listdir(xlmr_paths):
             # Compare the filename with `xlmr_file_path`
             if filename == xlmr_file_path:
+                print("match")
                 file_path = os.path.join(xlmr_paths, filename)
 
                 # Read and print the file contents
                 tree = ET.parse(file_path)  # Replace 'your_file.xml' with your XML file path
                 root = tree.getroot()
 
+
                 ds_value_float = None
                 for landmark in root.findall(".//landmark"):
+
+
                     if landmark.get('name') == landmark_type:
-                        ds_value = landmark.get('ds')
+
+                        ds_value = landmark.get('ds',None)
                         ds_value_float = float(ds_value)
+
                 if ds_value_float:
                     return ds_value_float, landmark_offset
                 else:
-                    return None,None
+                    return (None,None)
 
 
 

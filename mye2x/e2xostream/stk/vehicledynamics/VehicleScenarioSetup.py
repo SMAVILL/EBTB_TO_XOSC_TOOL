@@ -207,7 +207,7 @@ class VehicleScenario:
                     if entity == kv:
                         later_control_action = xosc.RelativeLaneOffsetAction(value, entity,
                                                                              shape=xosc.DynamicsShapes.linear,
-                                                                             maxlatacc=None, continuous=True)
+                                                                             maxlatacc=10, continuous=True)
 
                         return later_control_action
         except Exception as e:

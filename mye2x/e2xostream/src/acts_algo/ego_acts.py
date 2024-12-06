@@ -74,8 +74,6 @@ class Ego_Acts:
         pass
 
     def e_time(self,all_ego_events,state_key):
-
-
         keys = list(self.states_analysis.keys())
         start_key_index = keys.index(self.last_processed_key5) + 1 if self.last_processed_key5 else 0
 
@@ -92,6 +90,7 @@ class Ego_Acts:
                     delay = parameters[0].get("StateTime")
                     delay1 = parameters[0].get("SimTime")
 
+
                     event_name = f"event{shared_data.event_counter}"
                     action_name = f"SimOneDriver:event{shared_data.event_counter}"
 
@@ -100,12 +99,11 @@ class Ego_Acts:
                     else:
 
                         if delay:
-                                start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                                    element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=delay)
+                            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                                element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=delay)
                         elif delay1:
-                                start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                                    element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=delay1)
-
+                            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                                element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=delay1)
 
                     start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_Time")
                     all_ego_events.append(
@@ -120,6 +118,9 @@ class Ego_Acts:
                     # If all actions are processed, reset tracking variables
             self.last_processed_key5 = None
             self.last_processed_action_index5 = -1
+
+
+
 
 
     def ego_accelration_act(self, all_ego_events,state_key):
@@ -306,49 +307,53 @@ class Ego_Acts:
                                                                       start_action=start_action,event_name=event_name,action_name=action_name))
         shared_data.event_counter +=1
     def E_landmark(self,all_ego_events,state_key):
+
         event_name = f"event{shared_data.event_counter}"
         action_name = f"SimOneDriver:event{shared_data.event_counter}"
 
         envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=self.paramlist_analysis)
+
 
         landmark_type, landmark_offset = EBTB_API_data.xlmr_mapping_landmark(states_analysis=self.states_analysis,
                                                                              paramlist_analysis=self.paramlist_analysis)
 
         if landmark_type is None and landmark_offset is None:
             return "Stop"
-        lane_mapping = {"Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
-                        "Left1": 1, "Left2": 2, "Left3": 3, "Left4": 4, "Left5": 5, "Left6": 6}
-        envp_lane_selection1 = lane_mapping.get(envp_lane_selection)
 
-        # if envp_lane_selection == "Right1":
-        #     envp_lane_selection = -1
-        # elif envp_lane_selection == "Right2":
-        #     envp_lane_selection = -2
-        # elif envp_lane_selection == "Right3":
-        #     envp_lane_selection = -3
-        # elif envp_lane_selection == "Right4":
-        #     envp_lane_selection = -4
-        # elif envp_lane_selection == "Right5":
-        #     envp_lane_selection = -5
-        # elif envp_lane_selection == "Right6":
-        #     envp_lane_selection = -6
-        # elif envp_lane_selection == "Left1":
-        #     envp_lane_selection = 1
-        # elif envp_lane_selection == "Left2":
-        #     envp_lane_selection = 2
-        # elif envp_lane_selection == "Left3":
-        #     envp_lane_selection = 3
-        # elif envp_lane_selection == "Left4":
-        #     envp_lane_selection = 4
-        # elif envp_lane_selection == "Left5":
-        #     envp_lane_selection = 5
-        # elif envp_lane_selection == "Left6":
-        #     envp_lane_selection = 6
+
+        # lane_mapping = {"Right1":-1,"Right2":-2,"Right3" : -3,"Right4" : -4,"Right5" : -5,"Right6" : -6,
+        #  "Left1" : 1,"Left2" : 2,"Left3":3,"Left4":4,"Left5":5,"Left6":6}
+        # envp_lane_selection1 = lane_mapping.get(envp_lane_selection)
+
+        if envp_lane_selection == "Right1":
+            envp_lane_selection = -1
+        elif envp_lane_selection == "Right2":
+            envp_lane_selection = -2
+        elif envp_lane_selection == "Right3":
+            envp_lane_selection = -3
+        elif envp_lane_selection == "Right4":
+            envp_lane_selection = -4
+        elif envp_lane_selection == "Right5":
+            envp_lane_selection = -5
+        elif envp_lane_selection == "Right6":
+            envp_lane_selection = -6
+        elif envp_lane_selection == "Left1":
+            envp_lane_selection = 1
+        elif envp_lane_selection == "Left2":
+            envp_lane_selection = 2
+        elif envp_lane_selection == "Left3":
+            envp_lane_selection = 3
+        elif envp_lane_selection == "Left4":
+            envp_lane_selection = 4
+        elif envp_lane_selection == "Left5":
+            envp_lane_selection = 5
+        elif envp_lane_selection == "Left6":
+            envp_lane_selection = 6
 
         if shared_data.event_counter == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
-            start_trig = self.VehicleDefines.create_reach_position_condition_trigger(landmark_type, envp_lane_selection1,
+            start_trig = self.VehicleDefines.create_reach_position_condition_trigger(landmark_type, envp_lane_selection,
                                                                                      landmark_offset)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_Landmark")
         all_ego_events.append(
@@ -356,8 +361,8 @@ class Ego_Acts:
                                                         event_name=event_name, action_name=action_name))
         shared_data.event_counter += 1
 
-
-
+        # except:
+        #     print("error")
 
 
     def ego_Dri_SetLateralDisplacement(self, all_ego_events,state_key):

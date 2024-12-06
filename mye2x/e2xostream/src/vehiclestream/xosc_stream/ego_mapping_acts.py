@@ -143,7 +143,7 @@ class EgoScnearioActs:
                         continue
 
     flag = 0
-    print("flag",flag)
+
     def initial_acceleration(self, all_ego_events,state_key):
         if EgoScnearioActs.flag == 0:
         # initial Acceleration act
@@ -164,6 +164,10 @@ class EgoScnearioActs:
     def e_time(self,all_ego_events,state_key):
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.e_time(all_ego_events,state_key)
+            # if self.EGO_algo_acts.e_time(all_ego_events, state_key) == "Stop":
+            #     EgoScnearioActs.flag = 1
+            # else:
+            #     self.EGO_algo_acts.e_time(all_ego_events, state_key)
 
     def throttle_acts(self, all_ego_events,state_key):
         # Ego Throttle act
