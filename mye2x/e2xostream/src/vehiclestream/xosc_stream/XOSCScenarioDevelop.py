@@ -12,9 +12,10 @@ from e2xostream.config.api_constants import (api_methods_constants as ApiMethods
                                              obj_api_constants as ObjAPI,
                                              other_api_constants as OtherAPI)
 from e2xostream.src.scenario_generator import basescenario as BS
-from e2xostream.src.acts_algo import ego_acts, obj_acts
+from e2xostream.src.acts_algo import ego_acts, obj_acts, shared_data
 from e2xostream.src.vehiclestream.xosc_stream import ego_mapping_acts, obj_mapping_acts
 from e2xostream.stk.scenariogeneration import esmini
+from e2xostream.src.acts_algo.shared_data import event_counter_obj
 
 MAIN_PATH = os.path.abspath(os.path.join(__file__, "..", "..", "..", ".."))
 CURRENT_WORKING_FILE_DIRECTORY = os.path.abspath(os.path.join(__file__))
@@ -59,6 +60,7 @@ class FuncScenario(ScenarioGenerator):
 
         self.EgoManeuverActs = ego_mapping_acts.EgoScnearioActs(egoname, states_analysis, paramlist_analysis,
                                                                 state_events, param_events, esmini_path)
+
 
         self.ObjManeuverActs = obj_mapping_acts.ObjScnearioActs(egoname, states_analysis, paramlist_analysis,
                                                                 state_events, param_events, esmini_path)
@@ -179,11 +181,13 @@ class FuncScenario(ScenarioGenerator):
         self.act.add_maneuver_group(ego_mnvgr)
 
     def ObjManeuverGroup(self):
+        from e2xostream.src.acts_algo.shared_data import event_counter_obj
 
         # Dictionary to store processed maneuvers for each object
         if len(self.obj_list) > 0:
             for i in self.obj_list:
                 self.all_target_events=[]
+                shared_data.event_counter_obj = 1
                 target_mnvgr = self.target_maneuver_group_with_condition(target_name=i)
                 self.act.add_maneuver_group(target_mnvgr)
 

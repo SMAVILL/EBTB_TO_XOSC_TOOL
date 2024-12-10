@@ -59,11 +59,12 @@ class EgoScnearioActs:
         self.register_dispatch.register(EgoAPI.Dri_SetLongitudinalSpeed,self.initial_acceleration)
         self.register_dispatch.register(EgoAPI.Dri_SetAccelerationPedal, self.throttle_acts)
         self.register_dispatch.register(EgoAPI.Dri_SetBrakePedal, self.brake_acts)
-        self.register_dispatch.register(OtherAPI.E_SysVehicleVelocity, self.E_sysvehiclevelocity)
         self.register_dispatch.register(EgoAPI.Dri_SetLateralDisplacement, self.dri_setLateralDisplacement)
-        self.register_dispatch.register(OtherAPI.E_Time,self.e_time)
+
         self.register_dispatch.register(EgoAPI.Dri_SetLateralReference, self.dri_setLateralReference)
-        self.register_dispatch.register(OtherAPI.E_ObjectDistanceLaneBased, self.ego_ObjectDistanceLaneBased)
+        #self.register_dispatch.register(OtherAPI.E_ObjectDistanceLaneBased, self.ego_ObjectDistanceLaneBased)
+        self.register_dispatch.register(OtherAPI.E_Time, self.e_time)
+        self.register_dispatch.register(OtherAPI.E_SysVehicleVelocity, self.E_sysvehiclevelocity)
         self.register_dispatch.register(OtherAPI.E_DistanceTimeBased, self.ego_E_DistanceTimeBased)
         self.register_dispatch.register(OtherAPI.E_ObjectCollision,self.ego_Eobjectcollision)
         self.register_dispatch.register(OtherAPI.E_TimeToCollision, self.ego_E_timetocollision)
@@ -143,6 +144,7 @@ class EgoScnearioActs:
                         continue
 
     flag = 0
+    error_name = None
 
     def initial_acceleration(self, all_ego_events,state_key):
         if EgoScnearioActs.flag == 0:
@@ -157,6 +159,7 @@ class EgoScnearioActs:
         if EgoScnearioActs.flag == 0:
             if self.EGO_algo_acts.E_landmark(all_ego_events,state_key) == "Stop":
                 EgoScnearioActs.flag = 1
+                EgoScnearioActs.error_name = "E_landMark"
             else:
                 self.EGO_algo_acts.E_landmark(all_ego_events, state_key)
 

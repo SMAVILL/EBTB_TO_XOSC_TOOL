@@ -32,8 +32,8 @@ class Ego_Acts:
         self.paramlist_analysis = paramlist_analysis
         self.last_processed_key = None  # Track the last key processed
         self.last_processed_action_index = -1
-        self.last_processed_key1 = None
-        self.last_processed_action_index1 = -1
+        # self.last_processed_key1 = None
+        # self.last_processed_action_index1 = -1
         self.last_processed_key2 = None
         self.last_processed_action_index2 = -1
         self.last_processed_key3 = None
@@ -66,6 +66,12 @@ class Ego_Acts:
 
         shared_data.event_counter = 1
         self.last_index_ego = {}
+        self.ego_brake_index = {}
+        self.ego_gear_index = {}
+        self.ego_throttle_index = {}
+        self.ego_pb_index = {}
+        self.ego_sw_index = {}
+
 
 
 
@@ -87,8 +93,8 @@ class Ego_Acts:
                 if action.get('Action') == "E_Time":
                     # Extract operator and velocity values from the parameters
                     parameters = action.get('Parameters', [])
-                    delay = parameters[0].get("StateTime")
-                    delay1 = parameters[0].get("SimTime")
+                    delay = parameters[0].get("StateTime",0)
+                    delay1 = parameters[0].get("SimTime",0)
 
 
                     event_name = f"event{shared_data.event_counter}"
@@ -104,6 +110,9 @@ class Ego_Acts:
                         elif delay1:
                             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                                 element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=delay1)
+                        else:
+                            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                                element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
 
                     start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_Time")
                     all_ego_events.append(
@@ -160,8 +169,8 @@ class Ego_Acts:
                 if action.get('Action') == "E_SysVehicleVelocity":
                     # Extract operator and velocity values from the parameters
                     parameters = action.get('Parameters', [])
-                    operator = parameters[0].get("Operator")
-                    velocity_value = parameters[0].get("Velocity")
+                    operator = parameters[0].get("Operator","equalTo")
+                    velocity_value = parameters[0].get("Velocity",0)
                     velocity = float(velocity_value)*(5/18)
 
 
@@ -188,7 +197,7 @@ class Ego_Acts:
                         )
                     )
 
-                    # Update counters and tracking for the next call
+
                     shared_data.event_counter += 1
                     self.last_processed_key = key  # Update last processed key
                     self.last_processed_action_index = i  # Update last processed action index
@@ -199,54 +208,21 @@ class Ego_Acts:
         self.last_processed_action_index = -1
 
     def ego_throttle_act(self, all_ego_events,state_key):
-        global value_throttle
-
-
-        if not hasattr(self, 'start_trig_throttle'):
-            self.start_trig_throttle = 0
-
-
-        if not hasattr(self, 'last_processed_index1'):
-            self.last_processed_index1 = 0
-
-        trigger_created = False  # Flag to indicate trigger creation
-        keys = list(self.states_analysis.keys())  # Convert keys to a list for indexed access
-        # Loop starting from last processed index
-        for i in range(self.last_processed_index1, len(keys)):
-            key = keys[i]
-            value = self.states_analysis[key]
-
-            ego_actions = value.get('EgoActions', [])
-
-            for action in ego_actions:
-                if action.get('Action', []) == "Dri_SetAccelerationPedal":
-
-                    throttle_value = self.throttle["Throttle"]
-                    all_actions = value.get('EgoActions')
-                    acts = [item['Action'] for item in all_actions]
-                    param = action.get('Parameters')
-                    value_throttle = (param[0]['Position'])
-                    if value_throttle == "Hold":
-                        value_throttle = 5
-
-                    if shared_data.event_counter == 1:
-                        self.start_trig_throttle = self.VehicleDefines.create_ego_event(value=10)
-                        trigger_created = True
-                    else:
-                        self.start_trig_throttle = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                        element_name=f"SimOneDriver:event{shared_data.event_counter - 1}",delay=0)
-                        trigger_created = True
-
-                    if trigger_created:
-                        # Update the last processed index and break out of both loops
-                        self.last_processed_index1 = i + 1
-                        break  # Exit inner loop
-
-            if trigger_created:
-                break  # Exit outer loop
 
         event_name = f"event{shared_data.event_counter}"
         action_name = f"SimOneDriver:event{shared_data.event_counter}"
+
+        value_throttle = EBTB_API_data.ego_throttle(self.ego_throttle_index,self.states_analysis)
+        if value_throttle == "Hold":
+            value_throttle = 5
+
+        if shared_data.event_counter == 1:
+            self.start_trig_throttle = self.VehicleDefines.create_ego_event(value=10)
+
+        else:
+            self.start_trig_throttle = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
+
         start_action = self.VehicleDefines.create_controller_override_action(throttle=value_throttle,
                                                                          brake=0, clutch=0, parkingbrake=0,
                                                                          steeringwheel=0, gear=0)
@@ -257,45 +233,18 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_brake_act(self, all_ego_events,state_key):
-        global value_break
-        if not hasattr(self, 'start_trig_brake'):
-            self.start_trig_brake = 0
-
-        if not hasattr(self, 'last_processed_index'):
-            self.last_processed_index = 0
-
-        trigger_created = False  # Flag to indicate trigger creation
-        keys = list(self.states_analysis.keys())  # Convert keys to a list for indexed access
-
-        # Loop starting from last processed index
-        for i in range(self.last_processed_index, len(keys)):
-            key = keys[i]
-            value = self.states_analysis[key]
-
-            ego_actions = value.get('EgoActions', [])
-            for action in ego_actions:
-                if action.get('Action', []) == "Dri_SetBrakePedal":
-                    all_actions = value.get('EgoActions')
-                    acts = [item['Action'] for item in all_actions]
-                    param = action.get('Parameters')
-                    value_break = (param[0]['Position'])
-
-                    if shared_data.event_counter == 1:
-                        self.start_trig_brake = self.VehicleDefines.create_ego_event(value=10)
-                        trigger_created = True
-                    else:
-                        self.start_trig_brake = self.VehicleDefines.create_storyboard_element_state_condition_trigger(element_name=f"SimOneDriver:event{shared_data.event_counter - 1}",delay=0)
-                        trigger_created = True
-
-                    if trigger_created:
-                        self.last_processed_index = i + 1
-                        break  # Exit inner loop
-            if trigger_created:
-                break  # Exit outer loop
 
         event_name = f"event{shared_data.event_counter}"
         action_name = f"SimOneDriver:event{shared_data.event_counter}"
 
+        value_break = EBTB_API_data.ego_brake(self.ego_brake_index, self.states_analysis)
+
+        if shared_data.event_counter == 1:
+            self.start_trig_brake = self.VehicleDefines.create_ego_event(value=10)
+
+        else:
+            self.start_trig_brake = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
 
 
         start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
@@ -306,13 +255,12 @@ class Ego_Acts:
         all_ego_events.append(self.VehicleDefines.define_ego_action_event(start_trig=self.start_trig_brake,
                                                                       start_action=start_action,event_name=event_name,action_name=action_name))
         shared_data.event_counter +=1
-    def E_landmark(self,all_ego_events,state_key):
 
+    def E_landmark(self,all_ego_events,state_key):
         event_name = f"event{shared_data.event_counter}"
         action_name = f"SimOneDriver:event{shared_data.event_counter}"
 
         envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=self.paramlist_analysis)
-
 
         landmark_type, landmark_offset = EBTB_API_data.xlmr_mapping_landmark(states_analysis=self.states_analysis,
                                                                              paramlist_analysis=self.paramlist_analysis)
@@ -321,39 +269,14 @@ class Ego_Acts:
             return "Stop"
 
 
-        # lane_mapping = {"Right1":-1,"Right2":-2,"Right3" : -3,"Right4" : -4,"Right5" : -5,"Right6" : -6,
-        #  "Left1" : 1,"Left2" : 2,"Left3":3,"Left4":4,"Left5":5,"Left6":6}
-        # envp_lane_selection1 = lane_mapping.get(envp_lane_selection)
-
-        if envp_lane_selection == "Right1":
-            envp_lane_selection = -1
-        elif envp_lane_selection == "Right2":
-            envp_lane_selection = -2
-        elif envp_lane_selection == "Right3":
-            envp_lane_selection = -3
-        elif envp_lane_selection == "Right4":
-            envp_lane_selection = -4
-        elif envp_lane_selection == "Right5":
-            envp_lane_selection = -5
-        elif envp_lane_selection == "Right6":
-            envp_lane_selection = -6
-        elif envp_lane_selection == "Left1":
-            envp_lane_selection = 1
-        elif envp_lane_selection == "Left2":
-            envp_lane_selection = 2
-        elif envp_lane_selection == "Left3":
-            envp_lane_selection = 3
-        elif envp_lane_selection == "Left4":
-            envp_lane_selection = 4
-        elif envp_lane_selection == "Left5":
-            envp_lane_selection = 5
-        elif envp_lane_selection == "Left6":
-            envp_lane_selection = 6
+        lane_mapping = {"Right1":-1,"Right2":-2,"Right3" : -3,"Right4" : -4,"Right5" : -5,"Right6" : -6,
+         "Left1" : 1,"Left2" : 2,"Left3":3,"Left4":4,"Left5":5,"Left6":6}
+        envp_lane_selection1 = lane_mapping.get(envp_lane_selection)
 
         if shared_data.event_counter == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
-            start_trig = self.VehicleDefines.create_reach_position_condition_trigger(landmark_type, envp_lane_selection,
+            start_trig = self.VehicleDefines.create_reach_position_condition_trigger(landmark_type, envp_lane_selection1,
                                                                                      landmark_offset)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_Landmark")
         all_ego_events.append(
@@ -361,8 +284,6 @@ class Ego_Acts:
                                                         event_name=event_name, action_name=action_name))
         shared_data.event_counter += 1
 
-        # except:
-        #     print("error")
 
 
     def ego_Dri_SetLateralDisplacement(self, all_ego_events,state_key):
@@ -399,9 +320,6 @@ class Ego_Acts:
 
         self.last_processed_key7 = None
         self.last_processed_action_index7 = -1
-
-
-
 
 
 
@@ -451,6 +369,7 @@ class Ego_Acts:
 
                     except:
                         ego_lane = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=self.paramlist_analysis)
+
                         ego = self.VehicleControls.split_string(ego_lane)
                         if ego[0] == "Right":
                             lane_split_ego = self.VehicleControls.right_position(ego[1])
@@ -477,44 +396,45 @@ class Ego_Acts:
         self.last_processed_action_index = -1
 
 
-    def ego_E_ObjectDistanceLaneBased(self, all_ego_events,state_key):
 
-        event_name = f"event{shared_data.event_counter}"
-        action_name = f"SimOneDriver:event{shared_data.event_counter}"
-
-        keys = list(self.states_analysis.keys())
-        start_key_index = keys.index(self.last_processed_key1) + 1 if self.last_processed_key1 else 0
-
-        for key in keys[start_key_index:]:
-            ego_actions = self.states_analysis[key].get('EgoActions', [])
-
-            # Loop through `ego_actions`, starting from the next unprocessed action index
-            start_action_index = self.last_processed_action_index1 + 1 if self.last_processed_key1 == key else 0
-            for i in range(start_action_index, len(ego_actions)):
-                action = ego_actions[i]
-                if action.get('Action') == "E_ObjectDistanceLaneBased":
-                    parameters = action.get('Parameters',[])
-                    distance_value = parameters[0].get("Distance")
-                    relational_operator = parameters[0].get("RelationalOperator")
-                    reference_object = parameters[0].get("ReferenceObject")
-                    object_id = parameters[0].get("ObjectID")
-
-                    if shared_data.event_counter == 1:
-                        start_trig = self.VehicleDefines.create_ego_event(value=10)
-                    else:
-                        start_trig = self.VehicleDefines.create_relative_distance_condition_trigger(
-                        distance_value, relational_operator, reference_object, object_id)
-
-                    start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_ObjectDistanceLaneBased")
-
-                    all_ego_events.append(
-                        self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,event_name=event_name,action_name=action_name))
-                    shared_data.event_counter += 1
-                    self.last_processed_key1 = key
-                    self.last_processed_action_index1 = i
-                    return
-        self.last_processed_key1 = None
-        self.last_processed_action_index1 = -1
+    # def ego_E_ObjectDistanceLaneBased(self, all_ego_events,state_key):
+    #
+    #     event_name = f"event{shared_data.event_counter}"
+    #     action_name = f"SimOneDriver:event{shared_data.event_counter}"
+    #
+    #     keys = list(self.states_analysis.keys())
+    #     start_key_index = keys.index(self.last_processed_key1) + 1 if self.last_processed_key1 else 0
+    #
+    #     for key in keys[start_key_index:]:
+    #         ego_actions = self.states_analysis[key].get('EgoActions', [])
+    #
+    #         # Loop through `ego_actions`, starting from the next unprocessed action index
+    #         start_action_index = self.last_processed_action_index1 + 1 if self.last_processed_key1 == key else 0
+    #         for i in range(start_action_index, len(ego_actions)):
+    #             action = ego_actions[i]
+    #             if action.get('Action') == "E_ObjectDistanceLaneBased":
+    #                 parameters = action.get('Parameters',[])
+    #                 distance_value = parameters[0].get("Distance")
+    #                 relational_operator = parameters[0].get("RelationalOperator")
+    #                 reference_object = parameters[0].get("ReferenceObject")
+    #                 object_id = parameters[0].get("ObjectID")
+    #
+    #                 if shared_data.event_counter == 1:
+    #                     start_trig = self.VehicleDefines.create_ego_event(value=10)
+    #                 else:
+    #                     start_trig = self.VehicleDefines.create_relative_distance_condition_trigger(
+    #                     distance_value, relational_operator, reference_object, object_id)
+    #
+    #                 start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_ObjectDistanceLaneBased")
+    #
+    #                 all_ego_events.append(
+    #                     self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,event_name=event_name,action_name=action_name))
+    #                 shared_data.event_counter += 1
+    #                 self.last_processed_key1 = key
+    #                 self.last_processed_action_index1 = i
+    #                 return
+    #     self.last_processed_key1 = None
+    #     self.last_processed_action_index1 = -1
 
 
     def ego_E_ObjectCollision(self, all_ego_events,state_key):
@@ -556,12 +476,7 @@ class Ego_Acts:
         event_name = f"event{shared_data.event_counter}"
         action_name = f"SimOneDriver:event{shared_data.event_counter}"
 
-        for key, value in self.states_analysis.items():
-            ego_actions = value.get('EgoActions', [])
-            for action in ego_actions:
-                if action.get('Action', []) == "Dri_SwitchGear":
-                    parameters = action.get('Parameters', [])
-                    gear_value = parameters[0]["Position"]
+        gear_value = EBTB_API_data.ego_switchgear(self.ego_gear_index,self.states_analysis)
 
         if shared_data.event_counter == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
@@ -581,8 +496,8 @@ class Ego_Acts:
                                                                                  steeringwheel=0, gear=0)
         elif gear_value == "P":
             start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=1,
-                                                                                 steeringwheel=0, gear=0)
+                                                                                 brake=0, clutch=0, parkingbrake=0,
+                                                                                 steeringwheel=0, gear=3)
         all_ego_events.append(self.VehicleDefines.define_ego_action_event(start_trig=start_trig,
                                                                           start_action=start_action,event_name=event_name,action_name=action_name))
         shared_data.event_counter += 1
@@ -1332,35 +1247,34 @@ class Ego_Acts:
                     relational_operator = parameters[0].get("RelationalOperator")
                     reference_object = parameters[0].get("ReferenceObject")
                     object = parameters[0].get("Object")
-                    if shared_data.event_counter == 1:
-                        start_trig = self.VehicleDefines.create_ego_event(value=10)
-                    else:
-                        start_trig = self.VehicleDefines.create_time_headway_condition_trigger(
-                        dist_value, relational_operator, object, reference_object)
 
-                    start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_DistanceTimeBased")
+                    if object == "SysVehicle":
+                        if shared_data.event_counter == 1:
+                            start_trig = self.VehicleDefines.create_ego_event(value=10)
+                        else:
+                            start_trig = self.VehicleDefines.create_time_headway_condition_trigger(
+                            dist_value, relational_operator, object, reference_object)
 
-                    all_ego_events.append(
-                        self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
-                                                                    event_name=event_name, action_name=action_name))
-                    shared_data.event_counter += 1
-                    self.last_processed_key2 = key
-                    self.last_processed_action_index2 = i
-                    return
-        self.last_processed_key2 = None
-        self.last_processed_action_index2 = -1
+                        start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_DistanceTimeBased")
+
+                        all_ego_events.append(
+                            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                                        event_name=event_name, action_name=action_name))
+                        shared_data.event_counter += 1
+                        self.last_processed_key2 = key
+                        self.last_processed_action_index2 = i
+                        return
+
+            self.last_processed_key2 = None
+            self.last_processed_action_index2 = -1
 
 
     def ego_Dri_SetParkingBrake(self, all_ego_events,state_key):
         event_name = f"event{shared_data.event_counter}"
         action_name = f"SimOneDriver:event{shared_data.event_counter}"
 
-        for key, value in self.states_analysis.items():
-            ego_actions = value.get('EgoActions', [])
-            for action in ego_actions:
-                if action.get('Action', []) == "Dri_SetParkingBrake":
-                    parameters = action.get('Parameters', [])
-                    brake_value = parameters[0]["State"]
+
+        brake_value = EBTB_API_data.ego_parkingbrake(self.ego_pb_index,self.states_analysis)
 
         if shared_data.event_counter == 1:
             start_trig_parkingbrake = self.VehicleDefines.create_ego_event(value=10)
@@ -1386,12 +1300,7 @@ class Ego_Acts:
         event_name = f"event{shared_data.event_counter}"
         action_name = f"SimOneDriver:event{shared_data.event_counter}"
 
-        for key, value in self.states_analysis.items():
-            ego_actions = value.get('EgoActions', [])
-            for action in ego_actions:
-                if action.get('Action', []) == "Dri_SetSteeringWheelAngle":
-                    parameters = action.get('Parameters', [])
-                    wheel_angle_value=parameters[0]["Angle"]
+        wheel_angle_value = EBTB_API_data.ego_steeringwheel_angle(self.ego_sw_index,self.states_analysis)
 
         if shared_data.event_counter == 1:
             start_trig_steeringwheel = self.VehicleDefines.create_ego_event(value=10)
@@ -1425,8 +1334,8 @@ class Ego_Acts:
                 if action.get('Action') == "E_TimeToCollision":
                     parameters = action.get('Parameters', [])
                     obj_id = parameters[0].get("ObjectID")
-                    operator = parameters[0].get("Operator")
-                    reference_time = parameters[0].get("ReferenceTime")
+                    operator = parameters[0].get("Operator","equalTo")
+                    reference_time = parameters[0].get("ReferenceTime",0.0)
 
                     if shared_data.event_counter == 1:
                         start_trig = self.VehicleDefines.create_ego_event(value=10)

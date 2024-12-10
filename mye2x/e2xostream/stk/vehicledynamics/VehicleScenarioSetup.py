@@ -596,6 +596,9 @@ class VehicleScenario:
             speed_cond = xosc.SpeedCondition(speed, xosc.Rule.greaterThan)
         if operator == "WithinToleranceForDuration":
             speed_cond = xosc.SpeedCondition(speed, xosc.Rule.equalTo)
+        if operator == "equalTo":
+            speed_cond = xosc.SpeedCondition(speed, xosc.Rule.equalTo)
+
 
         speed_trig = xosc.EntityTrigger(
             "speed_trigger",
@@ -697,6 +700,8 @@ class VehicleScenario:
             time_to_collision_cond = xosc.TimeToCollisionCondition(time, xosc.Rule.lessThan, entity=target_entity)
         elif rule == "Greater":
             time_to_collision_cond = xosc.TimeToCollisionCondition(time, xosc.Rule.greaterThan, entity=target_entity)
+        elif rule == "equalTo":
+            time_to_collision_cond = xosc.TimeToCollisionCondition(time, xosc.Rule.equalTo, entity=target_entity)
 
         time_to_collision_trig = xosc.EntityTrigger(
             "time_to_collision_trigger",

@@ -531,6 +531,7 @@ button.custom-button {
             partially_converted_count += 1
         else:
             completely_converted_count += 1
+    total_converted_count = partially_converted_count + completely_converted_count
 
     for index, (xosc_file, data) in enumerate(grouped_data.items(), start=1):
 
@@ -543,7 +544,6 @@ button.custom-button {
             error_set = data["Details"]
             details = list(error_set)[0]
             details = (f"Error - {details}")
-
             xosc_file = " -------------------------- "
         else:
             details = "All functions mapped for this EBTB"
@@ -597,6 +597,7 @@ button.custom-button {
             <h2><left> <u>Completely Converted:</strong> {completely_converted_count}</u></left> </h2>
             <h2><left> <u>Partially Converted:</strong> {partially_converted_count}</u></left> </h2>
             <h2><left> <u>Not Converted:</strong> {not_converted_count}</u></left> </h2>
+            <h2><left> <u>Total Converted:</strong> {total_converted_count}</u></left> </h2>
 
 
             <h3><left> <a href = "{EBTB_paths}"> EBTB Folder </a></left> </h3>

@@ -170,7 +170,7 @@ def copy_xodr_share_to_local(sharepath, local_path):
 
     # Traverse the directory structure
     for dir1, subdir, files in os.walk(sharepath):
-        if os.path.basename(dir1) == "xodrmaps":
+        if os.path.basename(dir1) == "XODR":
             for name in files:
                 if re.match(pattern, name):  # Match XODR files
                     files_list.append(name)
@@ -194,7 +194,7 @@ def copy_xlmr_share_to_local(sharepath1, local_path):
 
     # Traverse the directory structure
     for dir1, subdir, files in os.walk(sharepath1):
-        if os.path.basename(dir1) == "xlmrmaps":
+        if os.path.basename(dir1) == "XLMR":
 
             for name in files:
                 if re.match(pattern, name):  # Match XODR files
@@ -232,8 +232,8 @@ username = getpass.getuser()
 print(f"Username: {username}")
 
 # Define shared paths
-sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\5_Training_Material\Pangu_Automation_Tools\EBTB_XOSC_Tool_Conv\xodrmaps"
-sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\5_Training_Material\Pangu_Automation_Tools\EBTB_XOSC_Tool_Conv\xlmrmaps"
+sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
+sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
 
 # Check access to the shared path
@@ -257,16 +257,17 @@ if __name__ == "__main__":
     """
     try:
 
-        sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\5_Training_Material\Pangu_Automation_Tools\EBTB_XOSC_Tool_Conv\xodrmaps"
-        sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\5_Training_Material\Pangu_Automation_Tools\EBTB_XOSC_Tool_Conv\xlmrmaps"
+        sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
+        sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
         # logger.info("Script execution started.")
         try:
 
             xml_file_path, function, report_path, esmini_path = args_data()
 
-            sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\5_Training_Material\Pangu_Automation_Tools\EBTB_XOSC_Tool_Conv\xodrmaps"
-            sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\5_Training_Material\Pangu_Automation_Tools\EBTB_XOSC_Tool_Conv\xlmrmaps"
+            sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
+            sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
+
 
             #Check access for both shared paths
             if not check_shared_path_access(sharepath):
@@ -276,10 +277,10 @@ if __name__ == "__main__":
                 sys.exit(1)  # Exit if access to the second path is denied
 
             local_path = Path(os.path.join(ebtb, "report", "xlmrmaps"))
-            #copy_xlmr_share_to_local(sharepath1, local_path)
+            copy_xlmr_share_to_local(sharepath1, local_path)
 
             local_path = Path(os.path.join(ebtb, "report", "xodrmaps"))
-            #copy_xodr_share_to_local(sharepath, local_path)
+            copy_xodr_share_to_local(sharepath, local_path)
 
         except Exception as e:
             logger.error(f"An unexpected error occurred: {str(e)}")
@@ -324,7 +325,8 @@ if __name__ == "__main__":
                 if EgoScnearioActs.flag == 1:
                     os.remove(E2XOStream.new_file_path)
                     EgoScnearioActs.flag = 0
-                    logger.error(f"mismatch due to XLMR - {E2XOStream.new_file_path}")
+                    logger.error(f"Check in API {EgoScnearioActs.error_name}- {E2XOStream.new_file_path}")
+                    EgoScnearioActs.error_name = None
 
                 logger.info(f"Processed file in exception handler - {xml_file}")
                 time.sleep(1)
