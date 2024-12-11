@@ -32,8 +32,6 @@ class Ego_Acts:
         self.paramlist_analysis = paramlist_analysis
         self.last_processed_key = None  # Track the last key processed
         self.last_processed_action_index = -1
-        # self.last_processed_key1 = None
-        # self.last_processed_action_index1 = -1
         self.last_processed_key2 = None
         self.last_processed_action_index2 = -1
         self.last_processed_key3 = None
@@ -46,8 +44,6 @@ class Ego_Acts:
         self.last_processed_action_index6 = -1
         self.last_processed_key7 = None
         self.last_processed_action_index7 = -1
-        self.states_analysis = states_analysis
-        self.paramlist_analysis = paramlist_analysis
         self.state_events = state_events
         self.param_events = param_events
         self.esmini_path = esmini_path
@@ -71,6 +67,8 @@ class Ego_Acts:
         self.ego_throttle_index = {}
         self.ego_pb_index = {}
         self.ego_sw_index = {}
+        self.ego_lateralref_index = {}
+        self.ego_lateraldisp_index = {}
 
 
 
@@ -288,112 +286,77 @@ class Ego_Acts:
 
     def ego_Dri_SetLateralDisplacement(self, all_ego_events,state_key):
 
-        keys = list(self.states_analysis.keys())
-        start_key_index = keys.index(self.last_processed_key7) + 1 if self.last_processed_key7 else 0
+        event_name = f"event{shared_data.event_counter}"
+        action_name = f"SimOneDriver:event{shared_data.event_counter}"
+        dispvalue = EBTB_API_data.ego_set_lateral_disp(self.ego_lateraldisp_index,self.states_analysis)
 
-        for key in keys[start_key_index:]:
-            ego_actions = self.states_analysis[key].get('EgoActions', [])
-            start_action_index = self.last_processed_action_index7 + 1 if self.last_processed_key7 == key else 0
-            for i in range(start_action_index, len(ego_actions)):
-                action = ego_actions[i]
-                if action.get('Action') == "Dri_SetLateralDisplacement":
-                    parameters = action.get('Parameters', [])
-                    dispvalue = parameters[0]["TargetDisplacement"]
+        if shared_data.event_counter == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
 
-                    event_name = f"event{shared_data.event_counter}"
-                    action_name = f"SimOneDriver:event{shared_data.event_counter}"
+        start_action = self.VehicleDefines.create_lateral_distance_action(value=dispvalue)
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
 
-                    if shared_data.event_counter == 1:
-                        start_trig = self.VehicleDefines.create_ego_event(value=10)
-                    else:
-                        start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                        element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
-                    start_action = self.VehicleDefines.create_lateral_distance_action(value=dispvalue)
-                    all_ego_events.append(
-                        self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
-                                                                    event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
 
-                    shared_data.event_counter += 1
-                    self.last_processed_key7 = key  # Update last processed key
-                    self.last_processed_action_index7 = i  # Update last processed action index
-                    return  # Exit after processing one action
-
-        self.last_processed_key7 = None
-        self.last_processed_action_index7 = -1
 
 
 
     def ego_Dri_SetLateralReference(self, all_ego_events,state_key):
 
-        keys = list(self.states_analysis.keys())
-        start_key_index = keys.index(self.last_processed_key6) + 1 if self.last_processed_key6 else 0
+        event_name = f"event{shared_data.event_counter}"
+        action_name = f"SimOneDriver:event{shared_data.event_counter}"
 
-        for key in keys[start_key_index:]:
-            ego_actions = self.states_analysis[key].get('EgoActions', [])
+        lane_value_str = EBTB_API_data.ego_set_lateral_ref(self.ego_lateralref_index,self.states_analysis)
 
-            # Loop through `ego_actions`, starting from the next unprocessed action index
-            start_action_index = self.last_processed_action_index6 + 1 if self.last_processed_key6 == key else 0
-            for i in range(start_action_index, len(ego_actions)):
-                action = ego_actions[i]
-                if action.get('Action') == "Dri_SetLateralReference":
-                    parameters = action.get('Parameters', [])
-                    lane_value_str = parameters[0]["LaneSelection"]
+        try:
+            lane = self.VehicleControls.split_string(lane_value_str)
+            if lane[0] == "Right":
+                lane_value = self.VehicleControls.right_position(lane[1])
+            elif lane[0] == "Left":
+                lane_value = self.VehicleControls.left_position(lane[1])
 
-                    event_name = f"event{shared_data.event_counter}"
-                    action_name = f"SimOneDriver:event{shared_data.event_counter}"
+            if shared_data.event_counter == 1:
+                start_trig = self.VehicleDefines.create_ego_event(value=10)
+            else:
+                start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                    element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
 
-                    try:
-                        lane = self.VehicleControls.split_string(lane_value_str)
-                        if lane[0] == "Right":
-                            lane_value = self.VehicleControls.right_position(lane[1])
-                        elif lane[0] == "Left":
-                            lane_value = self.VehicleControls.left_position(lane[1])
+            start_action = self.VehicleDefines.create_lateral_reference_action(lane=lane_value)
+            all_ego_events.append(self.VehicleDefines.define_ego_action_event(start_trig=start_trig,
+                                                                              start_action=start_action,
+                                                                              event_name=event_name,
+                                                                              action_name=action_name))
 
-                        if shared_data.event_counter == 1:
-                            start_trig = self.VehicleDefines.create_ego_event(value=10)
-                        else:
-                            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                            element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
-
-                        start_action = self.VehicleDefines.create_lateral_reference_action(lane=lane_value)
-                        all_ego_events.append(self.VehicleDefines.define_ego_action_event(start_trig=start_trig,
-                                                                                          start_action=start_action,
-                                                                                          event_name=event_name,
-                                                                                          action_name=action_name))
-
-                        shared_data.event_counter += 1
-                        self.last_processed_key = key  # Update last processed key
-                        self.last_processed_action_index = i  # Update last processed action index
-                        return  # Exit after processing one action
+            shared_data.event_counter += 1
 
 
-                    except:
-                        ego_lane = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=self.paramlist_analysis)
+        except:
+            ego_lane = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=self.paramlist_analysis)
 
-                        ego = self.VehicleControls.split_string(ego_lane)
-                        if ego[0] == "Right":
-                            lane_split_ego = self.VehicleControls.right_position(ego[1])
-                        elif ego[0] == "Left":
-                            lane_split_ego = self.VehicleControls.left_position(ego[1])
+            ego = self.VehicleControls.split_string(ego_lane)
+            if ego[0] == "Right":
+                lane_split_ego = self.VehicleControls.right_position(ego[1])
+            elif ego[0] == "Left":
+                lane_split_ego = self.VehicleControls.left_position(ego[1])
 
-                        lane_value = self.VehicleDefines.lane_set_lateral_ref(ego_lane, lane_value_str, lane_split_ego)
+            lane_value = self.VehicleDefines.lane_set_lateral_ref(ego_lane, lane_value_str, lane_split_ego)
 
-                        if shared_data.event_counter == 1:
-                            start_trig = self.VehicleDefines.create_ego_event(value=10)
-                        else:
-                            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                                            element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
-                        start_action = self.VehicleDefines.create_lateral_reference_action(lane=lane_value)
-                        all_ego_events.append(self.VehicleDefines.define_ego_action_event(start_trig=start_trig,
-                                                                            start_action=start_action,
-                                                                            event_name=event_name, action_name=action_name))
-                        shared_data.event_counter += 1
-                        self.last_processed_key6 = key
-                        self.last_processed_action_index6 = i
-                        return
-
-        self.last_processed_key = None
-        self.last_processed_action_index = -1
+            if shared_data.event_counter == 1:
+                start_trig = self.VehicleDefines.create_ego_event(value=10)
+            else:
+                start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                    element_name=f"SimOneDriver:event{shared_data.event_counter - 1}", delay=0)
+            start_action = self.VehicleDefines.create_lateral_reference_action(lane=lane_value)
+            all_ego_events.append(self.VehicleDefines.define_ego_action_event(start_trig=start_trig,
+                                                                              start_action=start_action,
+                                                                              event_name=event_name,
+                                                                              action_name=action_name))
+            shared_data.event_counter += 1
 
 
 
