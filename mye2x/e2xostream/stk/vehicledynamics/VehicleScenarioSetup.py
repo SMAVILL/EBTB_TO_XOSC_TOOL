@@ -1113,50 +1113,39 @@ class VehicleScenario:
         return condition_trigger
 
     def lane_set_lateral_ref(self,ego_lane,lane_value_str,lane_split_ego):
+        lane_mapping_right = {
+            "Right1": -2,
+            "Right2": -3,
+            "Right3": -4,
+            "Right4": -5,
+            "Right5": -6,
+            "Left2": 1,
+            "Left3": 2,
+            "Left4": 3,
+            "Left5": 4,
+            "Left6": 5
+        }
+
+        # Assuming lane_value_str is always "Right" in this logic
         if lane_value_str == "Right":
-            if ego_lane == "Right1":
-                lane_value = -2
-            if ego_lane == "Right2":
-                lane_value = -3
-            if ego_lane == "Right3":
-                lane_value = -4
-            if ego_lane == "Right4":
-                lane_value = -5
-            if ego_lane == "Right5":
-                lane_value = -6
-            if ego_lane == "Left2":
-                lane_value = 1
-            if ego_lane == "Left3":
-                lane_value = 2
-            if ego_lane == "Left4":
-                lane_value = 3
-            if ego_lane == "Left5":
-                lane_value = 4
-            if ego_lane == "Left6":
-                lane_value = 5
+            lane_value = lane_mapping_right.get(ego_lane, None)
 
+        lane_mapping_left = {
+            "Right2": -1,
+            "Right3": -2,
+            "Right4": -3,
+            "Right5": -4,
+            "Right6": -5,
+            "Left1": 2,
+            "Left2": 3,
+            "Left3": 4,
+            "Left4": 5,
+            "Left5": 6
+        }
 
+        # Assuming lane_value_str is "Left"
         if lane_value_str == "Left":
-            if ego_lane == "Right2":
-                lane_value = -1
-            if ego_lane == "Right3":
-                lane_value = -2
-            if ego_lane == "Right4":
-                lane_value = -3
-            if ego_lane == "Right5":
-                lane_value = -4
-            if ego_lane == "Right6":
-                lane_value = -5
-            if ego_lane == "Left1":
-                lane_value = 2
-            if ego_lane == "Left2":
-                lane_value = 3
-            if ego_lane == "Left3":
-                lane_value = 4
-            if ego_lane == "Left4":
-                lane_value = 5
-            if ego_lane == "Left5":
-                lane_value = 6
+            lane_value = lane_mapping_left.get(ego_lane, None)
 
 
         if lane_value_str == "Remain":

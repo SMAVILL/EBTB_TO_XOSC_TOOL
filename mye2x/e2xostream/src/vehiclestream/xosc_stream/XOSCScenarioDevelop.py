@@ -175,6 +175,8 @@ class FuncScenario(ScenarioGenerator):
                 self.base_scenario.Target_initialize(step_time=self.step_time, init=self.init, target_name=i,
                                                      states_analysis=self.states_analysis,paramlist_analysis=self.paramlist_analysis)
 
+
+
     def EgoManeuverGroup(self):
         # Ego Maneuver group
         ego_mnvgr = self.ego_maneuver_group_with_condition()
