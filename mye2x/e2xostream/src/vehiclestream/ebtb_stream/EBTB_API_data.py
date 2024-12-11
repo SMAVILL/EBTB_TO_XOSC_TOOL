@@ -306,12 +306,13 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                 ds_value_float = None
                 for landmark in root.findall(".//landmark"):
                     if landmark.get('name') == landmark_type:
-                        ds_value = landmark.get('ds')
+                        ds_value = landmark.get('ds',None)
                         ds_value_float = float(ds_value)
+
                 if ds_value_float:
                     return ds_value_float, landmark_offset
                 else:
-                    return None,None
+                    return (None,None)
 
 
 
@@ -627,7 +628,7 @@ def get_landmark_offset_ego(paramlist_analysis):
     for ego_action in ego_actions:
         parameters = ego_action['Parameters']
         for parameter in parameters:
-            envp_landmark_offset = parameter.get(AMC.LandmarkOffset)
+            envp_landmark_offset = parameter.get((AMC.LandmarkOffset),0.0)
     return envp_landmark_offset
 
 def get_lane_selection_ego(paramlist_analysis):
@@ -638,11 +639,13 @@ def get_lane_selection_ego(paramlist_analysis):
 
     """
     ego_actions = paramlist_analysis['Default']['EgoActions']
+    envp_lane_selection = None
     for ego_action in ego_actions:
         parameters = ego_action['Parameters']
         for parameter in parameters:
-            envp_lane_selection = parameter.get(AMC.LaneSelection)
+            envp_lane_selection = parameter.get((AMC.LaneSelection),None)
     return envp_lane_selection
+
 def get_lane_selection_object(states_analysis, target_name):
     extracted_info = {}
     for k, v in states_analysis.items():
@@ -650,7 +653,7 @@ def get_lane_selection_object(states_analysis, target_name):
             for action in actions:
                 if action.get('Action') == ObjAPI.Obj_Initialize:
                     for param in action.get('Parameters', []):
-                        lane_selection = param.get('LaneSelection', 'Not Available')
+                        lane_selection = param.get('LaneSelection', None)
 
                         # Append the object action information
                         obj_key = f'{obj_id}_Obj_Initialize'
@@ -673,7 +676,7 @@ def get_landmark_offset(states_analysis, target_name):
             for action in actions:
                 if action.get('Action') == ObjAPI.Obj_Initialize:
                     for param in action.get('Parameters', []):
-                        landmark_offset= param.get('LandmarkOffset', 'Not Available')
+                        landmark_offset= param.get('LandmarkOffset', 0.0)
 
                         # Append the object action information
                         obj_key = f'{obj_id}_Obj_Initialize'
@@ -687,7 +690,10 @@ def get_landmark_offset(states_analysis, target_name):
     if key_to_access in extracted_info:
          extracted_value = extracted_info[key_to_access]
          landmark_offset =  float(extracted_value[0]['LandmarkOffset'])
-    return landmark_offset
+    if landmark_offset:
+        return landmark_offset
+    else:
+        return 0.0
 
 def get_obj_intialise(states_analysis,target_name):
     extracted_info = {}
@@ -719,20 +725,23 @@ def get_obj_initialise_ver1(states_analysis,target_name):
             for action in actions:
                 if action.get('Action') == ObjAPI.Obj_Initialize:
                     for param in action.get('Parameters', []):
-                        landmark_offset = param.get('LaneOffset', 'Not Available')
+                        lane_offset = param.get('LaneOffset',0)
 
                         # Append the object action information
                         obj_key = f'{obj_id}_Obj_Initialize'
                         if obj_key not in extracted_info:
                             extracted_info[obj_key] = []
                         extracted_info[obj_key].append(
-                            {'LaneOffset': landmark_offset})
+                            {'LaneOffset': lane_offset})
 
     key_to_access = f"{target_name}_Obj_Initialize"
     if key_to_access in extracted_info:
         extracted_value = extracted_info[key_to_access]
         lane_offset = float(extracted_value[0]['LaneOffset'])
-    return lane_offset
+    if lane_offset:
+        return lane_offset
+    else:
+        return None
 
 def get_ego_initialise(paramlist_analysis):
     ego_actions = paramlist_analysis['Default']['EgoActions']
@@ -744,6 +753,7 @@ def get_ego_initialise(paramlist_analysis):
 
 def ego_landmark_start_init(paramlist_analysis):
     global landmark_type
+    ds_value_float = None
 
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
@@ -782,15 +792,19 @@ def ego_landmark_start_init(paramlist_analysis):
                 tree = ET.parse(file_path)  # Replace 'your_file.xml' with your XML file path
                 root = tree.getroot()
 
-                ds_value = None
+                ds_value_float = None
                 for landmark in root.findall(".//landmark"):
                     if landmark.get('name') == landmark_start:
                         ds_value = landmark.get('ds')
                         ds_value_float = float(ds_value)
 
-    return ds_value_float
+    if ds_value_float:
+        return ds_value_float
+    else:
+        return 0.0
 
 def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
+    ds_value_float = 0.0
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -843,10 +857,270 @@ def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
                 tree = ET.parse(file_path)  # Replace 'your_file.xml' with your XML file path
                 root = tree.getroot()
 
-                ds_value = None
+                ds_value_float = None
                 for landmark in root.findall(".//landmark"):
                     if landmark.get('name') == landmark_start:
                         ds_value = landmark.get('ds')
                         ds_value_float = float(ds_value)
+    if ds_value_float:
+        return ds_value_float
+    else:
+        return None
 
-    return ds_value_float
+def ego_brake(ego_brake_index,states_analysis):
+    extracted_info_brake = {}
+
+    # Iterate over the states analysis dictionary
+    for k, v in states_analysis.items():
+        for action in v.get('EgoActions', []):
+            if action.get('Action') == EgoAPI.Dri_SetBrakePedal:
+                for param in action.get('Parameters', []):
+                    value_break = param.get('Position','Not Available')
+
+                    # Append to the list of extracted information for Ego's speed and transition time
+                    if EgoAPI.Dri_SetBrakePedal not in extracted_info_brake:
+                        extracted_info_brake[EgoAPI.Dri_SetBrakePedal] = []
+
+                    extracted_info_brake[EgoAPI.Dri_SetBrakePedal].append(
+                        {'Position': value_break}
+                    )
+
+    # Default values for speed and transition time
+    value_break = 0
+    key = EgoAPI.Dri_SetBrakePedal
+
+    # Initialize last_index_ego for this action if not already initialized
+    if key not in ego_brake_index:
+        ego_brake_index[key] = 0
+
+
+    # If there are actions for Ego's longitudinal speed, access them sequentially
+    if key in extracted_info_brake:
+        actions = extracted_info_brake[key]
+
+        # Ensure that the index does not exceed the length of the actions list
+        if ego_brake_index[key] < len(actions):
+            current_action = actions[ego_brake_index[key]]
+
+            value_break = current_action['Position']
+            if value_break != 'Not Available':
+                try:
+                    value_break = value_break
+                except ValueError:
+                    print(f"Invalid speed value: {value_break}")
+                    value_break = 0
+
+
+            # Increment the index for the next call
+            ego_brake_index[key] += 1
+
+        # Handle the case where all actions are processed
+        else:
+            pass
+    return value_break
+
+def ego_throttle(ego_throttle_index,states_analysis):
+    extracted_info_throttle = {}
+
+    # Iterate over the states analysis dictionary
+    for k, v in states_analysis.items():
+        for action in v.get('EgoActions', []):
+            if action.get('Action') == EgoAPI.Dri_SetAccelerationPedal:
+                for param in action.get('Parameters', []):
+                    value_throttle = param.get('Position','Not Available')
+
+                    # Append to the list of extracted information for Ego's speed and transition time
+                    if EgoAPI.Dri_SetAccelerationPedal not in extracted_info_throttle:
+                        extracted_info_throttle[EgoAPI.Dri_SetAccelerationPedal] = []
+
+                    extracted_info_throttle[EgoAPI.Dri_SetAccelerationPedal].append(
+                        {'Position': value_throttle}
+                    )
+
+    # Default values for speed and transition time
+    value_throttle = 0
+    key = EgoAPI.Dri_SetAccelerationPedal
+
+    # Initialize last_index_ego for this action if not already initialized
+    if key not in ego_throttle_index:
+        ego_throttle_index[key] = 0
+
+
+    # If there are actions for Ego's longitudinal speed, access them sequentially
+    if key in extracted_info_throttle:
+        actions = extracted_info_throttle[key]
+
+        # Ensure that the index does not exceed the length of the actions list
+        if ego_throttle_index[key] < len(actions):
+            current_action = actions[ego_throttle_index[key]]
+
+            value_throttle = current_action['Position']
+            if value_throttle != 'Not Available':
+                try:
+                    value_throttle = value_throttle
+                except ValueError:
+                    print(f"Invalid speed value: {value_throttle}")
+                    value_throttle = 0
+
+
+            # Increment the index for the next call
+            ego_throttle_index[key] += 1
+
+        # Handle the case where all actions are processed
+        else:
+            pass
+    return value_throttle
+
+def ego_switchgear(ego_gear_index,states_analysis):
+    extracted_info_gear = {}
+
+    # Iterate over the states analysis dictionary
+    for k, v in states_analysis.items():
+        for action in v.get('EgoActions', []):
+            if action.get('Action') == EgoAPI.Dri_SwitchGear:
+
+                for param in action.get('Parameters', []):
+                    value_gear = param.get('Position', 'Not Available')
+
+                    # Append to the list of extracted information for Ego's speed and transition time
+                    if EgoAPI.Dri_SwitchGear not in extracted_info_gear:
+                        extracted_info_gear[EgoAPI.Dri_SwitchGear] = []
+
+                    extracted_info_gear[EgoAPI.Dri_SwitchGear].append(
+                        {'Position': value_gear}
+                    )
+
+    # Default values for speed and transition time
+    value_gear = 0
+    key = EgoAPI.Dri_SwitchGear
+
+    # Initialize last_index_ego for this action if not already initialized
+    if key not in ego_gear_index:
+        ego_gear_index[key] = 0
+
+    # If there are actions for Ego's longitudinal speed, access them sequentially
+    if key in extracted_info_gear:
+        actions = extracted_info_gear[key]
+
+        # Ensure that the index does not exceed the length of the actions list
+        if ego_gear_index[key] < len(actions):
+            current_action = actions[ego_gear_index[key]]
+
+            value_gear = current_action['Position']
+            if value_gear != 'Not Available':
+                try:
+                    value_gear = value_gear
+                except ValueError:
+                    print(f"Invalid speed value: {value_gear}")
+                    value_gear = 0
+
+            # Increment the index for the next call
+            ego_gear_index[key] += 1
+
+        # Handle the case where all actions are processed
+        else:
+            pass
+    return value_gear
+
+def ego_parkingbrake(ego_pb_index,states_analysis):
+    extracted_info_pb = {}
+
+    # Iterate over the states analysis dictionary
+    for k, v in states_analysis.items():
+        for action in v.get('EgoActions', []):
+            if action.get('Action') == EgoAPI.Dri_SetParkingBrake:
+
+                for param in action.get('Parameters', []):
+                    value_pb = param.get('State', 'Not Available')
+
+                    # Append to the list of extracted information for Ego's speed and transition time
+                    if EgoAPI.Dri_SetParkingBrake not in extracted_info_pb:
+                        extracted_info_pb[EgoAPI.Dri_SetParkingBrake] = []
+
+                    extracted_info_pb[EgoAPI.Dri_SetParkingBrake].append(
+                        {'State': value_pb}
+                    )
+
+    # Default values for speed and transition time
+    value_pb = 0
+    key = EgoAPI.Dri_SetParkingBrake
+
+    # Initialize last_index_ego for this action if not already initialized
+    if key not in ego_pb_index:
+        ego_pb_index[key] = 0
+
+    # If there are actions for Ego's longitudinal speed, access them sequentially
+    if key in extracted_info_pb:
+        actions = extracted_info_pb[key]
+
+        # Ensure that the index does not exceed the length of the actions list
+        if ego_pb_index[key] < len(actions):
+            current_action = actions[ego_pb_index[key]]
+
+            value_pb = current_action['State']
+            if value_pb != 'Not Available':
+                try:
+                    value_pb = value_pb
+                except ValueError:
+                    print(f"Invalid speed value: {value_pb}")
+                    value_pb = 0
+
+            # Increment the index for the next call
+            ego_pb_index[key] += 1
+
+        # Handle the case where all actions are processed
+        else:
+            pass
+    return value_pb
+
+
+def ego_steeringwheel_angle(ego_sw_index,states_analysis):
+    extracted_info_sw = {}
+
+    # Iterate over the states analysis dictionary
+    for k, v in states_analysis.items():
+        for action in v.get('EgoActions', []):
+            if action.get('Action') == EgoAPI.Dri_SetSteeringWheelAngle:
+
+                for param in action.get('Parameters', []):
+                    value_sw = param.get('Angle', 'Not Available')
+
+                    # Append to the list of extracted information for Ego's speed and transition time
+                    if EgoAPI.Dri_SetSteeringWheelAngle not in extracted_info_sw:
+                        extracted_info_sw[EgoAPI.Dri_SetSteeringWheelAngle] = []
+
+                    extracted_info_sw[EgoAPI.Dri_SetSteeringWheelAngle].append(
+                        {'Angle': value_sw}
+                    )
+
+    # Default values for speed and transition time
+    value_sw = 0
+    key = EgoAPI.Dri_SetSteeringWheelAngle
+
+    # Initialize last_index_ego for this action if not already initialized
+    if key not in ego_sw_index:
+        ego_sw_index[key] = 0
+
+    # If there are actions for Ego's longitudinal speed, access them sequentially
+    if key in extracted_info_sw:
+        actions = extracted_info_sw[key]
+
+        # Ensure that the index does not exceed the length of the actions list
+        if ego_sw_index[key] < len(actions):
+            current_action = actions[ego_sw_index[key]]
+
+            value_sw = current_action['Angle']
+            if value_sw != 'Not Available':
+                try:
+                    value_sw = value_sw
+                except ValueError:
+                    print(f"Invalid speed value: {value_sw}")
+                    value_sw = 0
+
+            # Increment the index for the next call
+            ego_sw_index[key] += 1
+
+        # Handle the case where all actions are processed
+        else:
+            pass
+    return value_sw

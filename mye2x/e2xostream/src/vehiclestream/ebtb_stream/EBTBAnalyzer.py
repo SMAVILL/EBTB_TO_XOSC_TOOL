@@ -90,6 +90,14 @@ def categorize_actions(entry, categories, keywords):
                 object_id = param['value']
                 break
         if object_id is None:
+            # object_id = next((param['value'] for param in entry['parameters'] if param['tag'] == 'ObjectId'),
+            #                  next((param['value'] for param in entry['parameters'] if param['tag'] == 'Object'), None))
+            #
+            # object_id = next(
+            #     (param['value'] for param in entry['parameters']
+            #      if param['tag'] in ['ObjectId', 'Object'] and param['value'] != 'SysVehicle'),
+            #     None
+            # )
             object_id = next((param['value'] for param in entry['parameters'] if param['tag'] == 'ObjectId'), None)
         if object_id:
             categories["objects"][object_id].append(entry)
@@ -195,7 +203,6 @@ def construct_analysis_dict(info):
                 "Parameters": [{param['tag']: param['value'] for param in action['parameters']}]
             } for action in actions]
             element_dict["ObjectActions"][object_id] = object_actions
-
         analysis_dict[element_id] = element_dict
 
     return analysis_dict
@@ -214,8 +221,8 @@ def main(file_path):
 
     """
     keywords = {
-        "ego": ["Dri_", "Sys_", "Ego_", "SysP_", "EnvP_", "TBA_", "E_","Ethernet_"],
-        "objects": ["Obj_", "Object", "ObjP_"]
+        "ego": ["Dri_", "Sys_", "Ego_", "SysP_", "EnvP_", "TBA_","E_SysVehicleVelocity","E_Time","E_DistanceTimeBased","Ethernet_","E_TimeToCollision","E_ObjectCollision","E_Landmark"],
+        "objects": ["Obj_", "Object", "ObjP_","E_ObjectDistanceLaneBased"]
     }
 
     tree = ET.parse(file_path)
@@ -226,6 +233,7 @@ def main(file_path):
 
 
     states_analysis = construct_analysis_dict(states_info)
+    print("states",states_analysis.items())
     paramlist_analysis = construct_analysis_dict(paramlist_info)
 
     return states_analysis, paramlist_analysis, state_events, param_events

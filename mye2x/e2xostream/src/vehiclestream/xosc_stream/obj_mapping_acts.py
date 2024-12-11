@@ -13,6 +13,7 @@ from e2xostream.config.api_constants import (api_methods_constants as ApiMethods
                                              other_api_constants as OtherAPI)
 from e2xostream.src.scenario_generator import basescenario as BS
 from e2xostream.src.acts_algo import ego_acts, obj_acts
+from e2xostream.src.vehiclestream.xosc_stream.ego_mapping_acts import EgoScnearioActs
 from e2xostream.stk.fun_register_dispatch import FunctionRegisterDispatcher
 
 MAIN_PATH = os.path.abspath(os.path.join(__file__, "..", "..", "..", ".."))
@@ -49,6 +50,7 @@ class ObjScnearioActs:
         self.register_dispatch = FunctionRegisterDispatcher()
 
 
+
         # Register the functions
         # dispatcher.register('a', func_a)
         # Dispatch the function
@@ -65,6 +67,7 @@ class ObjScnearioActs:
 
 
     def maneuver_api_mapping(self):
+
         self.register_dispatch.register(ObjAPI.Obj_Initialize,
                                         self.initial_acceleration_acts)
 
@@ -75,6 +78,9 @@ class ObjScnearioActs:
                                         self.obj_changelane)
         self.register_dispatch.register(ObjAPI.Obj_SetLateralDisplacement,
                                         self.obj_setlateraldisplacement)
+        self.register_dispatch.register(OtherAPI.E_ObjectDistanceLaneBased,self.obj_distance_lanebased)
+        # self.register_dispatch.register(OtherAPI.E_DistanceTimeBased,self.obj_E_distancetimebased)
+
 
     def check_api_dispatch_function(self,all_target_events,target_name):
         for statekey, statevalue in self.states_analysis.items():
@@ -116,3 +122,10 @@ class ObjScnearioActs:
 
     def obj_setlongitudinalspeed(self,all_target_events,state_key,target_name):
         self.Obj_algo_acts.obj_set_longitudinal_speed(all_target_events,state_key,target_name)
+
+    def obj_distance_lanebased(self,all_target_events,state_key,target_name):
+        self.Obj_algo_acts.obj_E_ObjectDistanceLaneBased(all_target_events,state_key,target_name)
+
+    def obj_E_distancetimebased(self,all_target_events,state_key,target_name):
+        print("111")
+        self.Obj_algo_acts.obj_E_DistanceTimeBased(all_target_events,state_key,target_name)
