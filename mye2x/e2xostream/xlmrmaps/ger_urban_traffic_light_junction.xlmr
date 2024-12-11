@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_urban_traffic_light_junction" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1693988822</timestamp>
+        <xodrFile>/opt/maps/germany/urban/ger_urban_traffic_light_junction/ger_urban_traffic_light_junction.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/traffic_light_junction/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="3">
+            <road id="3" successor="33" />
+            <road id="33" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="turn_left" startRoadId="3">
+            <road id="3" successor="5" />
+            <road id="5" successor="1" />
+            <road id="1" />
+        </route>
+        <route name="turn_right" startRoadId="3">
+            <road id="3" successor="25" />
+            <road id="25" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="go_straight" startRoadId="3">
+            <road id="3" successor="33" />
+            <road id="33" successor="2" />
+            <road id="2" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="3" ds="9.99756229690569853119e+00"
+            t="-1.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="2" ds="2.13002437703094301469e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="turn_left_start" type="none" roadId="3" ds="9.84516495723840989740e+00"
+            t="-1.00000000000000000000e+00" />
+        <landmark name="turn_left_end" type="none" roadId="1" ds="2.13032632448484235965e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="turn_right_start" type="none" roadId="3" ds="1.06868290987432317252e+01"
+            t="-1.00000000000000000000e+00" />
+        <landmark name="turn_right_end" type="none" roadId="0" ds="1.00085777270686264728e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="go_straight_start" type="none" roadId="3" ds="1.01897229312733372808e+01"
+            t="-1.00000000000000000000e+00" />
+        <landmark name="go_straight_end" type="none" roadId="2" ds="2.13000813417484778256e+02"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

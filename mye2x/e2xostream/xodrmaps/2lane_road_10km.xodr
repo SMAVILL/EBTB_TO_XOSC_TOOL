@@ -1,0 +1,75 @@
+<?xml version="1.0" standalone="yes"?>
+<!-- Original file name: DTR3-TS4870.xodr -->
+<OpenDRIVE>
+    <header revMajor="1" revMinor="4" name="" version="1.00" date="Thu Feb 22 14:59:01 2018" north="0.0000000000000000e+00" south="0.0000000000000000e+00" east="0.0000000000000000e+00" west="0.0000000000000000e+00"></header>
+    <road name="" length="5.0000000000000000e+00" id="9000" junction="-1">
+        <link>
+            <successor elementType="road" elementId="1" contactPoint="start" />
+        </link>
+        <planView>
+            <geometry s="0.0000000000000000e+00" x="-5.0000000000000000e+00" y="1.8750000000000000e+00" hdg="0.0000000000000000e+00" length="5.0000000000000000e+00">
+                <line />
+            </geometry>
+        </planView>
+        <lanes>
+            <laneSection s="0.0000000000000000e+00">
+                <left>
+                    <lane id="1" type="driving" level="false">
+                        <link>
+                            <successor id="2" />
+                        </link>
+                        <width sOffset="0.0000000000000000e+00" a="3.7500000000000000e+00" b="0.0000000000000000e+00" c="0.0000000000000000e+00" d="0.0000000000000000e+00" />
+                    </lane>
+                </left>
+                <center>
+                    <lane id="0" type="driving" level="false">
+                        <roadMark sOffset="0.0000000000000000e+00" type="none" weight="standard" color="white" width="1.0000000000000001e-01" laneChange="none" height="0.0000000000000000e+00"></roadMark>
+                    </lane>
+                </center>
+                <right>
+                    <lane id="-1" type="driving" level="false">
+                        <link>
+                            <successor id="-2" />
+                        </link>
+                        <width sOffset="0.0000000000000000e+00" a="3.7500000000000000e+00" b="0.0000000000000000e+00" c="0.0000000000000000e+00" d="0.0000000000000000e+00" />
+                    </lane>
+                </right>
+            </laneSection>
+        </lanes>
+    </road>
+    <road name="" length="20.0000000000000000e+03" id="1" junction="-1">
+        <link></link>
+        <planView>
+            <geometry s="0.0000000000000000e+00" x="0.0000000000000000e+00" y="1.8750000000000000e+00" hdg="0.0000000000000000e+00" length="20.0000000000000000e+03">
+                <line />
+            </geometry>
+        </planView>
+        <lanes>
+            <laneSection s="0.0000000000000000e+00">
+                <left>
+                    <lane id="1" type="driving" level="false">
+                        <link>
+                            <successor id="2" />
+                        </link>
+                        <width sOffset="0.0000000000000000e+00" a="3.7500000000000000e+00" b="0.0000000000000000e+00" c="0.0000000000000000e+00" d="0.0000000000000000e+00" />
+                        <roadMark sOffset="0.0000000000000000e+00" type="solid" weight="standard" color="white" width="1.1500000000000001e-01" laneChange="none" height="1.9999999552965164e-02"></roadMark>
+                    </lane>
+                </left>
+                <center>
+                    <lane id="0" type="driving" level="false">
+                        <roadMark sOffset="0.0000000000000000e+00" type="broken" weight="standard" color="white" width="1.0000000000000001e-01" laneChange="none" height="1.9999999552965164e-02"></roadMark>
+                    </lane>
+                </center>
+                <right>
+                    <lane id="-1" type="driving" level="false">
+                        <link>
+                            <successor id="-2" />
+                        </link>
+                        <width sOffset="0.0000000000000000e+00" a="3.7500000000000000e+00" b="0.0000000000000000e+00" c="0.0000000000000000e+00" d="0.0000000000000000e+00" />
+                        <roadMark sOffset="0.0000000000000000e+00" type="solid" weight="standard" color="white" width="1.1500000000000001e-01" laneChange="none" height="1.9999999552965164e-02"></roadMark>
+                    </lane>
+                </right>
+            </laneSection>
+        </lanes>
+    </road>
+</OpenDRIVE>
