@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="scene_herrenberg_intersection" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1709726830</timestamp>
+        <xodrFile>/opt/maps/germany/urban/scene_herrenberg_intersection/scene_herrenberg_intersection.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/scene_herrenberg_intersection/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="8">
+            <road id="8" successor="788" />
+            <road id="788" successor="6" />
+            <road id="6" successor="68" />
+            <road id="68" successor="22" />
+            <road id="22" successor="559" />
+            <road id="559" successor="23" />
+            <road id="23" successor="45" />
+            <road id="45" successor="7" />
+            <road id="7" successor="434" />
+            <road id="434" successor="20" />
+            <road id="20" successor="913" />
+            <road id="913" successor="19" />
+            <road id="19" successor="15" />
+            <road id="15" successor="36" />
+            <road id="36" successor="406" />
+            <road id="406" successor="34" />
+            <road id="34" successor="769" />
+            <road id="769" successor="65" />
+            <road id="65" successor="35" />
+            <road id="35" successor="33" />
+            <road id="33" successor="131" />
+            <road id="131" successor="17" />
+            <road id="17" successor="674" />
+            <road id="674" successor="32" />
+            <road id="32" successor="188" />
+            <road id="188" successor="57" />
+            <road id="57" successor="2" />
+            <road id="2" successor="70" />
+            <road id="70" successor="894" />
+            <road id="894" successor="8" />
+            <road id="8" />
+        </route>
+        <route name="basic_loop" startRoadId="8">
+            <road id="8" successor="788" />
+            <road id="788" successor="6" />
+            <road id="6" successor="68" />
+            <road id="68" successor="22" />
+            <road id="22" successor="559" />
+            <road id="559" successor="23" />
+            <road id="23" successor="45" />
+            <road id="45" successor="7" />
+            <road id="7" successor="434" />
+            <road id="434" successor="20" />
+            <road id="20" successor="913" />
+            <road id="913" successor="19" />
+            <road id="19" successor="15" />
+            <road id="15" successor="36" />
+            <road id="36" successor="406" />
+            <road id="406" successor="34" />
+            <road id="34" successor="769" />
+            <road id="769" successor="65" />
+            <road id="65" successor="35" />
+            <road id="35" successor="33" />
+            <road id="33" successor="131" />
+            <road id="131" successor="17" />
+            <road id="17" successor="674" />
+            <road id="674" successor="32" />
+            <road id="32" successor="188" />
+            <road id="188" successor="57" />
+            <road id="57" successor="2" />
+            <road id="2" successor="70" />
+            <road id="70" successor="894" />
+            <road id="894" successor="8" />
+            <road id="8" />
+        </route>
+        <route name="intersection_crossing" startRoadId="50">
+            <road id="50" successor="327" />
+            <road id="327" successor="29" />
+            <road id="29" successor="478" />
+            <road id="478" successor="30" />
+            <road id="30" successor="217" />
+            <road id="217" successor="31" />
+            <road id="31" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="8" ds="1.19128087993483845253e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="8" ds="1.13972444253013563298e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="basic_loop_start" type="none" roadId="8" ds="1.19128087993483845253e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="basic_loop_end" type="none" roadId="8" ds="1.13972444253013563298e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="intersection_crossing_start" type="none" roadId="50"
+            ds="2.66143520756600260313e+01" t="0.00000000000000000000e+00" />
+        <landmark name="intersection_crossing_end" type="none" roadId="31"
+            ds="7.13256249826426511618e+01" t="3.50000000000000000000e+00" />
+        <landmark name="intersection_traffic_light" type="milestone" roadId="50"
+            ds="4.91694034292344872572e-01" t="2.31294364159099519185e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

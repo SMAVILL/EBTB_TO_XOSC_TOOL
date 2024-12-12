@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_4lanes_missing_markings" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_v1.2.0.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1689324812</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_4lanes_missing_markings/ger_hw_4lanes_missing_markings.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_4lanes_missing_markings/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="1">
+            <road id="1" successor="0" />
+            <road id="0" successor="2" />
+            <road id="2" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="AllMarkingsToNoCenterMarkings" startRoadId="1">
+            <road id="1" successor="0" />
+            <road id="0" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="AllMarkingsToNoMarkings" startRoadId="2">
+            <road id="2" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="No_lanemark" startRoadId="3">
+            <road id="3" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="1" ds="5.06938657933915237663e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="3" ds="9.95003597268103021634e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="AllMarkingsToNoCenterMarkings_start" type="none" roadId="1"
+            ds="5.05466060596745592193e+00" t="0.00000000000000000000e+00" />
+        <landmark name="AllMarkingsToNoCenterMarkings_end" type="none" roadId="2"
+            ds="7.50000000000000000000e+02" t="0.00000000000000000000e+00" />
+        <landmark name="AllMarkingsToNoMarkings_start" type="none" roadId="2"
+            ds="5.14910315505747462339e+00" t="0.00000000000000000000e+00" />
+        <landmark name="AllMarkingsToNoMarkings_end" type="none" roadId="3"
+            ds="9.95008157594089880149e+02" t="0.00000000000000000000e+00" />
+        <landmark name="No_lanemark_start" type="none" roadId="3" ds="6.34463166291880042991e-01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="No_lanemark_end" type="none" roadId="3" ds="9.76111420971474217367e+02"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

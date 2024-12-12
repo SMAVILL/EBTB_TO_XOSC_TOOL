@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="bsm_testtrack" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>jtschea</author>
+        <timestamp>1597657565</timestamp>
+        <xodrFile>/opt/maps/germany/highway/bsm_testtrack/bsm_testtrack.xodr</xodrFile>
+    </header>
+    <routes>
+        <route name="Route" startRoadId="2">
+            <road id="2" successor="1" />
+            <road id="1" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="Route_start" type="none" roadId="2" ds="1.08737768992421115399e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="Route_end" type="none" roadId="1" ds="5.04271834559849366997e+02"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

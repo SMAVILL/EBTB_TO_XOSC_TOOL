@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_6lanes_side_variations" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1698064994</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_6lanes_side_variations/ger_hw_6lanes_side_variations_v2.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_6lanes_side_variations_v2/levels/main/main.usd</map3DAssetURL>
+        <!-- <map3DAssetPayloads></map3DAssetPayloads> -->
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="WestToEast" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="side_variation_guardrail" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="side_variation_fence" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="side_variation_bushes" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.01084407626474330755e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="2.99008343946538025193e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="WestToEast_start" type="none" roadId="0" ds="1.00594835037984466908e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="WestToEast_end" type="none" roadId="0" ds="2.99008967671076652550e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="side_variation_guardrail_start" type="none" roadId="0"
+            ds="1.02472332305926556728e+01" t="0.00000000000000000000e+00" />
+        <landmark name="side_variation_guardrail_end" type="none" roadId="0"
+            ds="9.89994257433600523655e+02" t="0.00000000000000000000e+00" />
+        <landmark name="side_variation_fence_start" type="none" roadId="0"
+            ds="1.01010833337832445977e+03" t="0.00000000000000000000e+00" />
+        <landmark name="side_variation_fence_end" type="none" roadId="0"
+            ds="1.98996296209634647312e+03" t="0.00000000000000000000e+00" />
+        <landmark name="side_variation_bushes_start" type="none" roadId="0"
+            ds="2.01006234942902165130e+03" t="0.00000000000000000000e+00" />
+        <landmark name="side_variation_bushes_end" type="none" roadId="0"
+            ds="2.99002506651983821939e+03" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

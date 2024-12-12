@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_urban_town_entry_exit_signs" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1718083973</timestamp>
+        <xodrFile>/opt/maps/germany/urban/ger_urban_town_entry_exit_signs/ger_urban_town_entry_exit_signs.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_urban_town_entry_exit_signs/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" successor="8" />
+            <road id="8" successor="1" />
+            <road id="1" successor="13" />
+            <road id="13" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="town_entry_route" startRoadId="4">
+            <road id="4" successor="9" />
+            <road id="9" successor="1" />
+            <road id="1" />
+        </route>
+        <route name="town_exit_route" startRoadId="1">
+            <road id="1" successor="15" />
+            <road id="15" successor="3" />
+            <road id="3" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="2.83623792579856477403e+01"
+            t="-5.76665324450666627598e+00" />
+        <landmark name="default_route_end" type="none" roadId="2" ds="3.90347902013876137062e+03"
+            t="-4.98670665323214645781e+00" />
+        <landmark name="town_entry_route_start" type="none" roadId="4"
+            ds="6.22382779477340363883e+02" t="-2.43795717884941343101e+00" />
+        <landmark name="town_entry_route_end" type="none" roadId="1" ds="1.02342326095863100477e+02"
+            t="-5.87168217699743522076e+00" />
+        <landmark name="town_exit_route_start" type="none" roadId="1"
+            ds="2.95437243532535785562e+03" t="-5.81696925989541480106e+00" />
+        <landmark name="town_exit_route_end" type="none" roadId="3" ds="2.05966621412729153917e+02"
+            t="-2.95724583197298729331e+00" />
+        <landmark name="town_exit_sign" type="milestone" roadId="1" ds="3.01284334119046934575e+03"
+            t="-6.46812613581477435787e+00" />
+        <landmark name="town_entry_sign" type="milestone" roadId="0" ds="1.23637145490230795986e+03"
+            t="-6.49021065120764095724e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

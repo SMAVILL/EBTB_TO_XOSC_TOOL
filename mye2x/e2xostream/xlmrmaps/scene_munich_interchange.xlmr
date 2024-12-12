@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="scene_munich_interchange" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1709736120</timestamp>
+        <xodrFile>/opt/maps/germany/highway/scene_munich_interchange/scene_munich_interchange.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/scene_munich_interchange/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="47">
+            <road id="47" successor="192" />
+            <road id="192" successor="8" />
+            <road id="8" successor="50" />
+            <road id="50" successor="37" />
+            <road id="37" successor="142" />
+            <road id="142" successor="4" />
+            <road id="4" successor="170" />
+            <road id="170" successor="19" />
+            <road id="19" />
+        </route>
+        <route name="ramp_off_ramp_on" startRoadId="39">
+            <road id="39" successor="108" />
+            <road id="108" successor="2" />
+            <road id="2" successor="53" />
+            <road id="53" successor="35" />
+            <road id="35" successor="167" />
+            <road id="167" successor="41" />
+            <road id="41" successor="42" />
+            <road id="42" successor="184" />
+            <road id="184" successor="26" />
+            <road id="26" successor="190" />
+            <road id="190" successor="8" />
+            <road id="8" successor="50" />
+            <road id="50" successor="37" />
+            <road id="37" successor="142" />
+            <road id="142" successor="4" />
+            <road id="4" successor="170" />
+            <road id="170" successor="19" />
+            <road id="19" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="47" ds="3.55838857514351218470e+02"
+            t="1.11226496100231009301e+00" />
+        <landmark name="default_route_end" type="none" roadId="19" ds="3.82507765388878510748e+02"
+            t="1.11226496100231009301e+00" />
+        <landmark name="ramp_off_ramp_on_start" type="none" roadId="39"
+            ds="6.02142377258761825942e+02" t="1.35279545785908528188e+00" />
+        <landmark name="ramp_off_ramp_on_end" type="none" roadId="19"
+            ds="3.81678843053639752725e+02" t="1.11226496100231009301e+00" />
+        <landmark name="ramp_off_begin" type="milestone" roadId="108"
+            ds="1.07087515164847957294e+00" t="-2.13162820728030055761e-14" />
+        <landmark name="ramp_off_lane_change" type="milestone" roadId="35"
+            ds="6.28500932539105434671e+01" t="5.00000000000000000000e-01" />
+        <landmark name="ramp_off_slow_down" type="milestone" roadId="167"
+            ds="1.74017142263567303750e+00" t="0.00000000000000000000e+00" />
+        <landmark name="ramp_on_lane_change_1" type="milestone" roadId="42"
+            ds="2.12357180812768895350e+01" t="5.00000000000000000000e-01" />
+        <landmark name="ramp_on_lane_change_2" type="milestone" roadId="8"
+            ds="6.28302500976508468966e+01" t="-6.70624918110951462324e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

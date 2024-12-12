@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_country_curve_1000m_1500m_2000m" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>sjanman</author>
+        <timestamp>1730721154</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_curve_1000m_1500m_2000m/ger_country_curve_1000m_1500m_2000m.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_curve_1000m_1500m_2000m/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="curve_1000m_route" startRoadId="0">
+            <road id="0" successor="2" />
+            <road id="2" successor="8" />
+            <road id="8" successor="7" />
+            <road id="7" successor="10" />
+            <road id="10" successor="1" />
+            <road id="1" successor="5" />
+            <road id="5" />
+        </route>
+        <route name="curve_1500m_route" startRoadId="8">
+            <road id="8" successor="7" />
+            <road id="7" successor="10" />
+            <road id="10" successor="1" />
+            <road id="1" successor="5" />
+            <road id="5" successor="6" />
+            <road id="6" successor="9" />
+            <road id="9" />
+        </route>
+        <route name="curve_2000m_route" startRoadId="5">
+            <road id="5" successor="6" />
+            <road id="6" successor="9" />
+            <road id="9" successor="4" />
+            <road id="4" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="default_route" startRoadId="0">
+            <road id="0" successor="2" />
+            <road id="2" successor="8" />
+            <road id="8" successor="7" />
+            <road id="7" successor="10" />
+            <road id="10" successor="1" />
+            <road id="1" successor="5" />
+            <road id="5" successor="6" />
+            <road id="6" successor="9" />
+            <road id="9" successor="4" />
+            <road id="4" successor="3" />
+            <road id="3" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="curve_1000m_route_start" type="none" roadId="0"
+            ds="1.86915751676926788605e+03" t="0.00000000000000000000e+00" />
+        <landmark name="curve_1000m_route_end" type="none" roadId="5"
+            ds="3.86839264366125306083e+01" t="0.00000000000000000000e+00" />
+        <landmark name="curve_1500m_route_start" type="none" roadId="8"
+            ds="1.49353977109335710338e+03" t="0.00000000000000000000e+00" />
+        <landmark name="curve_1500m_route_end" type="none" roadId="9"
+            ds="3.17845700727043904976e+01" t="0.00000000000000000000e+00" />
+        <landmark name="curve_2000m_route_start" type="none" roadId="5"
+            ds="2.23504980291635729373e+03" t="0.00000000000000000000e+00" />
+        <landmark name="curve_2000m_route_end" type="none" roadId="3"
+            ds="2.76791018782274456100e+01" t="0.00000000000000000000e+00" />
+        <landmark name="startpoint_1000mcurve" type="milestone" roadId="8"
+            ds="1.38061981160006869152e-01" t="0.00000000000000000000e+00" />
+        <landmark name="endpoint_1000mcurve" type="milestone" roadId="8"
+            ds="1.59303709250783185780e+03" t="0.00000000000000000000e+00" />
+        <landmark name="startpoint_1500mcurve" type="milestone" roadId="1"
+            ds="6.42581838608108402155e+00" t="0.00000000000000000000e+00" />
+        <landmark name="endpoint_1500mcurve" type="milestone" roadId="5"
+            ds="2.37544094392860552034e+03" t="0.00000000000000000000e+00" />
+        <landmark name="startpoint_2000mcurve" type="milestone" roadId="9"
+            ds="5.09309956922537776514e-01" t="0.00000000000000000000e+00" />
+        <landmark name="endpoint_2000mcurve" type="milestone" roadId="9"
+            ds="3.42383171361871791305e+03" t="0.00000000000000000000e+00" />
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.85306544612575476094e+03"
+            t="-1.65349390208402824420e+00" />
+        <landmark name="default_route_end" type="none" roadId="3" ds="4.89806415193078521497e+01"
+            t="-2.09443860079776422722e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="combined_regression_map" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1728308224</timestamp>
+        <xodrFile>/opt/maps/germany/highway/combined_regression_map/combined_regression_map.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/dsready_content/mb_content/germany/combined_regression_map/levels/main/main.usd</map3DAssetURL>
+        <!-- <map3DAssetPayloads></map3DAssetPayloads> -->
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="13">
+            <road id="13" successor="2" />
+            <road id="2" successor="19" />
+            <road id="19" successor="5" />
+            <road id="5" successor="25" />
+            <road id="25" successor="6" />
+            <road id="6" successor="9" />
+            <road id="9" />
+        </route>
+        <route name="loop_lower_dashed" startRoadId="13">
+            <road id="13" successor="2" />
+            <road id="2" successor="19" />
+            <road id="19" successor="5" />
+            <road id="5" successor="25" />
+            <road id="25" successor="6" />
+            <road id="6" successor="9" />
+            <road id="9" />
+        </route>
+        <route name="loop_upper_solid" startRoadId="9">
+            <road id="9" successor="0" />
+            <road id="0" successor="13" />
+            <road id="13" />
+        </route>
+        <route name="ramp_off_parking" startRoadId="13">
+            <road id="13" successor="2" />
+            <road id="2" successor="20" />
+            <road id="20" successor="1" />
+            <road id="1" successor="10" />
+            <road id="10" successor="14" />
+            <road id="14" />
+        </route>
+        <route name="parking_ramp_on" startRoadId="14">
+            <road id="14" successor="11" />
+            <road id="11" successor="12" />
+            <road id="12" successor="27" />
+            <road id="27" successor="6" />
+            <road id="6" successor="9" />
+            <road id="9" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="13" ds="1.25631237797617109209e+03" t="-9.22086671780340338955e+00" />
+        <landmark name="default_route_end" type="none" roadId="9" ds="3.75791587430645279255e+02" t="-8.36605365391875466230e+00" />
+        <landmark name="loop_lower_dashed_start" type="none" roadId="13" ds="1.25657440501967039381e+03" t="-8.48286099822161077100e+00" />
+        <landmark name="loop_lower_dashed_end" type="none" roadId="9" ds="3.75188482167857614513e+02" t="-8.77107078677772733499e+00" />
+        <landmark name="loop_upper_solid_start" type="none" roadId="9" ds="1.22237386518643370437e+03" t="-1.42671106986254017102e+01" />
+        <landmark name="loop_upper_solid_end" type="none" roadId="13" ds="4.28515117567240508833e+02" t="-1.41298252997078179760e+01" />
+        <landmark name="ramp_off_parking_start" type="none" roadId="13" ds="1.25645528919222647346e+03" t="-8.70893328762849705527e+00" />
+        <landmark name="ramp_off_parking_end" type="none" roadId="14" ds="1.52153655132183615706e+02" t="-2.39027239015761416852e+00" />
+        <landmark name="parking_ramp_on_start" type="none" roadId="14" ds="7.12480831649455126353e+00" t="-2.39027239015787529297e+00" />
+        <landmark name="parking_ramp_on_end" type="none" roadId="9" ds="3.75141807667713692354e+02" t="-9.92445985679586328843e+00" />
+        <landmark name="ramp_off_beginning" type="milestone" roadId="2" ds="1.14883876853069164525e+01" t="-1.21090510867536487183e+01" />
+        <landmark name="parking_beginning" type="milestone" roadId="14" ds="5.20591957901388013852e-01" t="-2.27159652100535680574e+00" />
+        <landmark name="parking_ending" type="milestone" roadId="14" ds="1.59259243476885046675e+02" t="-2.56514927462378317102e+00" />
+        <landmark name="ramp_on_beginning" type="milestone" roadId="6" ds="4.15386584489681354171e-01" t="-1.50043763414679620638e+01" />
+    </landmarks>
+    <trafficsignanchors />
+    <parkingbays />
+</lmr>

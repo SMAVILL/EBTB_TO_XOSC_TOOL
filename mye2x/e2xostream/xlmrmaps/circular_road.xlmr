@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="circular_road" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1706188501</timestamp>
+        <xodrFile>/opt/maps/germany/highway/circular_road/circular_road.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/circular_road/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="2">
+            <road id="2" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="LeftToRight" startRoadId="2">
+            <road id="2" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="complete_circle" startRoadId="2">
+            <road id="2" successor="0" />
+            <road id="0" successor="1" />
+            <road id="1" successor="3" />
+            <road id="3" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="2" ds="7.24992826319143457425e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="1.39515412195215003521e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="LeftToRight_start" type="none" roadId="2"
+            ds="3.24800592747033576302e+01" t="-1.12121501034538368913e+01" />
+        <landmark name="LeftToRight_end" type="none" roadId="0" ds="1.36139171170713825632e+03"
+            t="-5.20726768042527510261e+00" />
+
+        <landmark name="complete_circle_start" type="none" roadId="2"
+            ds="7.24992826319143457425e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="complete_circle_end" type="none" roadId="3" ds="1.430e+03"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

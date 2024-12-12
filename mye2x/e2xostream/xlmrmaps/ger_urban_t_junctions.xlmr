@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_urban_t_junctions" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1681978997</timestamp>
+        <xodrFile>/opt/maps/germany/urban/ger_urban_t_junctions/ger_urban_t_junctions.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_urban_t_junctions/levels/main/main.usd</map3DAssetURL>
+        <!-- <map3DAssetPayloads></map3DAssetPayloads> -->
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="16">
+            <road id="16" successor="29" />
+            <road id="29" successor="4" />
+            <road id="4" successor="12" />
+            <road id="12" successor="83" />
+            <road id="83" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="t_junction_left_priority" startRoadId="13">
+            <road id="13" successor="92" />
+            <road id="92" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="t_junction_left_yield" startRoadId="16">
+            <road id="16" successor="21" />
+            <road id="21" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="t_junction_right_priority" startRoadId="3">
+            <road id="3" successor="19" />
+            <road id="19" successor="16" />
+            <road id="16" />
+        </route>
+        <route name="t_junction_right_yield" startRoadId="2">
+            <road id="2" successor="87" />
+            <road id="87" successor="12" />
+            <road id="12" successor="4" />
+            <road id="4" />
+        </route>
+        <route name="outer_ring" startRoadId="9">
+            <road id="9" successor="1" />
+            <road id="1" successor="10" />
+            <road id="10" successor="81" />
+            <road id="81" successor="11" />
+            <road id="11" successor="17" />
+            <road id="17" successor="14" />
+            <road id="14" successor="49" />
+            <road id="49" successor="15" />
+            <road id="15" successor="0" />
+            <road id="0" successor="5" />
+            <road id="5" successor="59" />
+            <road id="59" successor="6" />
+            <road id="6" successor="7" />
+            <road id="7" successor="8" />
+            <road id="8" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="16" ds="4.48066568759883125495e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="2" ds="4.29456903073912826585e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_left_priority_start" type="none" roadId="13"
+            ds="2.04632256745270183274e+02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_left_priority_end" type="none" roadId="2"
+            ds="4.28109252654395618265e+02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_left_yield_start" type="none" roadId="16"
+            ds="4.47151400717312583311e+02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_left_yield_end" type="none" roadId="3"
+            ds="1.88466734461160854153e+01" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_right_priority_start" type="none" roadId="3"
+            ds="2.02068268823044832061e+01" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_right_priority_end" type="none" roadId="16"
+            ds="4.47151400717312583311e+02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_right_yield_start" type="none" roadId="2"
+            ds="4.26131938455206636718e+02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_right_yield_end" type="none" roadId="4"
+            ds="2.17137230397074660004e+02" t="0.00000000000000000000e+00" />
+        <landmark name="outer_ring_start" type="none" roadId="9" ds="8.50191751267010431548e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="outer_ring_end" type="none" roadId="8" ds="3.30188095783251696957e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_lower_east" type="milestone" roadId="16"
+            ds="2.69855251783610583516e-02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_lower_north" type="milestone" roadId="4"
+            ds="5.84397519244816976425e-03" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_lower_south" type="milestone" roadId="3"
+            ds="2.32945047577036575603e+02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_upper_west" type="milestone" roadId="2"
+            ds="4.37400739107829394925e-02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_upper_north" type="milestone" roadId="13"
+            ds="2.82574788063811865868e-02" t="0.00000000000000000000e+00" />
+        <landmark name="t_junction_upper_south" type="milestone" roadId="12"
+            ds="2.41494163261417298827e+02" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

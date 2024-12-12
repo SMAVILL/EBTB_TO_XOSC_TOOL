@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_6lanes_with_exit_to_parking_area" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author />
+        <timestamp>1722947942</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_6lanes_with_exit_to_parking_area/ger_hw_6lanes_with_exit_to_parking_area.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_6lanes_with_exit_to_parking_area/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="4">
+            <road id="4" successor="13" />
+            <road id="13" successor="7" />
+            <road id="7" />
+        </route>
+        <route name="reverse_right_to_left_route" startRoadId="7">
+            <road id="7" successor="14" />
+            <road id="14" successor="4" />
+            <road id="4" />
+        </route>
+        <route name="parking_area_route" startRoadId="4">
+            <road id="4" successor="15" />
+            <road id="15" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="event_parking_route" startRoadId="4">
+            <road id="4" successor="15" />
+            <road id="15" successor="0" />
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="4" ds="3.28946838367733063180e+00"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="7" ds="9.87059849302373777391e+02"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="reverse_right_to_left_route_start" type="none" roadId="7"
+            ds="9.79263677875771918480e+02" t="-2.75000000000000000000e+00" />
+        <landmark name="reverse_right_to_left_route_end" type="none" roadId="4"
+            ds="9.28652332721708262397e+00" t="-2.75000000000000000000e+00" />
+        <landmark name="parking_area_route_start" type="none" roadId="4"
+            ds="9.17637524025727657317e+02" t="-2.75000000000000000000e+00" />
+        <landmark name="parking_area_route_end" type="none" roadId="0"
+            ds="1.91501176336326409455e+02" t="0.00000000000000000000e+00" />
+        <landmark name="parking_area_turn_sign" type="milestone" roadId="7"
+            ds="5.03413361585244878427e+00" t="-2.75000000000000000000e+00" />
+        <landmark name="event_parking_route_start" type="none" roadId="4"
+            ds="3.83849951096104064163e+02" t="-2.75000000000000000000e+00" />
+        <landmark name="event_parking_route_end" type="none" roadId="0"
+            ds="2.34054359770091934934e+02" t="0.00000000000000000000e+00" />
+        <landmark name="parking_area_exit" type="milestone" roadId="15"
+            ds="5.09061184570354097190e+00" t="-3.38818863861983032848e+00" />
+        <landmark name="parking_bay" type="milestone" roadId="0" ds="3.68652240144187999249e+01"
+            t="-3.52125030944180750225e+00" />
+    </landmarks>
+    <parkingbays>
+        <parkingbay positionname="ParkingBay" x="4.35129999999999981242e+01"
+            y="-2.38859999999999992326e+01" />
+    </parkingbays>
+</lmr>

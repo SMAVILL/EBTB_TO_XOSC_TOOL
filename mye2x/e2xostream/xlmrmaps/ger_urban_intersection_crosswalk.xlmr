@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_urban_intersection_crosswalk" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author />
+        <timestamp>1721011106</timestamp>
+        <xodrFile>/opt/maps/germany/urban/ger_urban_intersection_crosswalk/ger_urban_intersection_crosswalk.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_urban_intersection_crosswalk/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="SysVehicle_Route" startRoadId="2">
+            <road id="2" successor="21" />
+            <road id="21" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="default_route" startRoadId="2">
+            <road id="2" successor="29" />
+            <road id="29" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="VRU_Route" startRoadId="3">
+            <road id="3" successor="28" />
+            <road id="28" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="crosswalk_south_route" startRoadId="1">
+            <road id="1" successor="36" />
+            <road id="36" successor="0" />
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="SysVehicle_Route_start" type="none" roadId="2"
+            ds="1.19129643655929214674e+02" t="0.00000000000000000000e+00" />
+        <landmark name="SysVehicle_Route_end" type="none" roadId="0" ds="1.58087124286793880401e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="crosswalk_west" type="milestone" roadId="29" ds="1.33544634069560075318e-01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="crosswalk_north" type="milestone" roadId="21"
+            ds="1.91577381777155011378e+01" t="0.00000000000000000000e+00" />
+        <landmark name="crosswalk_east" type="milestone" roadId="3" ds="4.03804716699911026012e-01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="crosswalk_south" type="milestone" roadId="42"
+            ds="1.91572595448831641818e+01" t="0.00000000000000000000e+00" />
+        <landmark name="default_route_start" type="none" roadId="2" ds="6.83505826956987050380e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="3" ds="5.57502944405490268309e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="VRU_Route_start" type="none" roadId="3" ds="3.75785790881974861577e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="VRU_Route_end" type="none" roadId="2" ds="1.54150197628458499821e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="crosswalk_south_route_start" type="none" roadId="1"
+            ds="1.29608737626876262539e+02" t="-3.53777315297572902963e+00" />
+        <landmark name="crosswalk_south_route_end" type="none" roadId="0"
+            ds="7.55347081634784274229e+01" t="-2.25131018825721973542e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

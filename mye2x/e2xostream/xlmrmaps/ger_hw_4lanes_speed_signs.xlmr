@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="germany_hw_4lanes_rq31_10km_straight_solid_markings" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_v1.2.0.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1661878586</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_4lanes_speed_signs/ger_hw_4lanes_speed_signs.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_4lanes_speed_signs/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="WestToEast" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="route_sign_60kmh" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="route_sign_70kmh" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="route_sign_80kmh" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="route_sign_90kmh" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="route_sign_110kmh" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="route_sign_120kmh" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="route_sign_130kmh" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="route_sign_unlimited" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.00142020280673023080e+01" t="-2.75000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="9.99008984575205977308e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="WestToEast_start" type="none" roadId="0" ds="1.01088222227617734461e+01" t="-2.75000000000000000000e+00" />
+        <landmark name="WestToEast_end" type="none" roadId="0" ds="9.98986172582754988980e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_60kmh_start" type="none" roadId="0" ds="0.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_60kmh_end" type="none" roadId="0" ds="1.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_70kmh_start" type="none" roadId="0" ds="1.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_70kmh_end" type="none" roadId="0" ds="2.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_80kmh_start" type="none" roadId="0" ds="2.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_80kmh_end" type="none" roadId="0" ds="3.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_90kmh_start" type="none" roadId="0" ds="3.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_90kmh_end" type="none" roadId="0" ds="4.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_100kmh_start" type="none" roadId="0" ds="4.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_100kmh_end" type="none" roadId="0" ds="5.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_110kmh_start" type="none" roadId="0" ds="5.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_110kmh_end" type="none" roadId="0" ds="6.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_120kmh_start" type="none" roadId="0" ds="6.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_120kmh_end" type="none" roadId="0" ds="7.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_130kmh_start" type="none" roadId="0" ds="7.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_130kmh_end" type="none" roadId="0" ds="8.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_unlimited_start" type="none" roadId="0" ds="8.1e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="route_sign_unlimited_end" type="none" roadId="0" ds="9.9e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="speed_sign_60kmh_fwd" type="milestone" roadId="0" ds="1.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_70kmh_fwd" type="milestone" roadId="0" ds="2.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_80kmh_fwd" type="milestone" roadId="0" ds="3.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_90kmh_fwd" type="milestone" roadId="0" ds="4.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_100kmh_fwd" type="milestone" roadId="0" ds="5.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_110kmh_fwd" type="milestone" roadId="0" ds="6.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_120kmh_fwd" type="milestone" roadId="0" ds="7.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_130kmh_fwd" type="milestone" roadId="0" ds="8.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_unlimited_fwd" type="milestone" roadId="0" ds="9.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_60kmh_bwd" type="milestone" roadId="0" ds="9.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_70kmh_bwd" type="milestone" roadId="0" ds="8.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_80kmh_bwd" type="milestone" roadId="0" ds="7.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_90kmh_bwd" type="milestone" roadId="0" ds="6.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_100kmh_bwd" type="milestone" roadId="0" ds="5.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_110kmh_bwd" type="milestone" roadId="0" ds="4.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_120kmh_bwd" type="milestone" roadId="0" ds="3.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_130kmh_bwd" type="milestone" roadId="0" ds="2.0e+03" t="0.00000000000000000000e+00" />
+        <landmark name="speed_sign_unlimited_bwd" type="milestone" roadId="0" ds="1.0e+03" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ParkCity" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>MWEISKO</author>
+        <timestamp>1558691241</timestamp>
+        <xodrFile>/opt/maps/germany/parking/park_city/park_city.xodr</xodrFile>
+    </header>
+    <routes>
+        <route name="SysPath" startRoadId="60">
+            <road id="60" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="SysPath_start" type="none" roadId="60" ds="7.80766890916225975161e+000" t="0.00000000000000000000e+000" />
+        <landmark name="SysPath_end" type="none" roadId="60" ds="1.48659847572369676527e+003" t="0.00000000000000000000e+000" />
+    </landmarks>
+    <parkingbays>
+        <!-- "Parallel Parking Bay on the Driver Side "Left" "-->
+        <parkingbay positionname="ParkingBay1" x="375" y="33.5" />
+        <!-- "Parallel Parking Bay on the Passenger Side "Right" "-->
+        <parkingbay positionname="ParkingBay2" x="373" y="21.5" />
+    </parkingbays>
+</lmr>

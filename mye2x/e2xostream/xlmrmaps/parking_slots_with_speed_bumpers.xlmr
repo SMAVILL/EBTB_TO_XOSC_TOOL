@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="parking_slots_with_speed_bumpers" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1717993941</timestamp>
+        <xodrFile>/opt/maps/germany/parking/parking_slots_with_speed_bumpers/parking_slots_with_speed_bumpers.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/parking_slots_with_speed_bumpers/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="parking_slots_with_12cms_speedbumpers_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="parking_slots_with_5cms_speedbumpers_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="9.92171519076918116298e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="4.02632536513651757559e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="parking_slots_with_12cms_speedbumpers_route_start" type="none" roadId="0"
+            ds="8.94448687695574335521e+02" t="0.00000000000000000000e+00" />
+        <landmark name="parking_slots_with_12cms_speedbumpers_route_end" type="none" roadId="0"
+            ds="6.21787340179747616276e+02" t="0.00000000000000000000e+00" />
+        <landmark name="parking_slots_with_5cms_speedbumpers_route_start" type="none" roadId="0"
+            ds="5.23855252200156769504e+02" t="0.00000000000000000000e+00" />
+        <landmark name="parking_slots_with_5cms_speedbumpers_route_end" type="none" roadId="0"
+            ds="2.76095439875721808676e+02" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays>
+        <parkingbay positionname="perpendicular_slots_with_5cms_speedbumper"
+            x="-1.11871999999999999886e+02" y="7.25300000000000011369e+00" />
+        <parkingbay positionname="parallel_slots_with_5cms_speedbumper"
+            x="-7.50030000000000001137e+01" y="6.57000000000000028422e+00" />
+        <parkingbay positionname="angular_slors_with_5cms_speedbumper"
+            x="-2.61129999999999995453e+01" y="7.24899999999999966604e+00" />
+        <parkingbay positionname="perpendicular_slots_with_12cms_speedbumper"
+            x="2.38355999999999994543e+02" y="7.45000000000000017764e+00" />
+        <parkingbay positionname="parallel_slots_with_12cms_speedbumper"
+            x="2.82699999999999988631e+02" y="6.17999999999999971578e+00" />
+        <parkingbay positionname="angular_slots_with_12cms_speedbumper"
+            x="3.19487000000000023192e+02" y="7.34100000000000019185e+00" />
+    </parkingbays>
+</lmr>

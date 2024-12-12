@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="unrestricted_autobahn_start_to_unrestricted" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1645440356</timestamp>
+        <xodrFile>unrestricted_autobahn_start_to_unrestricted.xodr</xodrFile>
+    </header>
+    <routes>
+        <route name="WestToEast" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="WestToEast_start" type="none" roadId="0" ds="3.00292529240259682410e+01"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="WestToEast_end" type="none" roadId="0" ds="9.97036953290523524629e+03"
+            t="-2.75000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

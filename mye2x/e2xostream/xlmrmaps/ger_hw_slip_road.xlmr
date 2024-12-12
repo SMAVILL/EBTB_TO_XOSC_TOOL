@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_slip_road" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1717544396</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_slip_road/ger_hw_slip_road.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_slip_road/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="1">
+            <road id="1" successor="7" />
+            <road id="7" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="R1_freeway_slip_road" startRoadId="1">
+            <road id="1" successor="9" />
+            <road id="9" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="R2_non_freeway_slip_road" startRoadId="0">
+            <road id="0" successor="8" />
+            <road id="8" successor="1" />
+            <road id="1" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="1" ds="2.43646746664519469050e+01"
+            t="-1.16362174003114251519e+01" />
+        <landmark name="default_route_end" type="none" roadId="2" ds="8.61521034191320040918e+02"
+            t="-1.11164708746620934932e+01" />
+        <landmark name="R1_freeway_slip_road_start" type="none" roadId="1"
+            ds="5.90368641094101121780e+02" t="-1.14629685584329408243e+01" />
+        <landmark name="R1_freeway_slip_road_end" type="none" roadId="3"
+            ds="1.62700534357314182898e+02" t="-3.15725032461058452427e+00" />
+        <landmark name="R2_non_freeway_slip_road_start" type="none" roadId="0"
+            ds="2.46548719744808266796e+02" t="-3.66056502606736700045e+00" />
+        <landmark name="R2_non_freeway_slip_road_end" type="none" roadId="1"
+            ds="5.93165295077033078996e+02" t="1.13613611514638943589e+01" />
+    </landmarks>
+    <parkingbays />
+</lmr>

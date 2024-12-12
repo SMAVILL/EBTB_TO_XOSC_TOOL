@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_10lanes_straight_road" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>prupuru</author>
+        <timestamp>1731320299</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_10lanes_straight_road/ger_hw_10lanes_straight_road.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_10lanes_straight_road/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="WestToEast" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="EastToWest" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="WestToEast_start" type="none" roadId="0" ds="2.66329450411777628460e+01"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="WestToEast_end" type="none" roadId="0" ds="9.94694714265947004606e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="EastToWest_start" type="none" roadId="0" ds="9.94699260380581472418e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="EastToWest_end" type="none" roadId="0" ds="2.66565835566770452658e+01"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="default_route_start" type="none" roadId="0" ds="2.62196446368395481841e+03"
+            t="-2.39662619565887666795e+01" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="5.41589611080230861262e+03"
+            t="-1.89578547020051679795e+01" />
+    </landmarks>
+    <trafficsignanchors />
+    <parkingbays />
+</lmr>

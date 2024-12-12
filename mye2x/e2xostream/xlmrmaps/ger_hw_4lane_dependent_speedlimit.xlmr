@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_4lane_dependent_speedlimit" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1713948600</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_4lane_dependent_speedlimit/ger_hw_4lane_dependent_speedlimit.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_4lane_dependent_speedlimit/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="speedlimit_sign_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="8.25225459987052545330e+00"
+            t="-1.81367923421821650720e+01" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="1.99661804777227416707e+03"
+            t="-1.85749993177265260158e+01" />
+        <landmark name="speedlimit_sign_route_start" type="none" roadId="0"
+            ds="7.37173182061717625402e+02" t="-1.34958744075715273425e+01" />
+        <landmark name="speedlimit_sign_route_end" type="none" roadId="0"
+            ds="1.18459075753012530186e+03" t="-1.43760401298019999672e+01" />
+        <landmark name="speedlimit_signs" type="milestone" roadId="0"
+            ds="9.77458424231308413255e+02" t="-2.08305887595136418611e+01" />
+    </landmarks>
+    <parkingbays />
+</lmr>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_road_width_5.5m" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1710322408</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_road_width_5.5m/ger_road_width_5.5m.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_road_width_5.5m/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="1">
+            <road id="1" />
+        </route>
+        <route name="left_lanemarking_route" startRoadId="1">
+            <road id="1" />
+        </route>
+        <route name="right_lanemarking_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="1" ds="1.52312900548138259182e+01"
+            t="-5.37360440023703844759e+00" />
+        <landmark name="default_route_end" type="none" roadId="1" ds="1.97521607733283781272e+03"
+            t="-5.45021979354466523660e+00" />
+        <landmark name="left_lanemarking_route_start" type="none" roadId="1"
+            ds="5.25828437084976485494e+00" t="-4.55967647798112984958e+00" />
+        <landmark name="left_lanemarking_route_end" type="none" roadId="1"
+            ds="1.99780676550667340052e+03" t="-5.35651258031511723345e+00" />
+        <landmark name="right_lanemarking_route_start" type="none" roadId="0"
+            ds="5.12706420972904197697e+00" t="-5.60069209091749176110e+00" />
+        <landmark name="right_lanemarking_route_end" type="none" roadId="0"
+            ds="1.99436546504728175933e+03" t="-5.60069209093963049639e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

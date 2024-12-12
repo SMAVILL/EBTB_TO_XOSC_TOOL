@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="oval_parking_slots" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1695360838</timestamp>
+        <xodrFile>../../../maps/germany/parking/parking_slots_oval/oval_parking_slots.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/germany/scene_oval_colored_parkingslots/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="oval_slots_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="oval_slots_route_start" type="none" roadId="0"
+            ds="4.24407271883506922450e+01" t="0.00000000000000000000e+00" />
+        <landmark name="oval_slots_route_end" type="none" roadId="0" ds="2.32675650058839977419e+02"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays>
+        <parkingbay positionname="blue_perpendicular_slots" x="-3.52349999999999994316e+01"
+            y="3.18170000000000001705e+01" />
+        <parkingbay positionname="blue_parallel_slots" x="-1.83780000000000001137e+01"
+            y="3.03290000000000006253e+01" />
+        <parkingbay positionname="blue_angular_slots" x="8.01600000000000001421e+00"
+            y="3.10229999999999996874e+01" />
+        <parkingbay positionname="white_perpendicular_slots" x="-3.53400000000000034106e+01"
+            y="6.56599999999999983658e+00" />
+        <parkingbay positionname="white_parallel_slots" x="-1.75440000000000004832e+01"
+            y="8.14700000000000024158e+00" />
+        <parkingbay positionname="white_angular_slots" x="7.47299999999999986500e+00"
+            y="7.53099999999999969447e+00" />
+    </parkingbays>
+</lmr>
