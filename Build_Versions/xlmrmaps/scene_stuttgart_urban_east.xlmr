@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="scene_stuttgart_urban_east" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1709804340</timestamp>
+        <xodrFile>/opt/maps/germany/urban/scene_stuttgart_urban_east/scene_stuttgart_urban_east.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/scene_stuttgart_urban_east/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="107">
+            <road id="107" successor="1199" />
+            <road id="1199" successor="103" />
+            <road id="103" successor="16" />
+            <road id="16" successor="593" />
+            <road id="593" successor="17" />
+            <road id="17" successor="854" />
+            <road id="854" successor="18" />
+            <road id="18" successor="658" />
+            <road id="658" successor="19" />
+            <road id="19" successor="614" />
+            <road id="614" successor="10" />
+            <road id="10" />
+        </route>
+        <route name="ikea_to_kundencenter" startRoadId="24">
+            <road id="24" successor="638" />
+            <road id="638" successor="19" />
+            <road id="19" successor="660" />
+            <road id="660" successor="121" />
+            <road id="121" successor="1206" />
+            <road id="1206" successor="127" />
+            <road id="127" successor="83" />
+            <road id="83" successor="237" />
+            <road id="237" successor="84" />
+            <road id="84" successor="228" />
+            <road id="228" successor="96" />
+            <road id="96" successor="1225" />
+            <road id="1225" successor="97" />
+            <road id="97" successor="457" />
+            <road id="457" successor="98" />
+            <road id="98" successor="1075" />
+            <road id="1075" successor="99" />
+            <road id="99" successor="741" />
+            <road id="741" successor="75" />
+            <road id="75" successor="192" />
+            <road id="192" successor="74" />
+            <road id="74" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="107"
+            ds="2.22255085123606022535e+02" t="-3.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="10" ds="6.40100194559380213377e+01"
+            t="4.13499999999999978684e+00" />
+        <landmark name="lane_change_left_1" type="milestone" roadId="97"
+            ds="6.37714952603023803590e+01" t="3.50000000000000000000e+00" />
+        <landmark name="lane_change_right_1" type="milestone" roadId="19"
+            ds="6.92331838030765993608e+01" t="0.00000000000000000000e+00" />
+        <landmark name="lane_change_right_2" type="milestone" roadId="19"
+            ds="2.19253294762008827945e+01" t="0.00000000000000000000e+00" />
+        <landmark name="ikea_to_kundencenter_start" type="none" roadId="24"
+            ds="1.55910106190949989013e+02" t="1.56635278270655065036e+00" />
+        <landmark name="ikea_to_kundencenter_end" type="none" roadId="74"
+            ds="1.61510806992894622169e+01" t="2.15727268665782156987e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

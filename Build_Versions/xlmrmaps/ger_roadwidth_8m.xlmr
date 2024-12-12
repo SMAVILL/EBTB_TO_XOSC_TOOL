@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_roadwidth_8m" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1714744867</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_roadwidth_8m/ger_roadwidth_8m.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_roadwidth_8m/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="RightLaneMarking" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="LeftLaneMarking" startRoadId="1">
+            <road id="1" />
+        </route>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="RightLaneMarking_start" type="none" roadId="0"
+            ds="2.57178683584072587109e+00" t="8.50000000000000000000e+00" />
+        <landmark name="RightLaneMarking_end" type="none" roadId="0" ds="1.20101319156741055849e+03"
+            t="8.50000000000000000000e+00" />
+        <landmark name="LeftLaneMarking_start" type="none" roadId="1"
+            ds="8.96048045595588926737e-01" t="5.00000000000000000000e-01" />
+        <landmark name="LeftLaneMarking_end" type="none" roadId="1" ds="1.19660671469298881675e+03"
+            t="5.00000000000000000000e-01" />
+        <landmark name="default_route_start" type="none" roadId="0" ds="2.53202429443266510134e+01"
+            t="4.25120500413926283301e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="1.17895926371287100665e+03"
+            t="4.73647183083822298499e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

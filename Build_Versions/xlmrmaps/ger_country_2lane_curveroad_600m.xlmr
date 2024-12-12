@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_country_2lane_curveroad_600m" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author />
+        <timestamp>1721888870</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_2lane_curveroad_600m/ger_country_2lane_curveroad_600m.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_2lane_curveroad_600m/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="5">
+            <road id="5" successor="0" />
+            <road id="0" successor="2" />
+            <road id="2" successor="1" />
+            <road id="1" successor="3" />
+            <road id="3" successor="4" />
+            <road id="4" />
+        </route>
+        <route name="Curveroad_route" startRoadId="5">
+            <road id="5" successor="0" />
+            <road id="0" successor="2" />
+            <road id="2" successor="1" />
+            <road id="1" successor="3" />
+            <road id="3" successor="4" />
+            <road id="4" />
+        </route>
+        <route name="ReverseLeftCurve_route" startRoadId="4">
+            <road id="4" successor="3" />
+            <road id="3" successor="1" />
+            <road id="1" successor="2" />
+            <road id="2" successor="0" />
+            <road id="0" successor="5" />
+            <road id="5" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="5" ds="1.67676280999400455585e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="4" ds="2.69121464137979273801e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="Curveroad_route_start" type="none" roadId="5"
+            ds="1.65115666035683943846e+02" t="0.00000000000000000000e+00" />
+        <landmark name="Curveroad_route_end" type="none" roadId="4" ds="1.64127282239036367173e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="RightCurveEntry" type="milestone" roadId="2" ds="9.42466271545870426962e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="RightCurveExit" type="milestone" roadId="3" ds="4.33767131982403508772e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="ReverseLeftCurve_route_start" type="none" roadId="4"
+            ds="9.80276273282493093575e+00" t="1.92254455667728274548e+00" />
+        <landmark name="ReverseLeftCurve_route_end" type="none" roadId="5"
+            ds="1.68818484417190802560e+03" t="-1.09065758728418349399e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

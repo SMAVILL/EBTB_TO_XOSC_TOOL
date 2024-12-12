@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_country_normal_to_singlewide_lane" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>sjanman</author>
+        <timestamp>1727962357</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_normal_to_singlewide_lane/ger_country_normal_to_singlewide_lane.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_normal_to_singlewide_lane/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="Transition_route" startRoadId="0">
+            <road id="0" successor="3" />
+            <road id="3" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="2.17314623983756973757e+01"
+            t="-1.97165657121421400433e+00" />
+        <landmark name="default_route_end" type="none" roadId="3" ds="4.98286737548943528964e+03"
+            t="-1.35750869173375043886e+00" />
+        <landmark name="Transition_route_start" type="none" roadId="0"
+            ds="4.10638606575125595555e+03" t="-1.50983077677497767866e+00" />
+        <landmark name="Transition_route_end" type="none" roadId="3" ds="3.12767724570922041494e+02"
+            t="-2.05380892834390138546e+00" />
+        <landmark name="Transition_point" type="milestone" roadId="0"
+            ds="4.99983288406797510106e+03" t="-1.60431294685785053034e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

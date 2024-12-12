@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_6lanes_solidlanemarking" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1719381193</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_6lanes_solidlanemarking/ger_hw_6lanes_solidlanemarking.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_6lanes_solidlanemarking/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="reverse_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="2.87690308306491715484e+00"
+            t="-1.12568833691379968087e+01" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="4.99781582820119001553e+03"
+            t="-1.07373349060021645585e+01" />
+        <landmark name="reverse_route_start" type="none" roadId="0" ds="4.99630590139443756925e+03"
+            t="5.55295549352214123928e+00" />
+        <landmark name="reverse_route_end" type="none" roadId="0" ds="5.72951995910443656612e+00"
+            t="8.33921228427279004336e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

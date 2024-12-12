@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="germany_country_2lanes_rq11_straight_missing_markings" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_v1.2.0.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1661878276</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_2lanes_missing_markings/germany_country_2lanes_rq11_straight_missing_markings.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_2lanes_missing_markings/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="SolidLeftSolidRight" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="SolidLeftMissingRight" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="MissingLeftSolidRight" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.00560767080228288251e+01" t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="1.99013396818246292241e+03" t="0.00000000000000000000e+00" />
+        <landmark name="SolidLeftSolidRight_start" type="none" roadId="0" ds="9.89839025394871896424e+00" t="0.00000000000000000000e+00" />
+        <landmark name="SolidLeftSolidRight_end" type="none" roadId="0" ds="4.90068915969813360789e+02" t="0.00000000000000000000e+00" />
+        <landmark name="SolidLeftMissingRight_start" type="none" roadId="0" ds="5.10124782873092669888e+02" t="0.00000000000000000000e+00" />
+        <landmark name="SolidLeftMissingRight_end" type="none" roadId="0" ds="9.90069777365378854483e+02" t="0.00000000000000000000e+00" />
+        <landmark name="MissingLeftSolidRight_start" type="none" roadId="0" ds="1.01022228800622769995e+03" t="0.00000000000000000000e+00" />
+        <landmark name="MissingLeftSolidRight_end" type="none" roadId="0" ds="1.50017934753113445367e+03" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

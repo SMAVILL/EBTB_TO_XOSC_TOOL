@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_urban_parking_slots_ground_locks" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1710413549</timestamp>
+        <xodrFile>/opt/maps/germany/parking/ger_urban_parking_slots_ground_locks/ger_urban_parking_slots_ground_locks.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_urban_parking_slots_ground_locks/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="parallel_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="angled_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="perpendicular_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="parallel_route_start" type="none" roadId="0" ds="2.48318292499537278673e+02"
+            t="6.43857231606379443178e+00" />
+        <landmark name="parallel_route_end" type="none" roadId="0" ds="1.57254350924109360221e+02"
+            t="6.49206233541353050498e+00" />
+        <landmark name="default_route_start" type="none" roadId="0" ds="2.46105867135377906152e+02"
+            t="6.11599614660620005679e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="2.63326693069041439799e+00"
+            t="7.31078213322566305976e+00" />
+        <landmark name="angled_route_start" type="none" roadId="0" ds="2.40417164266014395935e+02"
+            t="5.15100410755170212695e+00" />
+        <landmark name="angled_route_end" type="none" roadId="0" ds="8.99038277701015715593e+01"
+            t="6.93015516221261407281e+00" />
+        <landmark name="perpendicular_route_start" type="none" roadId="0"
+            ds="2.37570532440230010707e+02" t="5.45898577395390383060e+00" />
+        <landmark name="perpendicular_route_end" type="none" roadId="0"
+            ds="4.34255641503758198496e+01" t="6.16368601663519655176e+00" />
+    </landmarks>
+    <parkingbays>
+        <parkingbay positionname="ParallelBay" x="1.6894e+01"
+            y="8.544e+00" />
+        <parkingbay positionname="AngledBay" x="-4.6940e+01"
+            y="8.389e+00" />
+        <parkingbay positionname="PerpendicularBay" x="-9.74599999999999937472e+01"
+            y="8.90300000000000046896e+00" />
+    </parkingbays>
+</lmr>

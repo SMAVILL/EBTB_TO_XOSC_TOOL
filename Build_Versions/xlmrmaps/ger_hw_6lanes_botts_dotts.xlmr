@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_6lanes_botts_dotts" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1718688646</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_6lanes_botts_dotts/ger_hw_6lanes_botts_dotts.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_6lanes_botts_dotts/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="LeftToRight" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="default_reverse_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="2.08667076116955740872e+00"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="1.99730186273807134967e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="LeftToRight_start" type="none" roadId="0" ds="4.14243489766707853050e+01"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="LeftToRight_end" type="none" roadId="0" ds="1.97840569167263993222e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="default_reverse_route_start" type="none" roadId="0"
+            ds="1.98864177720890756973e+03" t="8.46990001154323657317e+00" />
+        <landmark name="default_reverse_route_end" type="none" roadId="0"
+            ds="5.75489136637418141618e+00" t="7.07560936205524981801e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

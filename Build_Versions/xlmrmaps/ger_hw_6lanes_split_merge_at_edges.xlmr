@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_6lanes_split_merge_at_edges" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>videore</author>
+        <timestamp>1724666421</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_6lanes_split_merge_at_edges/ger_hw_6lanes_split_merge_at_edges.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_6lanes_split_merge_at_edges/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="reverse_right_to_left_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="lane_split_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="lane_merge_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="lane_closures_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.14574775399605641724e+01"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="4.98115146245944288239e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="reverse_right_to_left_route_start" type="none" roadId="0"
+            ds="4.97911324079024598177e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="reverse_right_to_left_route_end" type="none" roadId="0"
+            ds="1.50243654610553676321e+01" t="-2.75000000000000000000e+00" />
+        <landmark name="lane_split_route_start" type="none" roadId="0"
+            ds="1.51566506940731551367e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="lane_split_route_end" type="none" roadId="0" ds="2.16534822646384600375e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="lane_merge_route_start" type="none" roadId="0"
+            ds="3.54420518567558792711e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="lane_merge_route_end" type="none" roadId="0" ds="4.18013034646503911063e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="lane_split_point" type="milestone" roadId="0"
+            ds="1.97257402058190041316e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="lane_split_point_on_reverse_lanes" type="milestone" roadId="0"
+            ds="1.99289035350824701709e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="lane_merge_point" type="milestone" roadId="0"
+            ds="3.98948833732094226434e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="lane_merge_point_on_reverse_lanes" type="milestone" roadId="0"
+            ds="3.98264712317227440508e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="lane_closures_route_start" type="none" roadId="0"
+            ds="3.09264896989503040459e+03" t="-1.13626095153994963738e+01" />
+        <landmark name="lane_closures_route_end" type="none" roadId="0"
+            ds="4.15636402991627619485e+03" t="-1.04885626298099570164e+01" />
+    </landmarks>
+    <parkingbays />
+</lmr>

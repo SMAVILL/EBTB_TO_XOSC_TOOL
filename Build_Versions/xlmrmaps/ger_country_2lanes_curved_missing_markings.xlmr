@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_country_2lanes_curved_missing_markings" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1701409136</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_2lanes_curved_missing_markings/ger_country_2lanes_curved_missing_markings.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_2lanes_curved_missing_markings/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="1">
+            <road id="1" successor="6" />
+            <road id="6" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="variant1_full" startRoadId="1">
+            <road id="1" successor="6" />
+            <road id="6" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="variant2_full" startRoadId="4">
+            <road id="4" successor="0" />
+            <road id="0" successor="7" />
+            <road id="7" successor="8" />
+            <road id="8" />
+        </route>
+        <route name="variant3_full" startRoadId="5">
+            <road id="5" successor="3" />
+            <road id="3" successor="9" />
+            <road id="9" />
+        </route>
+        <route name="no_lane_markings" startRoadId="2">
+            <road id="2" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="1" ds="0.00000000000000000000e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="2" ds="1.49893673513025396460e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="variant1_full_start" type="none" roadId="1" ds="0.00000000000000000000e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="variant1_full_end" type="none" roadId="2" ds="1.49893673513025396460e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="variant2_full_start" type="none" roadId="4" ds="0.00000000000000000000e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="variant2_full_end" type="none" roadId="8" ds="1.39900077437044228645e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="variant3_full_start" type="none" roadId="5" ds="0.00000000000000000000e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="variant3_full_end" type="none" roadId="9" ds="1.49901195417246253783e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="no_lane_markings_start" type="none" roadId="2"
+            ds="1.61224891046218843371e+01" t="-2.17620498521137051284e+00" />
+        <landmark name="no_lane_markings_end" type="none" roadId="2" ds="1.48475940972205830803e+03"
+            t="-1.12511113125583506189e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="germany_hw_4lanes_rq31_10km_straight_construction" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author />
+        <timestamp>1722530546</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_4lanes_construction/germany_hw_4lanes_rq31_10km_straight_construction_v2.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_4lanes_construction_v2/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="ConstructionZone" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="dashed_to_constructionzone_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.01088222227635924355e+01"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="9.99000264256649097661e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="ConstructionZone_start" type="none" roadId="0"
+            ds="3.90000371089243435563e+03" t="-2.75000000000000000000e+00" />
+        <landmark name="ConstructionZone_end" type="none" roadId="0" ds="6.10009085466608303250e+03"
+            t="-2.75000000000000000000e+00" />
+        <landmark name="dashed_to_constructionzone_route_start" type="none" roadId="0"
+            ds="2.85082174462705461337e+03" t="1.26422250315545721122e+01" />
+        <landmark name="dashed_to_constructionzone_route_end" type="none" roadId="0"
+            ds="7.26295828065739624435e+03" t="-1.26422250315069213400e+01" />
+    </landmarks>
+    <parkingbays />
+</lmr>

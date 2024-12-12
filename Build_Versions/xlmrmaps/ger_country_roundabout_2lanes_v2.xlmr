@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_country_roundabout_2lanes_v2" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1711971401</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_roundabout_2lanes/ger_country_roundabout_2lanes_v2.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_roundabout_2lanes/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="3">
+            <road id="3" successor="16" />
+            <road id="16" successor="1" />
+            <road id="1" successor="72" />
+            <road id="72" successor="4" />
+            <road id="4" successor="81" />
+            <road id="81" successor="6" />
+            <road id="6" />
+        </route>
+        <route name="WestToEastRight1" startRoadId="3">
+            <road id="3" successor="16" />
+            <road id="16" successor="1" />
+            <road id="1" successor="72" />
+            <road id="72" successor="4" />
+            <road id="4" successor="81" />
+            <road id="81" successor="6" />
+            <road id="6" />
+        </route>
+        <route name="WestToEastRight2" startRoadId="3">
+            <road id="3" successor="23" />
+            <road id="23" successor="1" />
+            <road id="1" successor="72" />
+            <road id="72" successor="4" />
+            <road id="4" successor="86" />
+            <road id="86" successor="6" />
+            <road id="6" />
+        </route>
+        <route name="WestToSouthRight1" startRoadId="3">
+            <road id="3" successor="16" />
+            <road id="16" successor="1" />
+            <road id="1" successor="63" />
+            <road id="63" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="WestToSouthRight2" startRoadId="3">
+            <road id="3" successor="23" />
+            <road id="23" successor="1" />
+            <road id="1" successor="57" />
+            <road id="57" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="WestToNorthRight1" startRoadId="3">
+            <road id="3" successor="16" />
+            <road id="16" successor="1" />
+            <road id="1" successor="72" />
+            <road id="72" successor="4" />
+            <road id="4" successor="89" />
+            <road id="89" successor="7" />
+            <road id="7" successor="40" />
+            <road id="40" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="WestToNorthRight2" startRoadId="3">
+            <road id="3" successor="23" />
+            <road id="23" successor="1" />
+            <road id="1" successor="72" />
+            <road id="72" successor="4" />
+            <road id="4" successor="89" />
+            <road id="89" successor="7" />
+            <road id="7" successor="37" />
+            <road id="37" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="WestToWest" startRoadId="3">
+            <road id="3" successor="23" />
+            <road id="23" successor="1" />
+            <road id="1" successor="72" />
+            <road id="72" successor="4" />
+            <road id="4" successor="89" />
+            <road id="89" successor="7" />
+            <road id="7" successor="48" />
+            <road id="48" successor="5" />
+            <road id="5" successor="9" />
+            <road id="9" successor="3" />
+            <road id="3" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="3" ds="1.00215503350894067580e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="6" ds="1.00269458403638765276e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="ExitRoundaboutSouth" type="milestone" roadId="2"
+            ds="5.00000000000000000000e-01" t="0.00000000000000000000e+00" />
+        <landmark name="ExitRoundaboutEast" type="milestone" roadId="6"
+            ds="5.00000000000000000000e-01" t="0.00000000000000000000e+00" />
+        <landmark name="ExitRoundaboutNorth" type="milestone" roadId="0"
+            ds="2.02000000000000000000e+02" t="0.00000000000000000000e+00" />
+        <landmark name="ExitRoundaboutWest" type="milestone" roadId="3"
+            ds="2.02000000000000000000e+02" t="0.00000000000000000000e+00" />
+        <landmark name="WestToEastRight1_start" type="none" roadId="3"
+            ds="1.00590482266791525490e+01" t="0.00000000000000000000e+00" />
+        <landmark name="WestToEastRight1_end" type="none" roadId="6" ds="1.90151126565401426660e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="WestToEastRight2_start" type="none" roadId="3"
+            ds="1.00590482266791525490e+01" t="0.00000000000000000000e+00" />
+        <landmark name="WestToEastRight2_end" type="none" roadId="6" ds="1.90151126565401426660e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="WestToSouthRight1_start" type="none" roadId="3"
+            ds="9.99473315613911950095e+00" t="0.00000000000000000000e+00" />
+        <landmark name="WestToSouthRight1_end" type="none" roadId="2"
+            ds="1.90188070662261083044e+02" t="0.00000000000000000000e+00" />
+        <landmark name="WestToSouthRight2_start" type="none" roadId="3"
+            ds="9.99473315613911950095e+00" t="0.00000000000000000000e+00" />
+        <landmark name="WestToSouthRight2_end" type="none" roadId="2"
+            ds="1.90188070662261083044e+02" t="0.00000000000000000000e+00" />
+        <landmark name="WestToNorthRight1_start" type="none" roadId="3"
+            ds="1.00623047078689467071e+01" t="0.00000000000000000000e+00" />
+        <landmark name="WestToNorthRight1_end" type="none" roadId="0"
+            ds="9.95942137460255239034e+00" t="0.00000000000000000000e+00" />
+        <landmark name="WestToNorthRight2_start" type="none" roadId="3"
+            ds="1.00623047078689467071e+01" t="0.00000000000000000000e+00" />
+        <landmark name="WestToNorthRight2_end" type="none" roadId="0"
+            ds="9.95942137460255239034e+00" t="0.00000000000000000000e+00" />
+        <landmark name="WestToWest_start" type="none" roadId="3" ds="1.55390123612658328511e+01"
+            t="-8.64106834049389327390e+00" />
+        <landmark name="WestToWest_end" type="none" roadId="3" ds="1.55395828004208453876e+01"
+            t="8.27507354822044760567e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

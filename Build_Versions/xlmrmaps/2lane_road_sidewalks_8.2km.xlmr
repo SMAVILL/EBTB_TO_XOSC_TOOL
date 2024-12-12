@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="DTR3-TS7770" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1637922604</timestamp>
+        <xodrFile>/opt/maps/germany/rural/2lane_road_sidewalks_8.2km/2lane_road_sidewalks_8.2km.xodr</xodrFile>
+    </header>
+    <routes>
+        <route name="WestToEast" startRoadId="1">
+            <road id="1" successor="2" />
+            <road id="2" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="EastToWest" startRoadId="3">
+            <road id="3" successor="2" />
+            <road id="2" successor="1" />
+            <road id="1" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="WestToEast_start" type="none" roadId="1" ds="4.99964588873998305729e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="WestToEast_end" type="none" roadId="3" ds="9.49943541111533704679e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="EastToWest_start" type="none" roadId="3" ds="9.49943541111533704679e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="EastToWest_end" type="none" roadId="1" ds="4.96066063696994774546e+00"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

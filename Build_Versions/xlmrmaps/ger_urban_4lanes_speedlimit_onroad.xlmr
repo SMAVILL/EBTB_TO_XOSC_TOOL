@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_urban_4lanes_speedlimit_onroad" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1722851647</timestamp>
+        <xodrFile>/opt/maps/germany/urban/ger_urban_4lanes_speedlimit_onroad/ger_urban_4lanes_speedlimit_onroad.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_urban_4lanes_speedlimit_onroad/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="speedsignonroad_route" startRoadId="1">
+            <road id="1" />
+        </route>
+        <route name="cityentrysign_route" startRoadId="0">
+            <road id="0" successor="1" />
+            <road id="1" />
+        </route>
+        <route name="default_route" startRoadId="0">
+            <road id="0" successor="1" />
+            <road id="1" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="speedsignonroad" type="milestone" roadId="1" ds="3.99451710523367239603e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="cityentrysign" type="milestone" roadId="0" ds="5.99947561044147050779e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="speedsignonroad_route_start" type="none" roadId="1"
+            ds="2.80177009705503223813e+02" t="0.00000000000000000000e+00" />
+        <landmark name="speedsignonroad_route_end" type="none" roadId="1"
+            ds="5.99434646514027235753e+02" t="0.00000000000000000000e+00" />
+        <landmark name="cityentrysign_route_start" type="none" roadId="0"
+            ds="3.61628973207512899535e+02" t="0.00000000000000000000e+00" />
+        <landmark name="cityentrysign_route_end" type="none" roadId="1"
+            ds="2.56300298311387621197e+02" t="0.00000000000000000000e+00" />
+        <landmark name="default_route_start" type="none" roadId="0" ds="1.67618667793876738870e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="1" ds="1.38769937953227668004e+03"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="Curveroad_100m" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1714052742</timestamp>
+        <xodrFile>/home/ubuntu/workspace/digital-testing-product/testcase_assets/maps/germany/rural/Curveroad_100m/curve_100m.xodr</xodrFile>
+    </header>
+    <routes>
+        <route name="Default_Route" startRoadId="1">
+            <road id="1" successor="3" />
+            <road id="3" successor="4" />
+            <road id="4" successor="2" />
+            <road id="2" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="Default_Route_start" type="none" roadId="1" ds="5.00066002200827938395e+02"
+            t="-2.85070117377140075376e+00" />
+        <landmark name="Default_Route_end" type="none" roadId="2" ds="5.01759354283705306443e+02"
+            t="-2.79166077198164996886e-01" />
+    </landmarks>
+    <parkingbays />
+</lmr>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_country_2lanes_curveroad_differentroadradius_2000m" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1718776450</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_2lanes_curveroad_differentroadradius/ger_country_2lanes_curveroad_differentroadradius_2000m.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_2lanes_curveroad_differentroadradius_2000m/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" successor="1" />
+            <road id="1" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="StraightToRightCurveRoad" startRoadId="0">
+            <road id="0" successor="1" />
+            <road id="1" successor="2" />
+            <road id="2" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="2.99366023470767095205e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="2" ds="8.92222398854597420481e-01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="StraightToRightCurveRoad_start" type="none" roadId="0"
+            ds="2.84732374661608173483e+03" t="0.00000000000000000000e+00" />
+        <landmark name="StraightToRightCurveRoad_end" type="none" roadId="2"
+            ds="8.61948364166409305653e+02" t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

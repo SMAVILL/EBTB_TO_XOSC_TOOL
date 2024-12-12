@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="main" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1695152898</timestamp>
+        <xodrFile>/opt/maps/germany/parking/parking_slot_colors/colored_parking_slots.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/scene_parkingslots/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="west_parking_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="east_parking_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="west_parking_route_start" type="none" roadId="0"
+            ds="1.41864677363906821483e+00" t="0.00000000000000000000e+00" />
+        <landmark name="west_parking_route_end" type="none" roadId="0"
+            ds="9.44687106183070284260e+01" t="0.00000000000000000000e+00" />
+        <landmark name="east_parking_route_start" type="none" roadId="0"
+            ds="2.05665150672995252989e+02" t="0.00000000000000000000e+00" />
+        <landmark name="east_parking_route_end" type="none" roadId="0"
+            ds="3.40275472342051727992e+02" t="0.00000000000000000000e+00" />
+        <landmark name="default_route_start" type="none" roadId="0" ds="4.46621234010445789409e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="9.50739990394130352058e+00"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays>
+        <parkingbay positionname="blue_perpendicular_slots" x="-1.60770000000000017337e+01"
+            y="1.05570000000000003837e+01" />
+        <parkingbay positionname="blue_parallel_slots" x="-2.52599999999999980105e+00"
+            y="9.50000000000000000000e+00" />
+        <parkingbay positionname="blue_angular_slots" x="1.72010000000000005116e+01"
+            y="1.02279999999999997584e+01" />
+        <parkingbay positionname="blue_per_noouterline_slots" x="-1.67420000000000008811e+01"
+            y="-8.60699999999999931788e+00" />
+        <parkingbay positionname="blue_parallel_noouterline_slots" x="-2.20800000000000018474e+00"
+            y="-7.66500000000000003553e+00" />
+        <parkingbay positionname="blue_angular_noouterline_slots" x="1.65090000000000003411e+01"
+            y="-8.51600000000000001421e+00" />
+        <parkingbay positionname="white_perpendicular_slots1" x="2.62240000000000001990e+01"
+            y="-6.79399999999999977263e+01" />
+        <parkingbay positionname="white_parallel_slots1" x="3.86880000000000023874e+01"
+            y="-6.93430000000000035243e+01" />
+        <parkingbay positionname="white_angular_slots1" x="5.70420000000000015916e+01"
+            y="-6.85450000000000017053e+01" />
+        <parkingbay positionname="white_outerline_perpendicular_slots"
+            x="-2.54869999999999983231e+01" y="-6.79659999999999939746e+01" />
+        <parkingbay positionname="white_outerline_parallel_slots1" x="-1.20410000000000003695e+01"
+            y="-6.94170000000000015916e+01" />
+        <parkingbay positionname="white_outerline_angular_slots" x="6.36899999999999977263e+00"
+            y="-6.86029999999999944293e+01" />
+        <parkingbay positionname="black_outerline_perpendicular_slots"
+            x="-2.55539999999999984936e+01" y="-8.94189999999999969305e+01" />
+        <parkingbay positionname="black_outerline_parallel_slots" x="-1.16609999999999995879e+01"
+            y="-8.78070000000000021600e+01" />
+        <parkingbay positionname="black_outerline_angular_slots" x="5.64599999999999990763e+00"
+            y="-8.84890000000000043201e+01" />
+    </parkingbays>
+</lmr>

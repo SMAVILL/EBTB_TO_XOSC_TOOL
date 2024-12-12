@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_country_2lanes_curveroad_differentroadradius_1200m_right" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author />
+        <timestamp>1721371980</timestamp>
+        <xodrFile>/opt/maps/germany/rural/ger_country_2lanes_curveroad_differentroadradius/ger_country_2lanes_curveroad_differentroadradius_1200m_right.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_country_2lanes_curveroad_differentroadradius_1200m_right/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="1">
+            <road id="1" successor="2" />
+            <road id="2" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="StraightToRightCurveRoad" startRoadId="1">
+            <road id="1" successor="2" />
+            <road id="2" successor="0" />
+            <road id="0" />
+        </route>
+        <route name="curve_road" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="straight_to_curve" startRoadId="1">
+            <road id="1" successor="2" />
+            <road id="2" successor="0" />
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="1" ds="2.99463339751220428298e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="1.45981917552631057511e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="StraightToRightCurveRoad_start" type="none" roadId="1"
+            ds="2.99094186684714759394e+03" t="0.00000000000000000000e+00" />
+        <landmark name="StraightToRightCurveRoad_end" type="none" roadId="0"
+            ds="6.66762880950186787032e+00" t="0.00000000000000000000e+00" />
+        <landmark name="curve_road_start" type="none" roadId="0" ds="1.71709375841338419377e+03"
+            t="0.00000000000000000000e+00" />
+        <landmark name="curve_road_end" type="none" roadId="0" ds="1.83742642068999231242e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="straight_to_curve_start" type="none" roadId="1"
+            ds="1.52118251075320677046e+03" t="1.20000207000439118588e-02" />
+        <landmark name="straight_to_curve_end" type="none" roadId="0"
+            ds="1.52017240701954392534e+03" t="2.13565968496686764411e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

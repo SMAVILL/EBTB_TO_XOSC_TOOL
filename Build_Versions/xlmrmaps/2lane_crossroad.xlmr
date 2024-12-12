@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="SRA_Radius9m_junGap15m_clo10" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1638455761</timestamp>
+        <xodrFile>/opt/maps/germany/rural/2lane_crossroad/2lane_crossroad.xodr</xodrFile>
+    </header>
+    <routes>
+        <route name="WestToNorth" startRoadId="1">
+            <road id="1" successor="13" />
+            <road id="13" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="EastToSouth" startRoadId="3">
+            <road id="3" successor="31" />
+            <road id="31" successor="4" />
+            <road id="4" />
+        </route>
+        <route name="NorthToEast" startRoadId="2">
+            <road id="2" successor="22" />
+            <road id="22" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="SouthToWest" startRoadId="4">
+            <road id="4" successor="40" />
+            <road id="40" successor="1" />
+            <road id="1" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="WestToNorth_start" type="none" roadId="1" ds="7.71253506004600986046e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="WestToNorth_end" type="none" roadId="2" ds="6.37866224067215625837e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="EastToSouth_start" type="none" roadId="3" ds="8.78420814121753323889e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="EastToSouth_end" type="none" roadId="4" ds="2.50000000000000000000e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="NorthToEast_start" type="none" roadId="2" ds="6.43964725903607337898e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="NorthToEast_end" type="none" roadId="3" ds="8.94838654685128176425e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="SouthToWest_start" type="none" roadId="4" ds="4.84829705933725474409e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="SouthToWest_end" type="none" roadId="1" ds="7.69800763018946554439e+00"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

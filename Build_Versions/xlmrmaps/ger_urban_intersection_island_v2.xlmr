@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_urban_intersection_island_v2" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>sjanman</author>
+        <timestamp>1726041319</timestamp>
+        <xodrFile>/opt/maps/germany/urban/ger_urban_intersection_island_v2/ger_urban_intersection_island_v2.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_urban_intersection_island_v2/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="NorthToWest" startRoadId="1">
+            <road id="1" successor="6" />
+            <road id="6" successor="3" />
+            <road id="3" />
+        </route>
+        <route name="default_route" startRoadId="3">
+            <road id="3" successor="17" />
+            <road id="17" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="SouthToEast" startRoadId="0">
+            <road id="0" successor="28" />
+            <road id="28" successor="2" />
+            <road id="2" />
+        </route>
+        <route name="EastToNorth" startRoadId="2">
+            <road id="2" successor="24" />
+            <road id="24" successor="1" />
+            <road id="1" />
+        </route>
+        <route name="WestToSouth" startRoadId="3">
+            <road id="3" successor="10" />
+            <road id="10" successor="0" />
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="NorthToWest_start" type="none" roadId="1" ds="1.07266956007029762077e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="NorthToWest_end" type="none" roadId="3" ds="6.11287316573786483787e+02"
+            t="-1.00000000000000000000e+00" />
+        <landmark name="default_route_start" type="none" roadId="3" ds="7.23235558131563305295e+00"
+            t="-1.00000000000000000000e+00" />
+        <landmark name="default_route_end" type="none" roadId="2" ds="7.89338972320324160137e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="SouthToEast_start" type="none" roadId="0" ds="7.01979383373437372029e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="SouthToEast_end" type="none" roadId="2" ds="3.12240023703153269707e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="EastToNorth_start" type="none" roadId="2" ds="1.20347401652123863869e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="EastToNorth_end" type="none" roadId="1" ds="1.23566128032536767023e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="WestToSouth_start" type="none" roadId="3" ds="6.70967546250434111244e+02"
+            t="-1.00000000000000000000e+00" />
+        <landmark name="WestToSouth_end" type="none" roadId="0" ds="6.97773550326375357145e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="StopLineSouthEast" type="milestone" roadId="28"
+            ds="1.69518677921270928266e+01" t="0.00000000000000000000e+00" />
+        <landmark name="StopLineSouthWest" type="milestone" roadId="10"
+            ds="1.52584134179782644480e+01" t="0.00000000000000000000e+00" />
+        <landmark name="StopLineEast" type="milestone" roadId="15" ds="4.42969794990821341685e+01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="StopLineSouth" type="milestone" roadId="0" ds="7.96610626932331683747e+02"
+            t="0.00000000000000000000e+00" />
+        <landmark name="StopLineWest" type="milestone" roadId="3" ds="8.00031567557843686700e+02"
+            t="-1.00000000000000000000e+00" />
+        <landmark name="StopLineNorth" type="milestone" roadId="1" ds="8.07330546358691614195e-01"
+            t="0.00000000000000000000e+00" />
+        <landmark name="StopLineNorthEast" type="milestone" roadId="24"
+            ds="1.30313767805601585792e+01" t="2.94660941505554241360e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

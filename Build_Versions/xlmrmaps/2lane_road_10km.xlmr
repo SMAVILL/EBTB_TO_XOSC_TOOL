@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="DTR3-TS4870" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_v1.1.1.xsd">
+    <header>
+        <author>SPICKMA</author>
+        <timestamp>1637922892</timestamp>
+        <xodrFile>/opt/maps/germany/rural/2lane_road_10km/2lane_road_10km.xodr</xodrFile>
+    </header>
+    <routes>
+        <route name="WestToEast" startRoadId="1">
+            <road id="1" />
+        </route>
+        <route name="EastToWest" startRoadId="1">
+            <road id="1" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="WestToEast_start" type="none" roadId="1" ds="5.01753405794988793787e+00"
+            t="0.00000000000000000000e+00" />
+        <landmark name="WestToEast_end" type="none" roadId="1" ds="1.99950610496913868701e+04"
+            t="0.00000000000000000000e+00" />
+        <landmark name="EastToWest_start" type="none" roadId="1" ds="1.99950284864270215621e+04"
+            t="0.00000000000000000000e+00" />
+        <landmark name="EastToWest_end" type="none" roadId="1" ds="5.00344583767582662404e+00"
+            t="0.00000000000000000000e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

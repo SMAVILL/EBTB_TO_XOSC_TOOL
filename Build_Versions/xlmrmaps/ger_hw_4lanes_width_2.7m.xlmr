@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="ger_hw_4lanes_width_2.7m" version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>ubuntu</author>
+        <timestamp>1712905722</timestamp>
+        <xodrFile>/opt/maps/germany/highway/ger_hw_4lanes_width_2.7m/ger_hw_4lanes_width_2.7m.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/ger_hw_4lanes_width_2.7m/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="0">
+            <road id="0" />
+        </route>
+        <route name="LeftToRight" startRoadId="0">
+            <road id="0" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="0" ds="7.97453233693204310839e-01"
+            t="-8.81039260888591080345e+00" />
+        <landmark name="default_route_end" type="none" roadId="0" ds="1.39944727989433158655e+03"
+            t="-9.29985886493588687074e+00" />
+        <landmark name="LeftToRight_start" type="none" roadId="0" ds="2.40471003960310554248e+01"
+            t="-9.29985886493512836637e+00" />
+        <landmark name="LeftToRight_end" type="none" roadId="0" ds="1.08937040668715235370e+03"
+            t="-9.54459199295836491217e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>

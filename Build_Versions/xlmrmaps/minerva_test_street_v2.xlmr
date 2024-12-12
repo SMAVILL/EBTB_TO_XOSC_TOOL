@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lmr id="minerva_test_street_nv" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="/opt/stf/share/language_definition/lmr_latest.xsd">
+    <header>
+        <author>spickma</author>
+        <timestamp>1700054190</timestamp>
+        <xodrFile>/opt/maps/germany/highway/minerva_test_street/minerva_test_street_v2.xodr</xodrFile>
+        <map3DAssetURL>{/app/drivesim/defaultNucleusRoot}/Projects/ds2_content/germany/scene_minerva_test_street/levels/main/main.usd</map3DAssetURL>
+    </header>
+    <routes>
+        <route name="default_route" startRoadId="10">
+            <road id="10" successor="9" />
+            <road id="9" successor="7" />
+            <road id="7" successor="1" />
+            <road id="1" successor="2" />
+            <road id="2" successor="4" />
+            <road id="4" successor="11" />
+            <road id="11" successor="8" />
+            <road id="8" successor="6" />
+            <road id="6" successor="3" />
+            <road id="3" successor="0" />
+            <road id="0" successor="5" />
+            <road id="5" />
+        </route>
+    </routes>
+    <landmarks>
+        <landmark name="default_route_start" type="none" roadId="10" ds="5.22201366893223308807e+01"
+            t="1.43733788964407693811e+01" />
+        <landmark name="default_route_end" type="none" roadId="5" ds="1.77310504385924758708e+02"
+            t="-4.79859593379308257965e+00" />
+    </landmarks>
+    <parkingbays />
+</lmr>
