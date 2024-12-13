@@ -60,7 +60,6 @@ class EgoScnearioActs:
         self.register_dispatch.register(EgoAPI.Dri_SetAccelerationPedal, self.throttle_acts)
         self.register_dispatch.register(EgoAPI.Dri_SetBrakePedal, self.brake_acts)
         self.register_dispatch.register(EgoAPI.Dri_SetLateralDisplacement, self.dri_setLateralDisplacement)
-
         self.register_dispatch.register(EgoAPI.Dri_SetLateralReference, self.dri_setLateralReference)
         #self.register_dispatch.register(OtherAPI.E_ObjectDistanceLaneBased, self.ego_ObjectDistanceLaneBased)
         self.register_dispatch.register(OtherAPI.E_Time, self.e_time)
@@ -155,13 +154,14 @@ class EgoScnearioActs:
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.prepare_vehicle(all_ego_events,state_key)
 
+    #
     def ego_E_Landmark(self,all_ego_events,state_key):
         if EgoScnearioActs.flag == 0:
-            if self.EGO_algo_acts.E_landmark(all_ego_events,state_key) == "Stop":
+            result = self.EGO_algo_acts.E_landmark(all_ego_events, state_key)
+            if result == "Stop":
                 EgoScnearioActs.flag = 1
-                EgoScnearioActs.error_name = "E_landMark"
-            else:
-                self.EGO_algo_acts.E_landmark(all_ego_events, state_key)
+                EgoScnearioActs.error_name = "E_Landmark"
+
 
 
     def e_time(self,all_ego_events,state_key):

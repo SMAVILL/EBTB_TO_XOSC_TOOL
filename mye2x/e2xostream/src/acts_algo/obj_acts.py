@@ -48,10 +48,7 @@ class Obj_Acts:
         self.lane = 0
         shared_data.event_counter_obj = 1
         self.last_index = {}
-        #
-        # for key,value in self.states_analysis.items():
-        #     print(key)
-        #     print(value)
+
 
 
     def Obj_Accelration_act(self, all_target_events,state_key,target_name):
@@ -59,6 +56,7 @@ class Obj_Acts:
 
 
     def obj_changelane(self, all_target_events,state_key,target_name):
+
         try:
             event_name = f"event{shared_data.event_counter_obj}"
             action_name = f"{target_name}:event{shared_data.event_counter_obj}"
@@ -66,28 +64,17 @@ class Obj_Acts:
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target_name}:event{shared_data.event_counter_obj - 1}", delay=0)
 
-
-            for state_id, state_info in self.states_analysis.items():
-                if 'ObjectActions' in state_info and state_info['ObjectActions']:
-                    if target_name in state_info['ObjectActions']:
-                        obj1_actions = state_info['ObjectActions'][target_name]
-                        for action in obj1_actions:
-                            if action['Action'] == 'Obj_ChangeLane':
-                                direction = action['Parameters'][0]['Direction']
-                                value_of_dist = action['Parameters'][0]['TransitionDistance']
+            direction,value_of_dist = EBTB_API_data.obj_change_lane_details(self.states_analysis,target_name)
 
 
-            for k, v in self.states_analysis.items():
-                for obj_id, actions in v.get('ObjectActions', {}).items():
-                    for action in actions:
-                        if action.get('Action') == ObjAPI.Obj_Initialize:
-                            for param in action.get('Parameters', []):
-                                if param.get('ObjectId') == target_name:
-                                    present_lane = param.get('LaneSelection')
 
-            start_action = self.VehicleDefines.create_obj_lanechange_action(target_name, direction, present_lane,value_of_dist,
+            present_lane = shared_data.obj_lane_init[target_name]
+
+
+            start_action,upd_lane = self.VehicleDefines.create_obj_lanechange_action(target_name, direction, present_lane,value_of_dist,
                                                                             state_data=self.states_analysis,
                                                                             param_data=self.paramlist_analysis)
+            shared_data.latest_lane_ego_ref = upd_lane
             target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
                                                                                start_action=start_action,event_name=event_name,action_name=action_name)
 
@@ -126,7 +113,6 @@ class Obj_Acts:
         action_name = f"{target_name}:event{shared_data.event_counter_obj}"
 
         if shared_data.event_counter_obj == 1:
-            #start_trig = self.VehicleDefines.create_target_event(value=15)
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"SimOneDriver:event{shared_data.count-1}", delay=0)
 

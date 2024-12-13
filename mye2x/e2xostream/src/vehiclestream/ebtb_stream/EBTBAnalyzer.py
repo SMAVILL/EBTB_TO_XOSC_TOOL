@@ -83,6 +83,7 @@ def categorize_actions(entry, categories, keywords):
     """
     if any(keyword in entry['tag'] for keyword in keywords['ego']):
         categories["ego"].append(entry)
+
     elif any(keyword in entry['tag'] for keyword in keywords['objects']) or entry['tag'].startswith('ObjP_'):
         object_id = None
         for param in entry['parameters']:
@@ -90,15 +91,8 @@ def categorize_actions(entry, categories, keywords):
                 object_id = param['value']
                 break
         if object_id is None:
-            # object_id = next((param['value'] for param in entry['parameters'] if param['tag'] == 'ObjectId'),
-            #                  next((param['value'] for param in entry['parameters'] if param['tag'] == 'Object'), None))
-            #
-            # object_id = next(
-            #     (param['value'] for param in entry['parameters']
-            #      if param['tag'] in ['ObjectId', 'Object'] and param['value'] != 'SysVehicle'),
-            #     None
-            # )
             object_id = next((param['value'] for param in entry['parameters'] if param['tag'] == 'ObjectId'), None)
+
         if object_id:
             categories["objects"][object_id].append(entry)
 
@@ -129,31 +123,7 @@ def process_entries(root, keywords, tag):
             if child.tag in [OtherAPI.E_ObjectDistanceLaneBased, OtherAPI.E_TimeToCollision,OtherAPI.E_DistanceTimeBased, OtherAPI.E_ADASState,OtherAPI.E_SysVehicleVelocity]:
                 specific_details = parse_element_details(child)
                 events_data[child.tag] = specific_details
-                # Directly add the specific details to the relevant category
-                # if child.tag == 'E_ObjectDistanceLaneBased':
-                #     # This assumes a structure where distance information is relevant to objects
-                #     # You may need to adjust based on your actual data and intent
-                #     #object_id = specific_details.get('ObjectID')# Hypothetical way to get an ObjectID, adjust as necessary
-                #     print("element_id", element_id)
-                #     print("info", info.items())
-                # #     if object_id:
-                # #         info[element_id]["objects"][object_id].append({"tag": child.tag, "details": specific_details})
-                # #         E_ObjectDistanceLaneBased["E_ObjectDistanceLaneBased"] = specific_details
-                # elif child.tag == 'E_TimeToCollision':
-                #     #object_id = specific_details.get('ObjectID')
-                #     # Hypothetical way to get an ObjectID, adjust as necessary
-                #     print("element_id",element_id)
-                #     print("info", info.items())
-                #     # info[element_id]["ego"].append([{"tag": child.tag,"parameters":[ "value": specific_details})
-                #     # E_TimeToCollision["E_TimeToCollision"] = specific_details
-                #    # Assuming TimeToCollision is an ego action; adjust this assumption as necessary
-                # elif child.tag == 'E_ADASState':
-                #     #object_id = specific_details.get('ObjectID')
-                #     # Hypothetical way to get an ObjectID, adjust as necessary
-                #     print("element_id", element_id)
-                #     print("info", info.items())
 
-            # continue
 
             entry = {
                 "tag": child.tag,
@@ -207,8 +177,23 @@ def construct_analysis_dict(info):
 
     return analysis_dict
 
+def extract_tags(data):
+    tags = []
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if key == 'tag':
+                tags.append(value)
+            else:
+                tags.extend(extract_tags(value))
+    elif isinstance(data, list):
+        for item in data:
+            tags.extend(extract_tags(item))
+    return tags
 
+parking_flag = 0
+error_name = None
 def main(file_path):
+    global parking_flag,error_name
     print("read",file_path)
     """
     Main run
@@ -231,10 +216,16 @@ def main(file_path):
     states_info, state_events = process_entries(root, keywords, "State")
     paramlist_info, param_events = process_entries(root, keywords, "ParameterList")
 
+    all_tags = extract_tags(paramlist_info)
+    if "EnvP_ParkingBayStyle" in all_tags or "EnvP_ParkingBay" in all_tags:
+        parking_flag = 1
+        error_name = "EnvP_ParkingBay or EnvP_ParkingBayStyle"
+
 
     states_analysis = construct_analysis_dict(states_info)
-    print("states",states_analysis.items())
+
     paramlist_analysis = construct_analysis_dict(paramlist_info)
+
 
     return states_analysis, paramlist_analysis, state_events, param_events
 

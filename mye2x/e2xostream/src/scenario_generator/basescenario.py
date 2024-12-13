@@ -12,6 +12,7 @@ from e2xostream.config.api_constants import (api_methods_constants as ApiMethods
                                              ego_api_constants as EgoAPI,
                                              obj_api_constants as ObjAPI,
                                              other_api_constants as OtherAPI)
+from e2xostream.src.acts_algo import shared_data
 
 
 class BaseScenario:
@@ -23,6 +24,7 @@ class BaseScenario:
         road_len = None
         x_value = None
         envp_lane_selection = None
+        shared_data.obj_lane_init = {}
 
     def trigger_condition(self, targetname):
         """
@@ -309,7 +311,7 @@ class BaseScenario:
         """
         try:
             global road_len, x_value, envp_lane_selection
-            landmark_start_value = EBTB_API_data.ego_landmark_start_init(paramlist_analysis=paramlist_analysis)
+            landmark_start_value,road_id = EBTB_API_data.ego_landmark_start_init(paramlist_analysis=paramlist_analysis)
             landmark_start_value = float(landmark_start_value)
             envp_landmark_offset = EBTB_API_data.get_landmark_offset_ego(paramlist_analysis=paramlist_analysis)
             envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=paramlist_analysis)
@@ -331,58 +333,18 @@ class BaseScenario:
                 else:
                     x_value = float(envp_landmark_offset)
 
-            if (envp_lane_selection == "Right1"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=-1,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Right2"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=-2,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Right3"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=-3,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Right4"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=-4,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Right5"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=-5,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Right6"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=-6,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Left1"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=1,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Left2"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=2,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Left3"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=3,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Left4"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=4,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Left5"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=5,
-                                                   x=x_value, offset=offset)
-            elif (envp_lane_selection == "Left6"):
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=6,
-                                                   x=x_value, offset=offset)
-            else:
-                self.VehicleDefines.ego_initialize(init=init, step_time=step_time, ini_speed=0,
-                                                   y=-4.625,
-                                                   x=x_value, offset=offset)
+            lane_selection_dict = {
+                "Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
+                "Left1": 1, "Left2": 2, "Left3": 3, "Left4": 4, "Left5": 5, "Left6": 6
+            }
+
+            # Default value for unmatched lane selection
+            y_value = lane_selection_dict.get(envp_lane_selection, -4.625)
+
+            # Calling the ego_initialize method with the selected or default y value
+            self.VehicleDefines.ego_initialize(init=init, step_time=step_time, road_id=road_id,ini_speed=0,
+                                               y=y_value, x=x_value, offset=offset)
+
         except:
             print("err")
 
@@ -396,7 +358,6 @@ class BaseScenario:
         """
         try:
             try:
-                print("111")
                 global road_len
 
 
@@ -407,7 +368,7 @@ class BaseScenario:
 
 
 
-                landmark_start = EBTB_API_data.obj_landmark_start_init(states_analysis=states_analysis,
+                landmark_start,road_id1 = EBTB_API_data.obj_landmark_start_init(states_analysis=states_analysis,
                                                                        target_name=target_name,
                                                                        paramlist_analysis=paramlist_analysis)
 
@@ -432,145 +393,70 @@ class BaseScenario:
                     else:
                         x_val = float(obj_landmark_offset)
 
+                lane_selection_map = {
+                    "Right1": -1,
+                    "Right2": -2,
+                    "Right3": -3,
+                    "Right4": -4,
+                    "Right5": -5,
+                    "Right6": -6,
+                    "Left1": 1,
+                    "Left2": 2,
+                    "Left3": 3,
+                    "Left4": 4,
+                    "Left5": 5,
+                    "Left6": 6
+                }
+
+                y_val = lane_selection_map.get(obj_lane_selection, -4.625)  # Default to -4.625 if no match
+
+                self.VehicleDefines.target_initialize(init=init, step_time=step_time,road_id=road_id1,
+                                                      targetname=target_name, x=x_val, y=y_val, offset=offset)
+                shared_data.obj_lane_init[target_name] = obj_lane_selection
 
 
-                if (obj_lane_selection == "Right1"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name, x=x_val, y=-1, offset=offset)
-                elif (obj_lane_selection == "Right2"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-2,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Right3"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-3,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Right4"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-4,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Right5"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-5,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Right6"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-6,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left1"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=1,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left2"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=2,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left3"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=3,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left4"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=4,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left5"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=5,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left6"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=6,
-                                                          x=x_val, offset=offset)
-                else:
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-4.625,
-                                                          x=x_val, offset=offset)
+
+
             except:
-                print("except")
-                global x_value, envp_lane_selection
+
+
+                global x_value, envp_lane_selection,road_id
                 obj_lane_selection = envp_lane_selection
 
-                Longitudinal, Lateral = EBTB_API_data.get_obj_intialise(states_analysis=states_analysis,
+                Longitudinal, Lateral, ref_obj = EBTB_API_data.get_obj_intialise(states_analysis=states_analysis,
                                                                         target_name=target_name)
+
                 Longitudinal = float(Longitudinal)
                 x_val = x_value + Longitudinal
                 x_val = float(x_val)
                 offset = float(Lateral)
 
-                if (obj_lane_selection == "Right1"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name, x=x_val, y=-1, offset=offset)
-                elif (obj_lane_selection == "Right2"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-2,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Right3"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-3,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Right4"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-4,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Right5"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-5,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Right6"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-6,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left1"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=1,
-                                                          x=x_val, offset=offset, )
-                elif (obj_lane_selection == "Left2"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=2,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left3"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=3,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left4"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=4,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left5"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=5,
-                                                          x=x_val, offset=offset)
-                elif (obj_lane_selection == "Left6"):
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=6,
-                                                          x=x_val, offset=offset)
-                else:
-                    self.VehicleDefines.target_initialize(init=init, step_time=step_time,
-                                                          targetname=target_name,
-                                                          y=-4.625,
-                                                          x=x_val, offset=offset)
+                # Dictionary mapping obj_lane_selection to corresponding y values
+                lane_selection_map = {
+                    "Right1": -1,
+                    "Right2": -2,
+                    "Right3": -3,
+                    "Right4": -4,
+                    "Right5": -5,
+                    "Right6": -6,
+                    "Left1": 1,
+                    "Left2": 2,
+                    "Left3": 3,
+                    "Left4": 4,
+                    "Left5": 5,
+                    "Left6": 6
+                }
+
+                # Get the corresponding y value from the dictionary, defaulting to -4.625 if no match
+                y_val = lane_selection_map.get(obj_lane_selection, -4.625)
+
+                # Single call to target_initialize with the determined y value
+                self.VehicleDefines.target_initialize(init=init, step_time=step_time,road_id=road_id,
+                                                      targetname=target_name, x=x_val, y=y_val, offset=offset)
+                shared_data.obj_lane_init[target_name] = obj_lane_selection
+
+
+
+
         except:
             pass
