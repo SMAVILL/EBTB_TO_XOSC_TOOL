@@ -5,7 +5,7 @@ from e2xostream.stk.scenariogeneration import xosc, prettyprint, ScenarioGenerat
 from e2xostream.stk.vehicledynamics.VehicleControl import VehicleControlMovements as vehiclecontrol
 from e2xostream.stk.vehicledynamics.DataControl import DataControls as datacontrol
 from e2xostream.stk.vehicledynamics.VehicleScenarioSetup import VehicleScenario
-from e2xostream import xlmrmaps, xodrmaps
+
 from e2xostream.src.vehiclestream.ebtb_stream import EBTBAnalyzer, EBTB_API_data
 from e2xostream.config import default_properties, global_parameters, settings
 from e2xostream.config.api_constants import (api_methods_constants as ApiMethods,

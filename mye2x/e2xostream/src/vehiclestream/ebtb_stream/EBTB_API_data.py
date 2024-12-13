@@ -10,7 +10,7 @@ from e2xostream.config.api_constants import (api_methods_constants as ApiMethods
                                              obj_api_constants as ObjAPI,
                                              other_api_constants as OtherAPI)
 from e2xostream.config.api_constants import api_methods_constants as AMC
-from e2xostream import xlmrmaps,xodrmaps
+
 
 
 
