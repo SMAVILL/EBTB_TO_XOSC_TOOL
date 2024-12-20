@@ -54,15 +54,13 @@ class EgoScnearioActs:
 
     def maneuver_api_mapping(self):
 
-        self.register_dispatch.register(EgoAPI.Dri_PrepareVehicle, self.prepare_vehicle)
+        #self.register_dispatch.register(EgoAPI.Dri_PrepareVehicle, self.prepare_vehicle)
         self.register_dispatch.register(OtherAPI.E_PrepareVehicle,self.E_PrepareVehicle)
         self.register_dispatch.register(EgoAPI.Dri_SetLongitudinalSpeed,self.initial_acceleration)
         self.register_dispatch.register(EgoAPI.Dri_SetAccelerationPedal, self.throttle_acts)
         self.register_dispatch.register(EgoAPI.Dri_SetBrakePedal, self.brake_acts)
         self.register_dispatch.register(EgoAPI.Dri_SetLateralDisplacement, self.dri_setLateralDisplacement)
-
         self.register_dispatch.register(EgoAPI.Dri_SetLateralReference, self.dri_setLateralReference)
-        #self.register_dispatch.register(OtherAPI.E_ObjectDistanceLaneBased, self.ego_ObjectDistanceLaneBased)
         self.register_dispatch.register(OtherAPI.E_Time, self.e_time)
         self.register_dispatch.register(OtherAPI.E_SysVehicleVelocity, self.E_sysvehiclevelocity)
         self.register_dispatch.register(OtherAPI.E_DistanceTimeBased, self.ego_E_DistanceTimeBased)
@@ -122,6 +120,21 @@ class EgoScnearioActs:
         self.register_dispatch.register(EgoAPI.Sys_SetTransportMode, self.ego_Sys_SetTransportMode)
         self.register_dispatch.register(OtherAPI.TBA_RunDiagnosticService, self.ego_TBA_RunDiagnosticService)
         self.register_dispatch.register(OtherAPI.TBA_WriteEvaluationEvent, self.ego_TBA_WriteEvaluationEvent)
+        self.register_dispatch.register(OtherAPI.E_ADASState, self.e_adas)
+        self.register_dispatch.register(OtherAPI.E_ChangeACCSpeed, self.e_change_acc_speed)
+        self.register_dispatch.register(OtherAPI.E_ChangeVSLSpeed, self.e_change_vsl_speed)
+        self.register_dispatch.register(OtherAPI.E_CompareSignal, self.e_compare_signal)
+        self.register_dispatch.register(OtherAPI.E_ConfigurationCollisionAvoidanceFunction, self.e_configuration_collision_avoidance)
+        self.register_dispatch.register(OtherAPI.E_ConfigurationDrivingFunction, self.e_configuration_drivingfunc)
+        self.register_dispatch.register(OtherAPI.E_DiagnosticResult, self.e_diagnostic_result)
+        self.register_dispatch.register(OtherAPI.E_IDCSystemState, self.e_IDC_Systemstate)
+        self.register_dispatch.register(OtherAPI.E_ParkAppActionFinished, self.e_park_appactionfinished)
+        self.register_dispatch.register(OtherAPI.E_ParkingFinished, self.e_parking_finished)
+        self.register_dispatch.register(OtherAPI.E_ParkingSpaceDetected, self.e_parking_space_detected)
+        self.register_dispatch.register(OtherAPI.E_SetBeltState, self.e_set_belt_state)
+        self.register_dispatch.register(OtherAPI.E_StepOut, self.e_stepout)
+        self.register_dispatch.register(OtherAPI.E_SwitchToACCDriving, self.e_switchtoACCdriving)
+        self.register_dispatch.register(OtherAPI.E_SwitchToVSLDriving, self.e_switchtoVSLDriving)
 
 
     def check_api_dispatch_function(self, all_ego_events):
@@ -155,22 +168,20 @@ class EgoScnearioActs:
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.prepare_vehicle(all_ego_events,state_key)
 
+    #
     def ego_E_Landmark(self,all_ego_events,state_key):
         if EgoScnearioActs.flag == 0:
-            if self.EGO_algo_acts.E_landmark(all_ego_events,state_key) == "Stop":
+            result = self.EGO_algo_acts.E_landmark(all_ego_events, state_key)
+            if result == "Stop":
                 EgoScnearioActs.flag = 1
-                EgoScnearioActs.error_name = "E_landMark"
-            else:
-                self.EGO_algo_acts.E_landmark(all_ego_events, state_key)
+                EgoScnearioActs.error_name = "E_Landmark"
+
 
 
     def e_time(self,all_ego_events,state_key):
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.e_time(all_ego_events,state_key)
-            # if self.EGO_algo_acts.e_time(all_ego_events, state_key) == "Stop":
-            #     EgoScnearioActs.flag = 1
-            # else:
-            #     self.EGO_algo_acts.e_time(all_ego_events, state_key)
+
 
     def throttle_acts(self, all_ego_events,state_key):
         # Ego Throttle act
@@ -440,3 +451,63 @@ class EgoScnearioActs:
     def E_PrepareVehicle(self, all_ego_events, state_key):
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.E_PrepareVehicle(all_ego_events, state_key)
+
+    def e_adas(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_adas(all_ego_events, state_key)
+
+    def e_change_acc_speed(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_change_acc_speed(all_ego_events, state_key)
+
+    def e_change_vsl_speed(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_change_vsl_speed(all_ego_events, state_key)
+
+    def e_compare_signal(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_compare_signal(all_ego_events, state_key)
+
+    def e_configuration_collision_avoidance(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_configuration_collision_avoidance(all_ego_events, state_key)
+
+    def e_configuration_drivingfunc(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_configuration_drivingfunc(all_ego_events, state_key)
+
+    def e_diagnostic_result(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_diagnostic_result(all_ego_events, state_key)
+
+    def e_IDC_Systemstate(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_IDC_Systemstate(all_ego_events, state_key)
+
+    def e_parking_space_detected(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_parking_space_detected(all_ego_events, state_key)
+
+    def e_park_appactionfinished(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_park_appactionfinished(all_ego_events, state_key)
+
+    def e_parking_finished(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_parking_finished(all_ego_events, state_key)
+
+    def e_set_belt_state(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_set_belt_state(all_ego_events, state_key)
+
+    def e_stepout(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_stepout(all_ego_events, state_key)
+
+    def e_switchtoACCdriving(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_switchtoACCdriving(all_ego_events, state_key)
+
+    def e_switchtoVSLDriving(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.e_switchtoVSLDriving(all_ego_events, state_key)

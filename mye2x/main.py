@@ -16,6 +16,7 @@ import tkinter as tk
 from tkinter import messagebox
 from e2xostream.src.E2X_Convert import E2XOStream
 from e2xostream.src.vehiclestream.xosc_stream.ego_mapping_acts import EgoScnearioActs
+from e2xostream.src.vehiclestream.ebtb_stream import EBTBAnalyzer
 
 
 
@@ -316,18 +317,31 @@ if __name__ == "__main__":
 
         #logger.error(f"An  occurred: {str(e)}")
         for xml_file in xml_file_path:
+            print("xml",xml_file)
+            print(destination_directory)
             try:
-                E2XObj.XOSCStream(destination_directory=destination_directory,
+                destination_file_path =E2XObj.XOSCStream(destination_directory=destination_directory,
                                   original_file_path=original_file_path,
                                   xml_file_path=xml_file,
                                   report_path=report_path,
                                   esmini_path=esmini_path)
+
 
                 if EgoScnearioActs.flag == 1:
                     os.remove(E2XOStream.new_file_path)
                     EgoScnearioActs.flag = 0
                     logger.error(f"Check in API {EgoScnearioActs.error_name}  - {E2XOStream.new_file_path}")
                     EgoScnearioActs.error_name = None
+
+
+                if EBTBAnalyzer.parking_flag == 1:
+                    os.remove(E2XOStream.new_file_path)
+                    EBTBAnalyzer.parking_flag = 0
+                    logger.error(f"Check in API {EBTBAnalyzer.error_name}  - {E2XOStream.new_file_path}")
+                    EBTBAnalyzer.error_name = None
+
+                from e2xostream import merge
+                merge.process_file(destination_file_path, destination_file_path)
 
                 logger.info(f"Processed file in exception handler - {xml_file}")
                 time.sleep(1)

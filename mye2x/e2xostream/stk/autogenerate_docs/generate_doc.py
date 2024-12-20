@@ -89,7 +89,6 @@ def build_docs(source_dir, build_dir):
 
 
 
-
 def parse_python_script(file_path):
     """Parse a Python script to extract functions and their docstrings."""
     with open(file_path, 'r') as file:
