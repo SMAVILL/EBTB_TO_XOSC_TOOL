@@ -279,10 +279,10 @@ if __name__ == "__main__":
                 sys.exit(1)  # Exit if access to the second path is denied
 
             local_path = Path(os.path.join(ebtb, "report", "xlmrmaps"))
-            #copy_xlmr_share_to_local(sharepath1, local_path)
+            copy_xlmr_share_to_local(sharepath1, local_path)
 
             local_path = Path(os.path.join(ebtb, "report", "xodrmaps"))
-            #copy_xodr_share_to_local(sharepath, local_path)
+            copy_xodr_share_to_local(sharepath, local_path)
 
         except Exception as e:
             logger.error(f"An unexpected error occurred: {str(e)}")
