@@ -310,13 +310,15 @@ class BaseScenario:
 
         """
         try:
-            global road_len, x_value, envp_lane_selection
+            global road_len, x_value, envp_lane_selection,road_id
             landmark_start_value,road_id = EBTB_API_data.ego_landmark_start_init(paramlist_analysis=paramlist_analysis)
+            print("roadego",road_id,landmark_start_value)
             landmark_start_value = float(landmark_start_value)
             envp_landmark_offset = EBTB_API_data.get_landmark_offset_ego(paramlist_analysis=paramlist_analysis)
             envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=paramlist_analysis)
             road_len = EBTB_API_data.extract_lenthoflane(paramlist_analysis=paramlist_analysis)
             offset = EBTB_API_data.get_ego_initialise(paramlist_analysis=paramlist_analysis)
+            print(envp_landmark_offset,envp_lane_selection,road_len,offset)
 
             envp_landmark_offset = float(envp_landmark_offset)
 
@@ -342,7 +344,7 @@ class BaseScenario:
             y_value = lane_selection_dict.get(envp_lane_selection, -4.625)
 
             # Calling the ego_initialize method with the selected or default y value
-            self.VehicleDefines.ego_initialize(init=init, step_time=step_time, road_id=road_id,ini_speed=0,
+            self.VehicleDefines.ego_initialize(init=init, step_time=step_time, road_id=road_id,
                                                y=y_value, x=x_value, offset=offset)
 
         except:
@@ -357,6 +359,7 @@ class BaseScenario:
 
         """
         try:
+
             try:
                 global road_len
 
@@ -417,10 +420,12 @@ class BaseScenario:
 
 
 
+
             except:
 
 
                 global x_value, envp_lane_selection,road_id
+                print("road",road_id,envp_lane_selection,x_value)
                 obj_lane_selection = envp_lane_selection
 
                 Longitudinal, Lateral, ref_obj = EBTB_API_data.get_obj_intialise(states_analysis=states_analysis,
@@ -454,8 +459,6 @@ class BaseScenario:
                 self.VehicleDefines.target_initialize(init=init, step_time=step_time,road_id=road_id,
                                                       targetname=target_name, x=x_val, y=y_val, offset=offset)
                 shared_data.obj_lane_init[target_name] = obj_lane_selection
-
-
 
 
         except:

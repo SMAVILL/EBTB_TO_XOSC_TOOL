@@ -12,12 +12,6 @@ from e2xostream.config.api_constants import (api_methods_constants as ApiMethods
 from e2xostream.config.api_constants import api_methods_constants as AMC
 
 
-
-
-
-
-
-
 def EBTB_anlyses_info(paramlist_analysis, states_analysis):
     """
     EBTB Anlyzed information display
@@ -67,7 +61,6 @@ def get_ego_obj_speed_transition_time(states_analysis):
                         extracted_info[obj_key].append(
                             {'TargetSpeed': target_speed, 'TransitionTime': transition_time})
 
-    print("extras", extracted_info)
     # Ensure all values are lists for consistency
     for key, value in extracted_info.items():
         if isinstance(value, dict):
@@ -263,7 +256,6 @@ def xlmr_to_xodr_mapping(paramlist_analysis):
     return xodr_path
 
 def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
-    print("enter")
 
     global landmark_type
     for key, value in states_analysis.items():
@@ -310,7 +302,6 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                 root = tree.getroot()
 
                 ds_value_float = None
-                print(landmark_type,landmark_offset,obj_ref)
                 for landmark in root.findall(".//landmark"):
                     if landmark.get('name') == landmark_type:
                         ds_value = landmark.get('ds',None)
@@ -624,18 +615,19 @@ def get_TBA_key_value(states_analysis):
 
 
 def get_landmark_offset_ego(paramlist_analysis):
-    """
-    Get the Landmark offset of Ego
-    Returns
-    -------
-
-    """
-    envp_landmark_offset = 10.125
+    # """
+    # Get the Landmark offset of Ego
+    # Returns
+    # -------
+    #
+    # """
+    envp_landmark_offset = 0
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
-        parameters = ego_action['Parameters']
-        for parameter in parameters:
-            envp_landmark_offset = parameter.get(AMC.LandmarkOffset)
+        if ego_action['Action'] == 'EnvP_RoadNetwork':  # Check for specific action
+            parameters = ego_action.get('Parameters', [])  # Safely get 'Parameters' key
+            for parameter in parameters:
+                envp_landmark_offset = parameter.get('LandmarkOffset')
     return envp_landmark_offset
 
 def get_lane_selection_ego(paramlist_analysis):
@@ -647,10 +639,12 @@ def get_lane_selection_ego(paramlist_analysis):
     """
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
-        parameters = ego_action['Parameters']
-        for parameter in parameters:
-            envp_lane_selection = parameter.get(AMC.LaneSelection)
+        if ego_action['Action'] == 'EnvP_RoadNetwork':  # Check for specific action
+            parameters = ego_action.get('Parameters', [])  # Safely get 'Parameters' key
+            for parameter in parameters:
+                envp_lane_selection = parameter.get('LaneSelection')
     return envp_lane_selection
+
 def get_lane_selection_object(states_analysis, target_name):
     extracted_info = {}
     for k, v in states_analysis.items():
@@ -755,19 +749,23 @@ def get_obj_initialise_ver1(states_analysis,target_name):
 def get_ego_initialise(paramlist_analysis):
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
-        parameters = ego_action['Parameters']
-        for parameter in parameters:
-            lane_offset = parameter.get('LaneOffset',0)
+        if ego_action['Action'] == 'EnvP_RoadNetwork':  # Check for specific action
+            parameters = ego_action.get('Parameters', [])  # Safely get 'Parameters' key
+            for parameter in parameters:
+                lane_offset = parameter.get('LaneOffset',0)
     return lane_offset
+
+
 
 def ego_landmark_start_init(paramlist_analysis):
     global landmark_type
 
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
-        parameters = ego_action['Parameters']
-        for parameter in parameters:
-            landmark_start = parameter.get('LandmarkStart',None)
+        if ego_action['Action'] == 'EnvP_RoadNetwork':  # Check for specific action
+            parameters = ego_action.get('Parameters', [])  # Safely get 'Parameters' key
+            for parameter in parameters:
+                landmark_start = parameter.get('LandmarkStart')
 
     current_directory = os.getcwd()
 
@@ -804,8 +802,9 @@ def ego_landmark_start_init(paramlist_analysis):
                 road_id = 0
                 for landmark in root.findall(".//landmark"):
                     if landmark.get('name') == landmark_start:
+                        print("match")
                         ds_value = landmark.get('ds')
-                        road_id = landmark.get(road_id)
+                        road_id = landmark.get('roadId')
                         ds_value_float = float(ds_value)
 
     return ds_value_float,road_id
@@ -864,10 +863,11 @@ def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
                 root = tree.getroot()
 
                 ds_value_float = None
+                road_id = 0
                 for landmark in root.findall(".//landmark"):
                     if landmark.get('name') == landmark_start:
                         ds_value = landmark.get('ds')
-                        road_id = landmark.get('roadId',0)
+                        road_id = landmark.get('roadId')
                         ds_value_float = float(ds_value)
 
     if ds_value_float:
@@ -1226,7 +1226,7 @@ def ego_set_lateral_disp(ego_lateraldisp_index,states_analysis):
                 try:
                     dispvalue = dispvalue
                 except ValueError:
-                    print(f"Invalid speed value: {dispvalue}")
+                    print(f"Invalid disp value: {dispvalue}")
                     dispvalue = 0
 
             # Increment the index for the next call
@@ -1260,3 +1260,25 @@ def obj_change_lane_details(states_analysis,target_name):
         Direction = extracted_value[0]['Direction']
         value_of_dist = extracted_value[0]['TransitionDistance']
     return Direction,value_of_dist
+
+def obj_lateral_disp(states_analysis,target_name):
+    extracted_info = {}
+    for k, v in states_analysis.items():
+        for obj_id, actions in v.get('ObjectActions', {}).items():
+            for action in actions:
+                if action.get('Action') == ObjAPI.Obj_SetLateralDisplacement:
+                    for param in action.get('Parameters', []):
+                        dispvalue = param.get('TargetDisplacement', 0)
+
+                        # Append the object action information
+                        obj_key = f'{obj_id}Obj_SetLateralDisplacement'
+                        if obj_key not in extracted_info:
+                            extracted_info[obj_key] = []
+                        extracted_info[obj_key].append(
+                            {'TargetDisplacement': dispvalue})
+
+    key_to_access = f"{target_name}Obj_SetLateralDisplacement"
+    if key_to_access in extracted_info:
+        extracted_value = extracted_info[key_to_access]
+        dispvalue = extracted_value[0]['TargetDisplacement']
+    return dispvalue

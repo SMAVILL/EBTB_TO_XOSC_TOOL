@@ -91,6 +91,12 @@ def categorize_actions(entry, categories, keywords):
                 object_id = param['value']
                 break
         if object_id is None:
+            #
+            # object_id = next(
+            #     (param['value'] for param in entry['parameters']
+            #      if param['tag'] in ['ObjectId', 'Object'] and param['value'] != 'SysVehicle'),
+            #     None
+            # )
             object_id = next((param['value'] for param in entry['parameters'] if param['tag'] == 'ObjectId'), None)
 
         if object_id:
@@ -116,14 +122,38 @@ def process_entries(root, keywords, tag):
     events_data = {}
 
     for element in root.findall(f".//{tag}"):
-        element_id = element.attrib.get('id', 'Default')
+        element_id = element.attrib.get('id','Default')
         info[element_id]["info"] = element.attrib
 
         for child in element:
             if child.tag in [OtherAPI.E_ObjectDistanceLaneBased, OtherAPI.E_TimeToCollision,OtherAPI.E_DistanceTimeBased, OtherAPI.E_ADASState,OtherAPI.E_SysVehicleVelocity]:
                 specific_details = parse_element_details(child)
                 events_data[child.tag] = specific_details
+                # Directly add the specific details to the relevant category
+                # if child.tag == 'E_ObjectDistanceLaneBased':
+                #     # This assumes a structure where distance information is relevant to objects
+                #     # You may need to adjust based on your actual data and intent
+                #     #object_id = specific_details.get('ObjectID')# Hypothetical way to get an ObjectID, adjust as necessary
+                #     print("element_id", element_id)
+                #     print("info", info.items())
+                # #     if object_id:
+                # #         info[element_id]["objects"][object_id].append({"tag": child.tag, "details": specific_details})
+                # #         E_ObjectDistanceLaneBased["E_ObjectDistanceLaneBased"] = specific_details
+                # elif child.tag == 'E_TimeToCollision':
+                #     #object_id = specific_details.get('ObjectID')
+                #     # Hypothetical way to get an ObjectID, adjust as necessary
+                #     print("element_id",element_id)
+                #     print("info", info.items())
+                #     # info[element_id]["ego"].append([{"tag": child.tag,"parameters":[ "value": specific_details})
+                #     # E_TimeToCollision["E_TimeToCollision"] = specific_details
+                #    # Assuming TimeToCollision is an ego action; adjust this assumption as necessary
+                # elif child.tag == 'E_ADASState':
+                #     #object_id = specific_details.get('ObjectID')
+                #     # Hypothetical way to get an ObjectID, adjust as necessary
+                #     print("element_id", element_id)
+                #     print("info", info.items())
 
+            # continue
 
             entry = {
                 "tag": child.tag,
@@ -206,7 +236,9 @@ def main(file_path):
 
     """
     keywords = {
-        "ego": ["Dri_", "Sys_", "Ego_", "SysP_", "EnvP_", "TBA_","E_SysVehicleVelocity","E_Time","E_DistanceTimeBased","Ethernet_","E_TimeToCollision","E_ObjectCollision","E_Landmark"],
+        "ego": ["Dri_", "Sys_", "Ego_", "SysP_", "EnvP_", "TBA_","E_SysVehicleVelocity","E_Time","E_DistanceTimeBased","Ethernet_","E_TimeToCollision","E_ObjectCollision","E_Landmark","E_ConfigurationCollisionAvoidanceFunction","E_ConfigurationDrivingFunction",
+                "E_PrepareVehicle","E_ADASState","E_ChangeACCSpeed","E_ChangeVSLSpeed","E_CompareSignal","E_DiagnosticResult","E_IDCSystemState","E_ParkAppActionFinished","E_ParkingFinished",
+                "E_ParkingSpaceDetected","E_SetBeltState","E_StepOut","E_SwitchToACCDriving","E_SwitchToVSLDriving"],
         "objects": ["Obj_", "Object", "ObjP_","E_ObjectDistanceLaneBased"]
     }
 
@@ -223,7 +255,6 @@ def main(file_path):
 
 
     states_analysis = construct_analysis_dict(states_info)
-
     paramlist_analysis = construct_analysis_dict(paramlist_info)
 
 

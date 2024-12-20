@@ -279,10 +279,10 @@ if __name__ == "__main__":
                 sys.exit(1)  # Exit if access to the second path is denied
 
             local_path = Path(os.path.join(ebtb, "report", "xlmrmaps"))
-            copy_xlmr_share_to_local(sharepath1, local_path)
+            #copy_xlmr_share_to_local(sharepath1, local_path)
 
             local_path = Path(os.path.join(ebtb, "report", "xodrmaps"))
-            copy_xodr_share_to_local(sharepath, local_path)
+            #copy_xodr_share_to_local(sharepath, local_path)
 
         except Exception as e:
             logger.error(f"An unexpected error occurred: {str(e)}")
@@ -317,12 +317,15 @@ if __name__ == "__main__":
 
         #logger.error(f"An  occurred: {str(e)}")
         for xml_file in xml_file_path:
+            print("xml",xml_file)
+            print(destination_directory)
             try:
-                E2XObj.XOSCStream(destination_directory=destination_directory,
+                destination_file_path =E2XObj.XOSCStream(destination_directory=destination_directory,
                                   original_file_path=original_file_path,
                                   xml_file_path=xml_file,
                                   report_path=report_path,
                                   esmini_path=esmini_path)
+
 
                 if EgoScnearioActs.flag == 1:
                     os.remove(E2XOStream.new_file_path)
@@ -337,7 +340,8 @@ if __name__ == "__main__":
                     logger.error(f"Check in API {EBTBAnalyzer.error_name}  - {E2XOStream.new_file_path}")
                     EBTBAnalyzer.error_name = None
 
-
+                from e2xostream import merge
+                merge.process_file(destination_file_path, destination_file_path)
 
                 logger.info(f"Processed file in exception handler - {xml_file}")
                 time.sleep(1)

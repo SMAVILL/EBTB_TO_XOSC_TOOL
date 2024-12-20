@@ -68,8 +68,8 @@ class ObjScnearioActs:
 
     def maneuver_api_mapping(self):
 
-        self.register_dispatch.register(ObjAPI.Obj_Initialize,
-                                        self.initial_acceleration_acts)
+        # self.register_dispatch.register(ObjAPI.Obj_Initialize,
+        #                                 self.initial_acceleration_acts)
 
         self.register_dispatch.register(ObjAPI.Obj_SetLongitudinalSpeed,
                                         self.obj_setlongitudinalspeed)
@@ -79,7 +79,7 @@ class ObjScnearioActs:
         self.register_dispatch.register(ObjAPI.Obj_SetLateralDisplacement,
                                         self.obj_setlateraldisplacement)
         self.register_dispatch.register(OtherAPI.E_ObjectDistanceLaneBased,self.obj_distance_lanebased)
-        # self.register_dispatch.register(OtherAPI.E_DistanceTimeBased,self.obj_E_distancetimebased)
+        self.register_dispatch.register(ObjAPI.Obj_SetLateralReference,self.obj_setlateralref)
 
 
     def check_api_dispatch_function(self,all_target_events,target_name):
@@ -127,5 +127,7 @@ class ObjScnearioActs:
         self.Obj_algo_acts.obj_E_ObjectDistanceLaneBased(all_target_events,state_key,target_name)
 
     def obj_E_distancetimebased(self,all_target_events,state_key,target_name):
-        print("111")
         self.Obj_algo_acts.obj_E_DistanceTimeBased(all_target_events,state_key,target_name)
+
+    def obj_setlateralref(self,all_target_events,state_key,target_name):
+        self.Obj_algo_acts.obj_setlateralref(all_target_events,state_key,target_name)

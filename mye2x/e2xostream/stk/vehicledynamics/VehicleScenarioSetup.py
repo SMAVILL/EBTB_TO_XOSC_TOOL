@@ -111,7 +111,7 @@ class VehicleScenario:
 
         init.add_global_action(gloablAction)
 
-    def ego_initialize(self, init, step_time, road_id,ini_speed=0, y=0, x=3.75,offset=0):
+    def ego_initialize(self, init, step_time, road_id, y=0, x=3.75,offset=0):
         # Create a trajectory
         trajectory = xosc.Trajectory("example_trajectory", closed=False)
         # Add a polyline to the trajectory (example)
@@ -121,7 +121,7 @@ class VehicleScenario:
         # if statements for different positions based on EBTB API's
         initialize_position(init, "Ego", step_time,
                             position_types=["LanePosition"],
-                            init_speed=ini_speed,
+                            init_speed=0,
                             x=0, y=0, z=0, h=0, p=0, r=0,
                             dx=0, dy=0, dz=0,
                             road_id=road_id, s=x, t=0,
@@ -131,7 +131,7 @@ class VehicleScenario:
                             route_ref=0,
                             trajectory=trajectory, latitude=0, longitude=0, height=0)
 
-    def target_initialize(self, init, step_time,road_id, targetname="Obj1", ini_speed=0, lane_id=0, x=10, y=-4.625,offset=0):
+    def target_initialize(self, init, step_time,road_id, targetname="Obj1", x=10, y=-4.625,offset=0):
         # targetspeed = xosc.AbsoluteSpeedAction(ini_speed, step_time)
         # targetstart = xosc.TeleportAction(xosc.WorldPosition(x, y, 0, 0, 0, 0))
         # init.add_init_action(targetname, targetspeed)
@@ -146,8 +146,8 @@ class VehicleScenario:
         # if statements for different positions based on EBTB API's
         initialize_position(init, targetname, step_time,
                             position_types=["LanePosition"],
-                            init_speed=ini_speed,
-                            x=x, y=y, z=0, h=0, p=0, r=0,
+                            init_speed=0,
+                            x=0, y=0, z=0, h=0, p=0, r=0,
                             dx=0, dy=0, dz=0,
                             road_id=road_id, s=x, t=0,
                             ds=0, dt=0,
@@ -176,6 +176,7 @@ class VehicleScenario:
         )
 
         return start_trig
+
 
     def absolute_speed_action(self, speed=30):
         start_action = xosc.AbsoluteSpeedAction(
