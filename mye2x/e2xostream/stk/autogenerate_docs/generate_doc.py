@@ -88,11 +88,6 @@ def build_docs(source_dir, build_dir):
     print(f"Documentation built successfully at {build_path}.")
 
 
-import logging
-
-with open("EBTB_TO_XOSC_Conv_Status.log", 'w') as file:
-        pass
-logging.basicConfig(level=logging.DEBUG, filename='EBTB_TO_XOSC_Conv_Status.log', filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
 
 def parse_python_script(file_path):
     """Parse a Python script to extract functions and their docstrings."""

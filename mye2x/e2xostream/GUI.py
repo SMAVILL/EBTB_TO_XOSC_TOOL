@@ -592,12 +592,21 @@ button.custom-button {
     <body>
         <div class="container">
             <h1>EBTB to XOSC Conversion Status</h1>
+            <h2><left> <u>Generated on {current_datetime} </u></left> </h2>
 
-            <h2><left> <u>Total : {total_count} EBTB Files are found in give folder, Generated on {current_datetime} </u></left> </h2>
-            <h2><left> <u>Completely Converted:</strong> {completely_converted_count}</u></left> </h2>
-            <h2><left> <u>Partially Converted:</strong> {partially_converted_count}</u></left> </h2>
-            <h2><left> <u>Not Converted:</strong> {not_converted_count}</u></left> </h2>
-            <h2><left> <u>Total Converted:</strong> {total_converted_count}</u></left> </h2>
+                <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; text-align: left;">
+                <thead><tr><th>Status</th><th>Count</th></tr></thead>
+                <tbody>
+                <tr><td>Total EBTB Files</td><td>{total_count}</td></tr>
+                <tr><td>Completely Converted </td><td>{completely_converted_count}</td></tr>
+                <tr><td>Partially Converted</td><td>{partially_converted_count}</td></tr>
+                <tr><td>Not Converted</td><td>{not_converted_count}</td></tr>  
+                <tr><td><b>Total Converted Files</b></td><td><b>{total_converted_count}</b></td></tr>
+
+
+
+                </tbody>
+                </table>
 
 
             <h3><left> <a href = "{EBTB_paths}"> EBTB Folder </a></left> </h3>

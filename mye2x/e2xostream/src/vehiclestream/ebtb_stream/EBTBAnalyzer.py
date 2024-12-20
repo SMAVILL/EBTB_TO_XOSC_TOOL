@@ -83,6 +83,7 @@ def categorize_actions(entry, categories, keywords):
     """
     if any(keyword in entry['tag'] for keyword in keywords['ego']):
         categories["ego"].append(entry)
+
     elif any(keyword in entry['tag'] for keyword in keywords['objects']) or entry['tag'].startswith('ObjP_'):
         object_id = None
         for param in entry['parameters']:
@@ -90,8 +91,6 @@ def categorize_actions(entry, categories, keywords):
                 object_id = param['value']
                 break
         if object_id is None:
-            # object_id = next((param['value'] for param in entry['parameters'] if param['tag'] == 'ObjectId'),
-            #                  next((param['value'] for param in entry['parameters'] if param['tag'] == 'Object'), None))
             #
             # object_id = next(
             #     (param['value'] for param in entry['parameters']
@@ -99,6 +98,7 @@ def categorize_actions(entry, categories, keywords):
             #     None
             # )
             object_id = next((param['value'] for param in entry['parameters'] if param['tag'] == 'ObjectId'), None)
+
         if object_id:
             categories["objects"][object_id].append(entry)
 
@@ -122,7 +122,7 @@ def process_entries(root, keywords, tag):
     events_data = {}
 
     for element in root.findall(f".//{tag}"):
-        element_id = element.attrib.get('id', 'Default')
+        element_id = element.attrib.get('id','Default')
         info[element_id]["info"] = element.attrib
 
         for child in element:
@@ -207,8 +207,23 @@ def construct_analysis_dict(info):
 
     return analysis_dict
 
+def extract_tags(data):
+    tags = []
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if key == 'tag':
+                tags.append(value)
+            else:
+                tags.extend(extract_tags(value))
+    elif isinstance(data, list):
+        for item in data:
+            tags.extend(extract_tags(item))
+    return tags
 
+parking_flag = 0
+error_name = None
 def main(file_path):
+    global parking_flag,error_name
     print("read",file_path)
     """
     Main run
@@ -221,7 +236,9 @@ def main(file_path):
 
     """
     keywords = {
-        "ego": ["Dri_", "Sys_", "Ego_", "SysP_", "EnvP_", "TBA_","E_SysVehicleVelocity","E_Time","E_DistanceTimeBased","Ethernet_","E_TimeToCollision","E_ObjectCollision","E_Landmark"],
+        "ego": ["Dri_", "Sys_", "Ego_", "SysP_", "EnvP_", "TBA_","E_SysVehicleVelocity","E_Time","E_DistanceTimeBased","Ethernet_","E_TimeToCollision","E_ObjectCollision","E_Landmark","E_ConfigurationCollisionAvoidanceFunction","E_ConfigurationDrivingFunction",
+                "E_PrepareVehicle","E_ADASState","E_ChangeACCSpeed","E_ChangeVSLSpeed","E_CompareSignal","E_DiagnosticResult","E_IDCSystemState","E_ParkAppActionFinished","E_ParkingFinished",
+                "E_ParkingSpaceDetected","E_SetBeltState","E_StepOut","E_SwitchToACCDriving","E_SwitchToVSLDriving"],
         "objects": ["Obj_", "Object", "ObjP_","E_ObjectDistanceLaneBased"]
     }
 
@@ -231,10 +248,15 @@ def main(file_path):
     states_info, state_events = process_entries(root, keywords, "State")
     paramlist_info, param_events = process_entries(root, keywords, "ParameterList")
 
+    all_tags = extract_tags(paramlist_info)
+    if "EnvP_ParkingBayStyle" in all_tags or "EnvP_ParkingBay" in all_tags:
+        parking_flag = 1
+        error_name = "EnvP_ParkingBay or EnvP_ParkingBayStyle"
+
 
     states_analysis = construct_analysis_dict(states_info)
-    print("states",states_analysis.items())
     paramlist_analysis = construct_analysis_dict(paramlist_info)
+
 
     return states_analysis, paramlist_analysis, state_events, param_events
 

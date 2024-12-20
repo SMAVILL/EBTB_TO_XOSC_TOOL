@@ -72,6 +72,80 @@ class FuncScenario(ScenarioGenerator):
         self.all_ego_events = []
         self.all_target_events = []
 
+        result = {}
+        for key, value in states_analysis.items():
+            actions = []
+            actions.extend(action["Action"] for action in value.get("EgoActions", []))
+            for obj_actions in value.get("ObjectActions", {}).values():
+                actions.extend(action["Action"] for action in obj_actions)
+            result[key] = actions
+
+        shared_data.state_e_mapping = {}
+        # Iterate through the data and create the dictionary
+        for state_key in list(result.keys())[1:]:  # Start from second key to access previous state
+            previous_state_key = str(int(state_key) - 1)
+            current_e_names = result[state_key]
+            previous_e_names = result.get(previous_state_key, [])
+            e_name_from_previous = next((name for name in previous_e_names if name.startswith('E_')), None)
+            if e_name_from_previous:
+                shared_data.state_e_mapping[previous_state_key] = e_name_from_previous
+
+        excluded_apis = {"Dri_PrepareVehicle", "Obj_Initialize"}
+
+        # Initialize the main dictionary
+        dri_obj_mapping = {}
+        for state_key, e_names in result.items():
+            # Filter out the excluded APIs
+            filtered_apis = [api for api in e_names if api not in excluded_apis]
+
+            # Create a sub-dictionary for each API that is not excluded
+            sub_dict = {api: {"event_count": None, "action_count": None} for api in filtered_apis}
+
+            if sub_dict:  # Only add to the dictionary if there are APIs for the state
+                dri_obj_mapping[state_key] = sub_dict
+
+        event_count = 1
+        action_count = 1
+
+        # Result dictionary
+        shared_data.res = {}
+
+        for state_key, actions in dri_obj_mapping.items():
+            # Separate E_ values and non-E_ values
+            e_values = [key for key in actions if key.startswith('E_')]
+            non_e_values = [key for key in actions if not key.startswith('E_')]
+
+            # Create a list to store the API dictionaries for the current state_key
+            state_actions = []
+
+            # Handle non-E_ values first
+            if non_e_values:
+                for key in non_e_values:
+                    state_actions.append({
+                        'api_name': key,
+                        'event_count': event_count,  # Assign current event_count
+                        'action_count': action_count
+                    })
+                    action_count += 1  # Increment action_count for each non-E_ API
+                event_count += 1  # Increment event_count after all non-E_ APIs are processed
+
+            # Handle E_ values
+            for e_key in e_values:
+                state_actions.append({
+                    'api_name': e_key,
+                    'event_count': event_count,  # Assign current event_count
+                    'action_count': action_count
+                })
+                action_count += 1  # Increment action_count for each E_ API
+                event_count += 1  # Increment event_count for each E_ API
+
+            # Store the list of dictionaries in the result
+            shared_data.res[state_key] = state_actions
+
+        # # Output the updated dictionary
+        # import pprint
+        # pprint.pprint(shared_data.res)
+
     def ego_maneuver_group_with_condition(self):
         """
         Create manuever group with condition
@@ -132,6 +206,7 @@ class FuncScenario(ScenarioGenerator):
         paramdec = self.VehicleDefines.declare_parameters()
 
         return catalog, road, paramdec
+
 
     def VehicleEgoEntities(self):
         # Define ego and target entities
@@ -228,6 +303,7 @@ class FuncScenario(ScenarioGenerator):
         aeb_sce = self.VehicleDefines.assemble_scenario(catalog=catalog, road=road, paramdec=paramdec,
                                                         entities=self.vehicle_entities, storyboard=storyboard,
                                                         open_scenario_version=self.open_scenario_version)
+
         return aeb_sce
 
 

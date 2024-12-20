@@ -109,7 +109,7 @@ class E2XOStream:
         separator = "*" * 20
         print(f"{separator}\nEBTB Input File: {xml_file_path}\n")
         print(f"XOSC generated at: {destination_file_path}\n{separator}\n")
-        return "Success"
+        return destination_file_path
 
 
 if __name__ == "__main__":
