@@ -72,6 +72,10 @@ class FuncScenario(ScenarioGenerator):
         self.all_ego_events = []
         self.all_target_events = []
 
+
+
+
+
         result = {}
         for key, value in states_analysis.items():
             actions = []
@@ -80,17 +84,26 @@ class FuncScenario(ScenarioGenerator):
                 actions.extend(action["Action"] for action in obj_actions)
             result[key] = actions
 
+            # print(result)
+
+
+
         shared_data.state_e_mapping = {}
         # Iterate through the data and create the dictionary
-        for state_key in list(result.keys())[1:]:  # Start from second key to access previous state
-            previous_state_key = str(int(state_key) - 1)
-            current_e_names = result[state_key]
-            previous_e_names = result.get(previous_state_key, [])
-            e_name_from_previous = next((name for name in previous_e_names if name.startswith('E_')), None)
-            if e_name_from_previous:
-                shared_data.state_e_mapping[previous_state_key] = e_name_from_previous
+        for state_key in list(result.keys())[1:]:  # Start from the second key to access the previous state
+            try:
+                previous_state_key = str(int(state_key) - 1)
+                current_e_names = result[state_key]
+                previous_e_names = result.get(previous_state_key, [])
+                e_name_from_previous = next((name for name in previous_e_names if name.startswith('E_')), None)
+                if e_name_from_previous:
+                    shared_data.state_e_mapping[previous_state_key] = e_name_from_previous
+            except ValueError:
+                print(f"Skipping invalid state_key: {state_key}")
 
         excluded_apis = {"Dri_PrepareVehicle", "Obj_Initialize"}
+
+
 
         # Initialize the main dictionary
         dri_obj_mapping = {}
@@ -142,9 +155,12 @@ class FuncScenario(ScenarioGenerator):
             # Store the list of dictionaries in the result
             shared_data.res[state_key] = state_actions
 
-        # # Output the updated dictionary
-        # import pprint
-        # pprint.pprint(shared_data.res)
+        # Output the updated dictionary
+        import pprint
+        pprint.pprint(shared_data.res)
+
+
+
 
     def ego_maneuver_group_with_condition(self):
         """

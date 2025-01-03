@@ -511,3 +511,10 @@ class EgoScnearioActs:
     def e_switchtoVSLDriving(self, all_ego_events, state_key):
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.e_switchtoVSLDriving(all_ego_events, state_key)
+
+
+
+
+
+
+

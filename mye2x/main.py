@@ -1,3 +1,4 @@
+
 import os
 import sys
 import argparse
@@ -232,11 +233,6 @@ def show_popup(message, title="Access Error"):
 # Get the current username
 username = getpass.getuser()
 print(f"Username: {username}")
-
-# Define shared paths
-sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
-sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
-
 
 # Check access to the shared path
 def check_shared_path_access(path):

@@ -33,65 +33,65 @@ def EBTB_anlyses_info(paramlist_analysis, states_analysis):
         # print(v.get("E_ObjectDistanceLaneBasedActions"))
         print(v)
 
-def get_ego_obj_speed_transition_time(states_analysis):
-    extracted_info = {}
-
-    # Iterate over the states analysis dictionary
-    for k, v in states_analysis.items():
-        # Process EgoActions
-        for action in v.get('EgoActions', []):
-            if action.get('Action') == EgoAPI.Dri_SetLongitudinalSpeed:
-                for param in action.get('Parameters', []):
-                    target_speed = param.get('TargetSpeed', 'Not Available')
-                    transition_time = param.get('TransitionTime', 0.0)  # Default to 0.0 if missing
-                    extracted_info[EgoAPI.Dri_SetLongitudinalSpeed] = [
-                        {'TargetSpeed': target_speed, 'TransitionTime': transition_time}]
-
-        # Process ObjectActions
-        for obj_id, actions in v.get('ObjectActions', {}).items():
-            for action in actions:
-                if action.get('Action') == ObjAPI.Obj_SetLongitudinalSpeed:
-                    for param in action.get('Parameters', []):
-                        target_speed = param.get('TargetSpeed', 'Not Available')
-                        transition_time = param.get('TransitionTime', 0.0)  # Default to 0.0 if missing
-                        # Append the object action information
-                        obj_key = f'{obj_id}_Obj_SetLongitudinalSpeed'
-                        if obj_key not in extracted_info:
-                            extracted_info[obj_key] = []
-                        extracted_info[obj_key].append(
-                            {'TargetSpeed': target_speed, 'TransitionTime': transition_time})
-
-    # Ensure all values are lists for consistency
-    for key, value in extracted_info.items():
-        if isinstance(value, dict):
-            extracted_info[key] = [value]
-
-    # Extract ego vehicle information
-    if EgoAPI.Dri_SetLongitudinalSpeed in extracted_info:
-        speed_kmhr = float(extracted_info[EgoAPI.Dri_SetLongitudinalSpeed][0]['TargetSpeed'])
-        speed_ms_float = datacontrol().kmhr_to_ms(speed_kmhr)
-        ego_speed_ms = round(speed_ms_float, 2)
-        ego_transition_time = extracted_info[EgoAPI.Dri_SetLongitudinalSpeed][0]['TransitionTime']
-    else:
-        ego_speed_ms = 0
-        ego_transition_time = 0  # Default if no ego action found
-
-    # Extract object vehicle information (Obj1 and Obj2)
-    obj_speeds = []
-    obj_transition_times = []
-
-    for obj_id in ['Obj1', 'Obj2']:
-        obj_key = f'{obj_id}_Obj_SetLongitudinalSpeed'
-        if obj_key in extracted_info:
-            for i in range(len(extracted_info[obj_key])):
-                obj_speed_kmhr = float(extracted_info[obj_key][i]['TargetSpeed'])
-                obj_speed_ms_float = round(datacontrol().kmhr_to_ms(obj_speed_kmhr), 2)
-                obj_speed = round(obj_speed_ms_float,2)
-                # obj_speeds.append(obj_speed_ms_float)  # Collect speeds
-                obj_transition_time = extracted_info[obj_key][i]['TransitionTime']  # Collect transition times
-
-    # Return the extracted values
-    return ego_speed_ms, obj_speed, ego_transition_time, obj_transition_time
+# def get_ego_obj_speed_transition_time(states_analysis):
+#     extracted_info = {}
+#
+#     # Iterate over the states analysis dictionary
+#     for k, v in states_analysis.items():
+#         # Process EgoActions
+#         for action in v.get('EgoActions', []):
+#             if action.get('Action') == EgoAPI.Dri_SetLongitudinalSpeed:
+#                 for param in action.get('Parameters', []):
+#                     target_speed = param.get('TargetSpeed', 'Not Available')
+#                     transition_time = param.get('TransitionTime', 0.0)  # Default to 0.0 if missing
+#                     extracted_info[EgoAPI.Dri_SetLongitudinalSpeed] = [
+#                         {'TargetSpeed': target_speed, 'TransitionTime': transition_time}]
+#
+#         # Process ObjectActions
+#         for obj_id, actions in v.get('ObjectActions', {}).items():
+#             for action in actions:
+#                 if action.get('Action') == ObjAPI.Obj_SetLongitudinalSpeed:
+#                     for param in action.get('Parameters', []):
+#                         target_speed = param.get('TargetSpeed', 'Not Available')
+#                         transition_time = param.get('TransitionTime', 0.0)  # Default to 0.0 if missing
+#                         # Append the object action information
+#                         obj_key = f'{obj_id}_Obj_SetLongitudinalSpeed'
+#                         if obj_key not in extracted_info:
+#                             extracted_info[obj_key] = []
+#                         extracted_info[obj_key].append(
+#                             {'TargetSpeed': target_speed, 'TransitionTime': transition_time})
+#
+#     # Ensure all values are lists for consistency
+#     for key, value in extracted_info.items():
+#         if isinstance(value, dict):
+#             extracted_info[key] = [value]
+#
+#     # Extract ego vehicle information
+#     if EgoAPI.Dri_SetLongitudinalSpeed in extracted_info:
+#         speed_kmhr = float(extracted_info[EgoAPI.Dri_SetLongitudinalSpeed][0]['TargetSpeed'])
+#         speed_ms_float = datacontrol().kmhr_to_ms(speed_kmhr)
+#         ego_speed_ms = round(speed_ms_float, 2)
+#         ego_transition_time = extracted_info[EgoAPI.Dri_SetLongitudinalSpeed][0]['TransitionTime']
+#     else:
+#         ego_speed_ms = 0
+#         ego_transition_time = 0  # Default if no ego action found
+#
+#     # Extract object vehicle information (Obj1 and Obj2)
+#     obj_speeds = []
+#     obj_transition_times = []
+#
+#     for obj_id in ['Obj1', 'Obj2']:
+#         obj_key = f'{obj_id}_Obj_SetLongitudinalSpeed'
+#         if obj_key in extracted_info:
+#             for i in range(len(extracted_info[obj_key])):
+#                 obj_speed_kmhr = float(extracted_info[obj_key][i]['TargetSpeed'])
+#                 obj_speed_ms_float = round(datacontrol().kmhr_to_ms(obj_speed_kmhr), 2)
+#                 obj_speed = round(obj_speed_ms_float,2)
+#                 # obj_speeds.append(obj_speed_ms_float)  # Collect speeds
+#                 obj_transition_time = extracted_info[obj_key][i]['TransitionTime']  # Collect transition times
+#
+#     # Return the extracted values
+#     return ego_speed_ms, obj_speed, ego_transition_time, obj_transition_time
 
 def get_ego_speed_transition_time(last_index_ego,states_analysis):
     extracted_info = {}
@@ -262,10 +262,6 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
             ego_actions = value.get('EgoActions', [])
             for action in ego_actions:
                 if action.get('Action', []) == "E_Landmark":
-                    # landmark_type = (action.get('Parameters')[0]['Landmark'])
-                    # landmark_offset = (action.get('Parameters')[0]['LandmarkOffset'])
-                    # obj_ref = (action.get('Parameters')[0]['Object'])
-
                     landmark_type = action.get('Parameters', [{}])[0].get('Landmark', 0)
                     landmark_offset = action.get('Parameters', [{}])[0].get('LandmarkOffset', 0)
                     obj_ref = action.get('Parameters', [{}])[0].get('Object', 0)
@@ -314,12 +310,14 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
 
 
 
-def extract_lenthoflane(paramlist_analysis):
+def extract_lenthoflane(paramlist_analysis, xlmr_file=None):
     current_directory = os.getcwd()
 
-    subdirectory = "xodrmaps"
+    subdirectory = "xlmrmaps"
+    subdirectory2 = "xodrmaps"
 
-    folder_path = os.path.join(current_directory, subdirectory)
+    folder_path2 = os.path.join(current_directory, subdirectory)
+    folder_path = os.path.join(current_directory, subdirectory2)
 
     for key, value in paramlist_analysis.items():
         ego_actions = value.get('EgoActions', [])
@@ -333,7 +331,22 @@ def extract_lenthoflane(paramlist_analysis):
                 else:
                     continue
                 break
-        cleaned_file_path = os.path.basename(xlmr_file)
+
+        clean_xlmr_file = os.path.basename(xlmr_file)
+        xlmr_file_path = os.path.join(folder_path2, clean_xlmr_file)
+
+        import re
+        if os.path.exists(xlmr_file_path):
+            with open(xlmr_file_path, 'r') as file:
+                content = file.read()
+
+            # Regex to extract the .xodr file name from the specific line
+            match = re.search(r'<xodrFile>.*\/([^\/]+\.xodr)<\/xodrFile>', content)
+            if match:
+                xodr_file_name = match.group(1)
+                print(f"Extracted .xodr file name: {xodr_file_name}")
+            else:
+                print("No .xodr file name found in the specified line.")
 
     """
     Converts the given .xlmr file name to .xodr, compares it with files in the folder,
@@ -348,12 +361,12 @@ def extract_lenthoflane(paramlist_analysis):
         Path to the folder where files are located.
     """
     try:
-        xodr_map = cleaned_file_path.replace('.xlmr', '.xodr')
+
         if os.path.exists(folder_path) and os.path.isdir(folder_path):
             # Iterate over files in the folder
             for filename in os.listdir(folder_path):
                 # Compare the filename with the generated xodr_map
-                if filename == xodr_map:
+                if filename == xodr_file_name:
                     file_path = os.path.join(folder_path, filename)
 
                     # Parse the .xodr file as XML
@@ -383,7 +396,7 @@ def extract_lenthoflane(paramlist_analysis):
                     except ET.ParseError as e:
                         print(f"Error parsing the .xodr file: {e}")
                         return None
-            print(f"File {xodr_map} not found in the folder {folder_path}.")
+            print(f"File {xodr_file_name} not found in the folder {folder_path}.")
             return None
         else:
             print(f"The folder {folder_path} does not exist.")
@@ -1282,3 +1295,7 @@ def obj_lateral_disp(states_analysis,target_name):
         extracted_value = extracted_info[key_to_access]
         dispvalue = extracted_value[0]['TargetDisplacement']
     return dispvalue
+
+
+
+

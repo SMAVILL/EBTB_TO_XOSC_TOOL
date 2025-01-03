@@ -49,3 +49,4 @@ def process_file(input_folder, output_folder):
         tree.write(file, pretty_print=True, encoding="utf-8")
 
     print(f"XML has been written to '{output_file}' successfully!")
+

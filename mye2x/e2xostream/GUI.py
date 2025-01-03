@@ -35,7 +35,7 @@ def ebtb_GUI():
 
     # Main GUI setup
     root = tk.Tk()
-    root.title("EBTB_to_XOSC_Tool_ver:1.3")
+    root.title("EBTB_to_XOSC_Tool_ver1.1")
 
     # Input label and entry field
     tk.Label(root, text="Select EBTB_Folder:").grid(row=0, column=0, padx=10, pady=10)
@@ -448,7 +448,13 @@ button.custom-button {
 
             elif "WARNING - " in line:
                 warning_message = line.split("WARNING - ")[-1].strip()
-                current_warnings.append(warning_message)
+                excluded_warnings = [
+                    "No function mapped to Dri_PrepareVehicle",
+                    "No function mapped to Obj_Initialize"
+                ]
+                if warning_message not in excluded_warnings:
+                    current_warnings.append(warning_message)
+
 
             elif "INFO - Processed file in exception handler" in line:
                 file_path = line.split("INFO - Processed file in exception handler: ")[-1].strip()
@@ -538,6 +544,9 @@ button.custom-button {
         ebtb_filenames = data["EBTB_filename"]  # EBTB_filename appears only once
 
         if data["status"] == "Partially converted":
+            # details_list = [detail for detail in data["Details"] if detail != "Dri_PrepareVehicle"]
+            # if details_list:  # Only join if there are other details
+            #     details = "No function mapped to " + ", ".join(details_list)
             details = "No function mapped to " + ", ".join(
                 data["Details"])  # Join all unique details for the same XOSC_filename
         elif data["status"] == "Not converted":
