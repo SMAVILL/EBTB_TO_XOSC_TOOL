@@ -118,15 +118,18 @@ class Ego_Acts:
 
                         if delay:
                             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+
+                                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=delay)
+                                    element_name=f"{target_name}:action{prev_count}", delay=delay)
                             else:
                                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                                     element_name=f"SimOneDriver:action{prev_count}", delay=delay)
                         elif delay1:
                             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=delay1)
+                                    element_name=f"{target_name}:action{prev_count}", delay=delay1)
                             else:
                                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                                     element_name=f"SimOneDriver:action{prev_count}", delay=delay1)
@@ -1749,8 +1752,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"Obj1:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -1987,8 +1991,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2019,8 +2024,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2051,8 +2057,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2083,8 +2090,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2116,8 +2124,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2149,8 +2158,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2181,8 +2191,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2213,8 +2224,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2245,8 +2257,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2277,8 +2290,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2309,8 +2323,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2341,8 +2356,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2373,8 +2389,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2405,8 +2422,9 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
@@ -2438,13 +2456,134 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
             if prev_action.startswith("Obj_") or prev_action == "E_ObjectDistanceLaneBased":
+                target_name = shared_data.filtered_dict[prev_count]['ObjectId']
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-                    element_name=f"ENCAP_GVT01:action{prev_count}", delay=0)
+                    element_name=f"{target_name}:action{prev_count}", delay=0)
             else:
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"SimOneDriver:action{prev_count}", delay=0)
 
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_SwitchToVSLDriving")
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def dri_SetIndicatorState(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Dri_SetIndicatorState":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetIndicatorState")
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def dri_SetVehicleDoor(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Dri_SetVehicleDoor":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetVehicleDoor")
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def dri_StepOut(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Dri_StepOut":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_StepOut")
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def dri_SetSteeringWheelForce(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Dri_SetSteeringWheelForce":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetSteeringWheelForce")
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def dri_SetSteeringWheelTorque(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Dri_SetSteeringWheelTorque":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetSteeringWheelTorque")
         all_ego_events.append(
             self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
                                                         event_name=event_name, action_name=action_name))

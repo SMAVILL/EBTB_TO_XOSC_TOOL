@@ -116,7 +116,6 @@ class FuncScenario(ScenarioGenerator):
 
             if sub_dict:  # Only add to the dictionary if there are APIs for the state
                 dri_obj_mapping[state_key] = sub_dict
-
         event_count = 1
         action_count = 1
 
@@ -127,6 +126,11 @@ class FuncScenario(ScenarioGenerator):
             # Separate E_ values and non-E_ values
             e_values = [key for key in actions if key.startswith('E_')]
             non_e_values = [key for key in actions if not key.startswith('E_')]
+
+            # Check if both Obj_SetLateralReference and Obj_SetLateralDisplacement are in the state_key
+            if 'Obj_SetLateralReference' in non_e_values and 'Obj_SetLateralDisplacement' in non_e_values:
+                # Remove Obj_SetLateralDisplacement from non_e_values
+                non_e_values.remove('Obj_SetLateralDisplacement')
 
             # Create a list to store the API dictionaries for the current state_key
             state_actions = []
@@ -156,8 +160,73 @@ class FuncScenario(ScenarioGenerator):
             shared_data.res[state_key] = state_actions
 
         # Output the updated dictionary
-        import pprint
-        pprint.pprint(shared_data.res)
+        # import pprint
+        # pprint.pprint(shared_data.res)
+
+        # event_count = 1
+        # action_count = 1
+        #
+        # # Result dictionary
+        # shared_data.res = {}
+        #
+        # for state_key, actions in dri_obj_mapping.items():
+        #     # Separate E_ values and non-E_ values
+        #     e_values = [key for key in actions if key.startswith('E_')]
+        #     non_e_values = [key for key in actions if not key.startswith('E_')]
+        #
+        #     # Create a list to store the API dictionaries for the current state_key
+        #     state_actions = []
+        #
+        #     # Handle non-E_ values first
+        #     if non_e_values:
+        #         for key in non_e_values:
+        #             state_actions.append({
+        #                 'api_name': key,
+        #                 'event_count': event_count,  # Assign current event_count
+        #                 'action_count': action_count
+        #             })
+        #             action_count += 1  # Increment action_count for each non-E_ API
+        #         event_count += 1  # Increment event_count after all non-E_ APIs are processed
+        #
+        #     # Handle E_ values
+        #     for e_key in e_values:
+        #         state_actions.append({
+        #             'api_name': e_key,
+        #             'event_count': event_count,  # Assign current event_count
+        #             'action_count': action_count
+        #         })
+        #         action_count += 1  # Increment action_count for each E_ API
+        #         event_count += 1  # Increment event_count for each E_ API
+        #
+        #     # Store the list of dictionaries in the result
+        #     shared_data.res[state_key] = state_actions
+        #
+        # # Output the updated dictionary
+        # import pprint
+        # pprint.pprint(shared_data.res)
+
+        shared_data.filtered_dict = {}
+
+        for key, actions in shared_data.res.items():
+            for action in actions:
+                api_name = action['api_name']
+                action_count = action['action_count']
+                # Filter based on api_name
+                if api_name.startswith("Obj_") or api_name == "E_ObjectDistanceLaneBased":
+                    object_id = None
+                    # Retrieve ObjectId from states_analysis
+                    if key in states_analysis:
+                        object_actions = states_analysis[key].get('ObjectActions', {})
+                        for obj, obj_actions in object_actions.items():
+                            for obj_action in obj_actions:
+                                if obj_action['Action'] == api_name:
+                                    object_id = obj_action['Parameters'][0].get('ObjectId', None)
+                                    break
+                    # Add to filtered dictionary
+                    if action_count not in shared_data.filtered_dict:
+                        shared_data.filtered_dict[action_count] = {'api_name': api_name, 'ObjectId': object_id}
+
+        # print(shared_data.filtered_dict)
 
 
 

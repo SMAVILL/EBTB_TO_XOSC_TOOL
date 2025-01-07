@@ -418,6 +418,9 @@ button.custom-button {
                 # Extract the part after "ERROR - "
                 error_part = line.split("ERROR - ", 1)[1].strip()
 
+                if "Error reading file" in error_part:
+                    continue  # Skip this specific error
+
                 # Split into error description and file path based on the first " - "
 
                 error_description, file_path = error_part.split(" - ", 1)

@@ -201,18 +201,32 @@ class VehicleScenario:
                                                                  , target_lane_offset=None)
         return lateral_reference_action
 
-    def create_obj_lateral_distance_action(self, value, entity, state_data=None):
+    def create_obj_lateral_distance_action(self, value,target_name, entity,abs_or_rel, state_data=None):
         try:
             for k, v in state_data.items():
                 for kv, vv in v["ObjectActions"].items():
-                    if entity == kv:
-                        later_control_action = xosc.RelativeLaneOffsetAction(value, entity,
+                    if target_name == kv:
+                        if abs_or_rel == "RelSysLane":
+                            later_control_action = xosc.RelativeLaneOffsetAction(value, entity,
                                                                              shape=xosc.DynamicsShapes.linear,
                                                                              maxlatacc=10, continuous=True)
+                        if abs_or_rel == "AbsSysLane":
+                            later_control_action = xosc.AbsoluteLaneOffsetAction(value,
+                                                                                 shape=xosc.DynamicsShapes.linear,
+                                                                                 maxlatacc=10, continuous=True)
+
 
                         return later_control_action
         except Exception as e:
             print(e)
+
+    def obj_relative_position(self,target_name,state_data,entity,distance):
+        if entity == "SysVehicle":
+            entity = "Ego"
+        relative_position = xosc.LongitudinalDistanceAction(entity,distance)
+        return relative_position
+
+
 
     def create_obj_lanechange_action(self, obj_id, direction, present_lane,value_of_dist, state_data=None, param_data=None):
         try:

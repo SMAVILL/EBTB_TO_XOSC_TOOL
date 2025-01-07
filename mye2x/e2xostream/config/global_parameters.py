@@ -76,7 +76,7 @@ VEHICLE_CATEGORIES = {'car': 'car',
                       'bus': 'bus',
                       'buses': 'bus',
                       'twowheelers': 'motorbike',
-                     'twowheeler': 'motorbike',
+                      'twowheeler': 'motorbike',
                       # 'twowheeler': 'bicycle',
                       'human': 'pedestrian',
                       'motorbikes': 'motorbike',
@@ -85,13 +85,19 @@ VEHICLE_CATEGORIES = {'car': 'car',
                       'train': 'train',
                       'trains': 'train',
                       'tram': 'tram',
-                      'trams': 'tram'
+                      'trams': 'tram',
+                      'roadsideobjects' : 'obstacle',
+                      'roadsideobject' : 'obstacle',
+                      'trafficsign' : 'pole'
                       }
 
 VEHICLE_NAME = {'car': 'ENCAP_GVT01',
                 'bicycle': 'Bike01',
                 'pedestrian': 'Ped00',
-                'twowheelers': 'Motorcycle02'
+                'twowheelers': 'Motorcycle02',
+                'truck' : "Van Truck 01",
+                'obstacle' : "Plastic Barrier 01",
+                'pole' : "Defaced Sign 09"
 
                 #'motorbike' : 'Bike03'
                 # 'van' :,

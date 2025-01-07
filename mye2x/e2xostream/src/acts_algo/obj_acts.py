@@ -104,6 +104,10 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
+        dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name)
+        abs_or_rel,entity = EBTB_API_data.obj_lateral_ref(self.states_analysis,target_name)
+        print("rel",abs_or_rel,entity)
+
         state_key = int(state_key)
         val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
         target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
@@ -114,7 +118,11 @@ class Obj_Acts:
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
-        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Obj_SetLateralReference")
+        start_action = self.VehicleDefines.create_obj_lateral_distance_action(
+            value=dispvalue,target_name=target_name,
+            entity=entity,abs_or_rel=abs_or_rel,
+            state_data=self.states_analysis
+        )
 
         target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
                                                                            start_action=start_action,
@@ -123,8 +131,13 @@ class Obj_Acts:
         all_target_events.append(target_next_event)
         shared_data.event_counter_obj += 1
 
+    def obj_setlateraldisplacement(self, all_target_events, state_key, target_name):
+        # Check if Obj_SetLateralReference exists in the same state_key
+        if any(api['api_name'] == "Obj_SetLateralReference" for api in shared_data.res[state_key]):
+            # Skip execution if Obj_SetLateralReference is found
+            return
 
-    def obj_setlateraldisplacement(self, all_target_events,state_key,target_name):
+        # Proceed with the current implementation
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Obj_SetLateralDisplacement":
                 event_count = api['event_count']
@@ -132,7 +145,7 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
-        dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis,target_name)
+        dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name)
 
         state_key = int(state_key)
         val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
@@ -144,17 +157,19 @@ class Obj_Acts:
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
-        start_action = self.VehicleDefines.create_obj_lateral_distance_action(value=dispvalue,
-                                                                              entity=target_name,
-                                                                              state_data=self.states_analysis)
-        target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
-                                                                           start_action=start_action,
-                                                                           event_name=event_name,
-                                                                           action_name=action_name)
+        start_action = self.VehicleDefines.create_obj_lateral_distance_action(
+            value=dispvalue,target_name=target_name,
+            entity=None,abs_or_rel="AbsSysLane",
+            state_data=self.states_analysis
+        )
+        target_next_event = self.VehicleDefines.define_target_action_event(
+            start_trig=start_trig,
+            start_action=start_action,
+            event_name=event_name,
+            action_name=action_name
+        )
         all_target_events.append(target_next_event)
         shared_data.event_counter_obj += 1
-
-
 
 
     def obj_set_longitudinal_speed(self, all_target_events,state_key, target_name):
@@ -166,8 +181,8 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
+
         state_key = int(state_key)
-        print(state_key)
         val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
         target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
@@ -190,6 +205,70 @@ class Obj_Acts:
         all_target_events.append(target_next_event)
         shared_data.event_counter_obj += 1
 
+    def Obj_SetLongitudinalRelativePosition(self,all_target_events, state_key, target_name):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Obj_SetLongitudinalRelativePosition":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"{target_name}:action{action_count}"
+
+        state_key = int(state_key)
+        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+
+        entity,distance = EBTB_API_data.obj_set_lateral_relative(states_analysis=self.states_analysis,target_name=target_name)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.obj_relative_position(target_name,
+                                                                    state_data=self.states_analysis,
+                                                                    entity=entity,distance=distance)
+        target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
+                                                                           start_action=start_action,
+                                                                           event_name=event_name,
+                                                                           action_name=action_name)
+
+        all_target_events.append(target_next_event)
+        shared_data.event_counter_obj += 1
+
+    # def obj_deactivate(self,all_target_events, state_key, target_name):
+    #     for api in shared_data.res[state_key]:
+    #         if api['api_name'] == "Obj_Deactivate":
+    #             event_count = api['event_count']
+    #             action_count = api['action_count']
+    #             event_name = f"event{event_count}"
+    #             action_name = f"{target_name}:action{action_count}"
+    #
+    #     state_key = int(state_key)
+    #     val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+    #     target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+    #
+    #     if event_count == 1:
+    #         start_trig = self.VehicleDefines.create_ego_event(value=10)
+    #     else:
+    #         start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+    #             element_name=f"{target}:action{val}", delay=0)
+    #
+    #     start_action = self.VehicleDefines.obj_acceleration_actions(target_name,
+    #                                                                 state_data=self.states_analysis,
+    #                                                                 param_data=self.paramlist_analysis,
+    #                                                                 dict=self.last_index)
+    #
+    #     target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
+    #                                                                        start_action=start_action,
+    #                                                                        event_name=event_name,
+    #                                                                        action_name=action_name)
+    #
+    #     all_target_events.append(target_next_event)
+    #     shared_data.event_counter_obj += 1
+
+
+
     def obj_E_ObjectDistanceLaneBased(self, all_target_events, state_key, target_name):
         # Define event and action names
         for api in shared_data.res[state_key]:
@@ -199,7 +278,7 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
-        shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased", shared_data.event_counter,target_name)
+        shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased",action_count,target_name)
 
         # Initialize tracking variables if not already done
         if not hasattr(self, 'last_processed_action'):
