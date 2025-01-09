@@ -433,13 +433,21 @@ def get_obj_entities(paramlist_analysis):
                 else:
                      asset_id = "car"
 
-
-
                 if asset_id == "bicycle":
                     vehicle_name = global_parameters.VEHICLE_NAME.get(asset_id.lower(),'bicycle')
                     width = default_properties.DEFAULT_SIZE_PROPERTIES.get('bicycle')['width']
                     length = default_properties.DEFAULT_SIZE_PROPERTIES.get('bicycle')['length']
                     height = default_properties.DEFAULT_SIZE_PROPERTIES.get('bicycle')['height']
+                if asset_id == "obstacle":
+                    vehicle_name = global_parameters.VEHICLE_NAME.get(asset_id.lower(), 'obstacle')
+                    width = default_properties.DEFAULT_SIZE_PROPERTIES.get('roadsideobjects')['width']
+                    length = default_properties.DEFAULT_SIZE_PROPERTIES.get('roadsideobjects')['length']
+                    height = default_properties.DEFAULT_SIZE_PROPERTIES.get('roadsideobjects')['height']
+                if asset_id == "pole":
+                    vehicle_name = global_parameters.VEHICLE_NAME.get(asset_id.lower(), 'pole')
+                    width = default_properties.DEFAULT_SIZE_PROPERTIES.get('trafficsign')['width']
+                    length = default_properties.DEFAULT_SIZE_PROPERTIES.get('trafficsign')['length']
+                    height = default_properties.DEFAULT_SIZE_PROPERTIES.get('trafficsign')['height']
                 if asset_id == "van" :
                     vehicle_name = global_parameters.VEHICLE_NAME.get(asset_id.lower(),'van')
                     width = default_properties.DEFAULT_SIZE_PROPERTIES.get('van')['width']
@@ -486,7 +494,6 @@ def get_obj_entities(paramlist_analysis):
                     length = default_properties.DEFAULT_SIZE_PROPERTIES.get('human')['length']
                     height = default_properties.DEFAULT_SIZE_PROPERTIES.get('human')['height']
                 if asset_id == "car":
-
                     vehicle_name = global_parameters.VEHICLE_NAME.get(asset_id.lower(),'car')
                     width = default_properties.DEFAULT_SIZE_PROPERTIES.get('car')['width']
                     length = default_properties.DEFAULT_SIZE_PROPERTIES.get('car')['length']
@@ -1295,6 +1302,59 @@ def obj_lateral_disp(states_analysis,target_name):
         extracted_value = extracted_info[key_to_access]
         dispvalue = extracted_value[0]['TargetDisplacement']
     return dispvalue
+
+def obj_lateral_ref(states_analysis,target_name):
+    extracted_info = {}
+    for k, v in states_analysis.items():
+        for obj_id, actions in v.get('ObjectActions', {}).items():
+            for action in actions:
+                if action.get('Action') == ObjAPI.Obj_SetLateralReference:
+                    for param in action.get('Parameters', []):
+                        abs_or_rel = param.get('ReferenceSystem', None)
+                        entity = param.get('ReferenceObject',None)
+
+                        # Append the object action information
+                        obj_key = f'{obj_id}Obj_SetLateralReference'
+                        if obj_key not in extracted_info:
+                            extracted_info[obj_key] = []
+                        extracted_info[obj_key].append(
+                            {'ReferenceSystem': abs_or_rel,'ReferenceObject': entity })
+
+    abs_or_rel = None
+    entity = None
+    key_to_access = f"{target_name}Obj_SetLateralReference"
+    if key_to_access in extracted_info:
+        extracted_value = extracted_info[key_to_access]
+        abs_or_rel = extracted_value[0]['ReferenceSystem']
+        entity = extracted_value[0]['ReferenceObject']
+    return abs_or_rel,entity
+
+def obj_set_lateral_relative(states_analysis,target_name):
+    extracted_info = {}
+    for k, v in states_analysis.items():
+        for obj_id, actions in v.get('ObjectActions', {}).items():
+            for action in actions:
+                if action.get('Action') == ObjAPI.Obj_SetLongitudinalRelativePosition:
+                    for param in action.get('Parameters', []):
+                        distance = param.get('Distance', None)
+                        entity = param.get('ReferenceObject',None)
+
+                        # Append the object action information
+                        obj_key = f'{obj_id}Obj_SetLongitudinalRelativePosition'
+                        if obj_key not in extracted_info:
+                            extracted_info[obj_key] = []
+                        extracted_info[obj_key].append(
+                            {'Distance': distance,'ReferenceObject': entity })
+
+    distance = None
+    entity = None
+    key_to_access = f"{target_name}Obj_SetLongitudinalRelativePosition"
+    if key_to_access in extracted_info:
+        extracted_value = extracted_info[key_to_access]
+        distance = extracted_value[0]['Distance']
+        entity = extracted_value[0]['ReferenceObject']
+    return entity,distance
+
 
 
 

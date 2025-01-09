@@ -120,6 +120,11 @@ class EgoScnearioActs:
         self.register_dispatch.register(EgoAPI.Sys_SetTransportMode, self.ego_Sys_SetTransportMode)
         self.register_dispatch.register(OtherAPI.TBA_RunDiagnosticService, self.ego_TBA_RunDiagnosticService)
         self.register_dispatch.register(OtherAPI.TBA_WriteEvaluationEvent, self.ego_TBA_WriteEvaluationEvent)
+        self.register_dispatch.register(EgoAPI.Dri_SetIndicatorState,self.dri_SetIndicatorState)
+        self.register_dispatch.register(EgoAPI.Dri_SetVehicleDoor,self.dri_SetVehicleDoor)
+        self.register_dispatch.register(EgoAPI.Dri_StepOut,self.dri_StepOut)
+        self.register_dispatch.register(EgoAPI.Dri_SetSteeringWheelForce,self.dri_SetSteeringWheelForce)
+        self.register_dispatch.register(EgoAPI.Dri_SetSteeringWheelTorque,self.dri_SetSteeringWheelTorque)
         self.register_dispatch.register(OtherAPI.E_ADASState, self.e_adas)
         self.register_dispatch.register(OtherAPI.E_ChangeACCSpeed, self.e_change_acc_speed)
         self.register_dispatch.register(OtherAPI.E_ChangeVSLSpeed, self.e_change_vsl_speed)
@@ -511,6 +516,26 @@ class EgoScnearioActs:
     def e_switchtoVSLDriving(self, all_ego_events, state_key):
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.e_switchtoVSLDriving(all_ego_events, state_key)
+
+    def dri_SetIndicatorState(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.dri_SetIndicatorState(all_ego_events, state_key)
+
+    def dri_SetVehicleDoor(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.dri_SetVehicleDoor(all_ego_events, state_key)
+
+    def dri_StepOut(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.dri_StepOut(all_ego_events, state_key)
+
+    def dri_SetSteeringWheelForce(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.dri_SetSteeringWheelForce(all_ego_events, state_key)
+
+    def dri_SetSteeringWheelTorque(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.dri_SetSteeringWheelTorque(all_ego_events, state_key)
 
 
 

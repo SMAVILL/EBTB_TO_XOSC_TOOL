@@ -158,6 +158,10 @@ class BaseScenario:
             property_car = properties.get('car')
             property_truck = properties.get('Truck')
             property_motorbike = properties.get('twowheelers')
+            proprty_bicycle = properties.get('bicycle')
+            proprty_pedestrian = properties.get('human')
+            property_roadside = properties.get('obstacle')
+            property_traffic = properties.get('pole')
 
             if obj_entities[obj][3] == 'car':
                 if obj == 'Obj1':
@@ -229,35 +233,201 @@ class BaseScenario:
                                                                                  height=float(value[2]))
 
             elif obj_entities[obj][3] == 'bicycle':
-                target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model=value[4],
+                if obj == 'Obj1':
+                    prop1 = proprty_bicycle.get('Obj1')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Bike01",
                                                                              default_cat=False, entity_type='Vehicle',
-                                                                             properties=properties.get('bicycle'),
+                                                                             properties=prop1,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj == 'Obj2':
+                    prop2 = proprty_bicycle.get('Obj2')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Bike05",
+                                                                             default_cat=False, entity_type='Vehicle',
+                                                                             properties=prop2,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj == 'Obj3':
+                    prop3 = proprty_bicycle.get('Obj3')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Bike02",
+                                                                             default_cat=False, entity_type='Vehicle',
+                                                                             properties=prop3,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj == 'Obj4':
+                    prop4 = proprty_bicycle.get('Obj4')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Bike03",
+                                                                             default_cat=False, entity_type='Vehicle',
+                                                                             properties=prop4,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj == 'Obj5':
+                    prop5 = proprty_bicycle.get('Obj5')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Bike06",
+                                                                             default_cat=False, entity_type='Vehicle',
+                                                                             properties=prop5,
                                                                              vehicle_category=value[3],
                                                                              width=float(value[0]),
                                                                              length=float(value[1]),
                                                                              height=float(value[2]))
                 # vehicle_entities.add_scenario_object(obj, target_obj)
-            elif obj_entities[obj][3] == 'pedestrian':
-                target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model=value[4],
+
+            elif obj_entities[obj][3] == 'pole':
+                if obj =='Obj1':
+                    pro1 = property_traffic.get('Obj1')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Defaced Sign 02",
                                                                              default_cat=False,
-                                                                             entity_type='Pedestrian',
-                                                                             properties=properties.get('human'),
+                                                                             entity_type='MiscObject',
+                                                                             properties=pro1,
                                                                              vehicle_category=value[3],
                                                                              width=float(value[0]),
                                                                              length=float(value[1]),
                                                                              height=float(value[2]))
-            # elif obj_entities[obj][3] == 'bicycle':
-            #     target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model=value[4],
-            #                                                                  default_cat=False, entity_type='Vehicle',
-            #                                                                  properties=properties.get('twowheeler'),
-            #                                                                  vehicle_category=value[3],
-            #                                                                  width=float(value[0]),
-            #                                                                  length=float(value[1]),
-            #                                                                  height=float(value[2]))
+                if obj =='Obj2':
+                    pro2 = property_traffic.get('Obj2')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Defaced Sign 03",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=pro2,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj3':
+                    pro3 = property_traffic.get('Obj3')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Defaced Sign 09",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=pro3,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+
+            elif obj_entities[obj][3] == 'obstacle':
+                if obj =='Obj1':
+                    proper1 = property_roadside.get('Obj1')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Traffic Cone 01",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=proper1,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj2':
+                    proper2 = property_roadside.get('Obj2')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Traffic Cone 02",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=proper2,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj3':
+                    proper3 = property_roadside.get('Obj3')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Road Block 01",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=proper3,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj4':
+                    proper4 = property_roadside.get('Obj4')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Plastic Barrier 01",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=proper4,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj5':
+                    proper5 = property_roadside.get('Obj5')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Plastic Barrier 02",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=proper5,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj6':
+                    proper6 = property_roadside.get('Obj6')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Warning Triangle 01",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=proper6,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj7':
+                    proper7 = property_roadside.get('Obj7')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Road Block 02",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=proper7,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj8':
+                    proper8 = property_roadside.get('Obj8')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Barricade 02",
+                                                                             default_cat=False,
+                                                                             entity_type='MiscObject',
+                                                                             properties=proper8,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+            elif obj_entities[obj][3] == 'pedestrian':
+                if obj =='Obj1':
+                    prope1 = proprty_pedestrian.get('Obj1')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Ped00",
+                                                                             default_cat=False,
+                                                                             entity_type='Pedestrian',
+                                                                             properties=prope1,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj2':
+                    prope2 = proprty_pedestrian.get('Obj2')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Ped03",
+                                                                             default_cat=False,
+                                                                             entity_type='Pedestrian',
+                                                                             properties=prope2,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
+                if obj =='Obj3':
+                    prope3 = proprty_pedestrian.get('Obj3')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Ped08",
+                                                                             default_cat=False,
+                                                                             entity_type='Pedestrian',
+                                                                             properties=prope3,
+                                                                             vehicle_category=value[3],
+                                                                             width=float(value[0]),
+                                                                             length=float(value[1]),
+                                                                             height=float(value[2]))
             elif obj_entities[obj][3] == 'truck':
                 if obj == 'Obj1':
                     propers1 = property_truck.get('Obj1')
-                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model=value[4],
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Van Truck 02",
                                                                                  default_cat=False,
                                                                                  entity_type='Vehicle',
                                                                                  properties=propers1,
@@ -267,7 +437,7 @@ class BaseScenario:
                                                                                  height=float(value[2]))
                 if obj == 'Obj2':
                     propers2 = property_truck.get('Obj2')
-                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model=value[4],
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Van Truck 01",
                                                                                  default_cat=False,
                                                                                  entity_type='Vehicle',
                                                                                  properties=propers2,
@@ -275,10 +445,21 @@ class BaseScenario:
                                                                                  width=float(value[0]),
                                                                                  length=float(value[1]),
                                                                                  height=float(value[2]))
+
+                if obj == 'Obj3':
+                    propers3 = property_truck.get('Obj3')
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Truck 03",
+                                                                                 default_cat=False,
+                                                                                 entity_type='Vehicle',
+                                                                                 properties=propers3,
+                                                                                 vehicle_category=value[3],
+                                                                                 width=float(value[0]),
+                                                                                 length=float(value[1]),
+                                                                                 height=float(value[2]))
             elif obj_entities[obj][3] == 'motorbike':
                 if obj == 'Obj1':
                     propers1_bike = property_motorbike.get('Obj1')
-                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model=value[4],
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Motorcycle03",
                                                                                  default_cat=False,
                                                                                  entity_type='Vehicle',
                                                                                  properties=propers1_bike,
@@ -288,7 +469,7 @@ class BaseScenario:
                                                                                  height=float(value[2]))
                 if obj == 'Obj2':
                     propers2_bike = property_motorbike.get('Obj2')
-                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model=value[4],
+                    target_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Motorcycle02",
                                                                                  default_cat=False,
                                                                                  entity_type='Vehicle',
                                                                                  properties=propers2_bike,
@@ -312,13 +493,11 @@ class BaseScenario:
         try:
             global road_len, x_value, envp_lane_selection,road_id
             landmark_start_value,road_id = EBTB_API_data.ego_landmark_start_init(paramlist_analysis=paramlist_analysis)
-            print("roadego",road_id,landmark_start_value)
             landmark_start_value = float(landmark_start_value)
             envp_landmark_offset = EBTB_API_data.get_landmark_offset_ego(paramlist_analysis=paramlist_analysis)
             envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=paramlist_analysis)
             road_len = EBTB_API_data.extract_lenthoflane(paramlist_analysis=paramlist_analysis)
             offset = EBTB_API_data.get_ego_initialise(paramlist_analysis=paramlist_analysis)
-            print(envp_landmark_offset,envp_lane_selection,road_len,offset)
 
             envp_landmark_offset = float(envp_landmark_offset)
 
@@ -425,7 +604,6 @@ class BaseScenario:
 
 
                 global x_value, envp_lane_selection,road_id
-                print("road",road_id,envp_lane_selection,x_value)
                 obj_lane_selection = envp_lane_selection
 
                 Longitudinal, Lateral, ref_obj = EBTB_API_data.get_obj_intialise(states_analysis=states_analysis,
