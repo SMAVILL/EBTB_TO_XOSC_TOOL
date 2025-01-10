@@ -540,7 +540,10 @@ class VehicleScenario:
         return user_defined_value_trig
 
     def create_custom_command_action(self, value):
-        message = xosc.CustomCommandAction(type="str", content=value)
+        if value == '{"ActorStateAction": {"enabled": true, "name": "DisabledVehicle"}}':
+            message = xosc.CustomCommandAction(type="SimOneExtensionAdd", content=value)
+        else :
+            message = xosc.CustomCommandAction(type="str", content=value)
         user_defined = xosc.UserDefinedAction(message)
         return user_defined
 

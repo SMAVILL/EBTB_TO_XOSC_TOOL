@@ -98,14 +98,4 @@ VEHICLE_NAME = {'car': 'ENCAP_GVT01',
                 'truck' : "Van Truck 01",
                 'obstacle' : "Plastic Barrier 01",
                 'pole' : "Defaced Sign 09"
-
-                #'motorbike' : 'Bike03'
-                # 'van' :,
-                # 'truck' :,
-                # 'trailer' :,
-                # 'semitrailer':,
-                # 'bus' :,
-                # 'motorbike':,
-                # 'train':,
-                # 'tram' :
                 }
