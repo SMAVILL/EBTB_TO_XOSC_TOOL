@@ -453,45 +453,6 @@ class Ego_Acts:
                                                                               action_name=action_name))
             shared_data.event_counter += 1
 
-    # def ego_E_ObjectDistanceLaneBased(self, all_ego_events,state_key):
-    #
-    #     event_name = f"event{shared_data.event_counter}"
-    #     action_name = f"SimOneDriver:event{shared_data.event_counter}"
-    #
-    #     keys = list(self.states_analysis.keys())
-    #     start_key_index = keys.index(self.last_processed_key1) + 1 if self.last_processed_key1 else 0
-    #
-    #     for key in keys[start_key_index:]:
-    #         ego_actions = self.states_analysis[key].get('EgoActions', [])
-    #
-    #         # Loop through `ego_actions`, starting from the next unprocessed action index
-    #         start_action_index = self.last_processed_action_index1 + 1 if self.last_processed_key1 == key else 0
-    #         for i in range(start_action_index, len(ego_actions)):
-    #             action = ego_actions[i]
-    #             if action.get('Action') == "E_ObjectDistanceLaneBased":
-    #                 parameters = action.get('Parameters',[])
-    #                 distance_value = parameters[0].get("Distance")
-    #                 relational_operator = parameters[0].get("RelationalOperator")
-    #                 reference_object = parameters[0].get("ReferenceObject")
-    #                 object_id = parameters[0].get("ObjectID")
-    #
-    #                 if shared_data.event_counter == 1:
-    #                     start_trig = self.VehicleDefines.create_ego_event(value=10)
-    #                 else:
-    #                     start_trig = self.VehicleDefines.create_relative_distance_condition_trigger(
-    #                     distance_value, relational_operator, reference_object, object_id)
-    #
-    #                 start_action = self.VehicleDefines.create_custom_command_action("Signal add:E_ObjectDistanceLaneBased")
-    #
-    #                 all_ego_events.append(
-    #                     self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,event_name=event_name,action_name=action_name))
-    #                 shared_data.event_counter += 1
-    #                 self.last_processed_key1 = key
-    #                 self.last_processed_action_index1 = i
-    #                 return
-    #     self.last_processed_key1 = None
-    #     self.last_processed_action_index1 = -1
-
     def ego_E_ObjectCollision(self, all_ego_events, state_key):
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ObjectCollision":

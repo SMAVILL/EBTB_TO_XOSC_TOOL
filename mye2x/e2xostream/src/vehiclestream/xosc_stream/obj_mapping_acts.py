@@ -81,6 +81,7 @@ class ObjScnearioActs:
         self.register_dispatch.register(OtherAPI.E_ObjectDistanceLaneBased,self.obj_distance_lanebased)
         self.register_dispatch.register(ObjAPI.Obj_SetLateralReference,self.obj_setlateralref)
         self.register_dispatch.register(ObjAPI.Obj_SetLongitudinalRelativePosition,self.Obj_SetLongitudinalRelativePosition)
+        self.register_dispatch.register(ObjAPI.Obj_Deactivate,self.obj_deactivate)
 
 
     def check_api_dispatch_function(self,all_target_events,target_name):
@@ -135,3 +136,6 @@ class ObjScnearioActs:
 
     def Obj_SetLongitudinalRelativePosition(self,all_target_events,state_key,target_name):
         self.Obj_algo_acts.Obj_SetLongitudinalRelativePosition(all_target_events,state_key,target_name)
+
+    def obj_deactivate(self,all_target_events,state_key,target_name):
+        self.Obj_algo_acts.obj_deactivate(all_target_events,state_key,target_name)

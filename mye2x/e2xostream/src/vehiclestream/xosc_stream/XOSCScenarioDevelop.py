@@ -163,48 +163,6 @@ class FuncScenario(ScenarioGenerator):
         # import pprint
         # pprint.pprint(shared_data.res)
 
-        # event_count = 1
-        # action_count = 1
-        #
-        # # Result dictionary
-        # shared_data.res = {}
-        #
-        # for state_key, actions in dri_obj_mapping.items():
-        #     # Separate E_ values and non-E_ values
-        #     e_values = [key for key in actions if key.startswith('E_')]
-        #     non_e_values = [key for key in actions if not key.startswith('E_')]
-        #
-        #     # Create a list to store the API dictionaries for the current state_key
-        #     state_actions = []
-        #
-        #     # Handle non-E_ values first
-        #     if non_e_values:
-        #         for key in non_e_values:
-        #             state_actions.append({
-        #                 'api_name': key,
-        #                 'event_count': event_count,  # Assign current event_count
-        #                 'action_count': action_count
-        #             })
-        #             action_count += 1  # Increment action_count for each non-E_ API
-        #         event_count += 1  # Increment event_count after all non-E_ APIs are processed
-        #
-        #     # Handle E_ values
-        #     for e_key in e_values:
-        #         state_actions.append({
-        #             'api_name': e_key,
-        #             'event_count': event_count,  # Assign current event_count
-        #             'action_count': action_count
-        #         })
-        #         action_count += 1  # Increment action_count for each E_ API
-        #         event_count += 1  # Increment event_count for each E_ API
-        #
-        #     # Store the list of dictionaries in the result
-        #     shared_data.res[state_key] = state_actions
-        #
-        # # Output the updated dictionary
-        # import pprint
-        # pprint.pprint(shared_data.res)
-
         shared_data.filtered_dict = {}
 
         for key, actions in shared_data.res.items():

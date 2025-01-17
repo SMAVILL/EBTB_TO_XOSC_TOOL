@@ -171,7 +171,6 @@ class Obj_Acts:
         all_target_events.append(target_next_event)
         shared_data.event_counter_obj += 1
 
-
     def obj_set_longitudinal_speed(self, all_target_events,state_key, target_name):
 
         for api in shared_data.res[state_key]:
@@ -236,36 +235,33 @@ class Obj_Acts:
         all_target_events.append(target_next_event)
         shared_data.event_counter_obj += 1
 
-    # def obj_deactivate(self,all_target_events, state_key, target_name):
-    #     for api in shared_data.res[state_key]:
-    #         if api['api_name'] == "Obj_Deactivate":
-    #             event_count = api['event_count']
-    #             action_count = api['action_count']
-    #             event_name = f"event{event_count}"
-    #             action_name = f"{target_name}:action{action_count}"
-    #
-    #     state_key = int(state_key)
-    #     val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-    #     target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
-    #
-    #     if event_count == 1:
-    #         start_trig = self.VehicleDefines.create_ego_event(value=10)
-    #     else:
-    #         start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
-    #             element_name=f"{target}:action{val}", delay=0)
-    #
-    #     start_action = self.VehicleDefines.obj_acceleration_actions(target_name,
-    #                                                                 state_data=self.states_analysis,
-    #                                                                 param_data=self.paramlist_analysis,
-    #                                                                 dict=self.last_index)
-    #
-    #     target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
-    #                                                                        start_action=start_action,
-    #                                                                        event_name=event_name,
-    #                                                                        action_name=action_name)
-    #
-    #     all_target_events.append(target_next_event)
-    #     shared_data.event_counter_obj += 1
+    def obj_deactivate(self, all_target_events, state_key, target_name):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Obj_Deactivate":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"{target_name}:action{action_count}"
+
+        state_key = int(state_key)
+        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action('{"ActorStateAction": {"enabled": true, "name": "DisabledVehicle"}}')
+
+        target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
+                                                                           start_action=start_action,
+                                                                           event_name=event_name,
+                                                                           action_name=action_name)
+
+        all_target_events.append(target_next_event)
+        shared_data.event_counter_obj += 1
 
 
 

@@ -4,7 +4,6 @@ import sys
 import argparse
 import time
 import logging
-from pathlib import Path
 from e2xostream.src import E2X_Convert
 import platform
 import getpass
@@ -313,8 +312,6 @@ if __name__ == "__main__":
 
         #logger.error(f"An  occurred: {str(e)}")
         for xml_file in xml_file_path:
-            print("xml",xml_file)
-            print(destination_directory)
             try:
                 destination_file_path =E2XObj.XOSCStream(destination_directory=destination_directory,
                                   original_file_path=original_file_path,
