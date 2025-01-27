@@ -17,6 +17,7 @@ from tkinter import messagebox
 from e2xostream.src.E2X_Convert import E2XOStream
 from e2xostream.src.vehiclestream.xosc_stream.ego_mapping_acts import EgoScnearioActs
 from e2xostream.src.vehiclestream.ebtb_stream import EBTBAnalyzer
+from e2xostream.src.vehiclestream.xosc_stream.XOSCScenarioDevelop import FuncScenario
 
 
 
@@ -253,12 +254,14 @@ if __name__ == "__main__":
     Execute the main script
     """
     try:
+        print("try")
 
         sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
         sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
         # logger.info("Script execution started.")
         try:
+            print("try1")
 
             xml_file_path, function, report_path, esmini_path = args_data()
 
@@ -280,6 +283,7 @@ if __name__ == "__main__":
             copy_xodr_share_to_local(sharepath, local_path)
 
         except Exception as e:
+            print("except1")
             logger.error(f"An unexpected error occurred: {str(e)}")
             show_popup(f"An unexpected error occurred:\n{str(e)}", "Unexpected Error")
             sys.exit(1)
@@ -309,6 +313,7 @@ if __name__ == "__main__":
                 time.sleep(1)
 
     except Exception as e:
+        print("except")
 
         #logger.error(f"An  occurred: {str(e)}")
         for xml_file in xml_file_path:
@@ -318,7 +323,6 @@ if __name__ == "__main__":
                                   xml_file_path=xml_file,
                                   report_path=report_path,
                                   esmini_path=esmini_path)
-
 
                 if EgoScnearioActs.flag == 1:
                     os.remove(E2XOStream.new_file_path)
@@ -332,6 +336,19 @@ if __name__ == "__main__":
                     EBTBAnalyzer.parking_flag = 0
                     logger.error(f"Check in API {EBTBAnalyzer.error_name}  - {E2XOStream.new_file_path}")
                     EBTBAnalyzer.error_name = None
+
+                if FuncScenario.ego_flag == 1:
+                    os.remove(E2XOStream.new_file_path)
+                    FuncScenario.ego_flag = 0
+                    logger.error(f"{FuncScenario.ego_error} - {E2XOStream.new_file_path}")
+                    FuncScenario.ego_error = None
+
+                if FuncScenario.obj_flag == 1:
+                    os.remove(E2XOStream.new_file_path)
+                    FuncScenario.obj_flag = 0
+                    logger.error(f"{FuncScenario.obj_error} - {E2XOStream.new_file_path}")
+                    FuncScenario.obj_error = None
+
 
                 from e2xostream import merge
                 merge.process_file(destination_file_path, destination_file_path)

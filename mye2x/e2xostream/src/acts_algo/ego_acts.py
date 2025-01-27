@@ -158,12 +158,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             self.start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             self.start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -247,12 +247,12 @@ class Ego_Acts:
             value_throttle = 5
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             self.start_trig_throttle = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             self.start_trig_throttle = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -278,12 +278,12 @@ class Ego_Acts:
         value_break = EBTB_API_data.ego_brake(self.ego_brake_index, self.states_analysis)
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             self.start_trig_brake = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             self.start_trig_brake = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -350,12 +350,12 @@ class Ego_Acts:
         dispvalue = EBTB_API_data.ego_set_lateral_disp(self.ego_lateraldisp_index, self.states_analysis)
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -394,12 +394,12 @@ class Ego_Acts:
             shared_data.latest_lane_ego_ref = latest_lane
 
             state_key = int(state_key)
-            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
             if event_count == 1:
                 start_trig = self.VehicleDefines.create_ego_event(value=10)
             else:
+                val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+                target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"{target}:action{val}", delay=0)
 
@@ -438,12 +438,12 @@ class Ego_Acts:
             shared_data.latest_lane_ego_ref = latest_lane
 
             state_key = int(state_key)
-            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
             if event_count == 1:
                 start_trig = self.VehicleDefines.create_ego_event(value=10)
             else:
+                val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+                target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"{target}:action{val}", delay=0)
             start_action = self.VehicleDefines.create_lateral_reference_action(lane=lane_value)
@@ -505,31 +505,19 @@ class Ego_Acts:
         gear_value = EBTB_API_data.ego_switchgear(self.ego_gear_index, self.states_analysis)
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
-        if gear_value == "D":
-            start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=0,
-                                                                                 steeringwheel=0, gear=1)
-        elif gear_value == "R":
-            start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=0,
-                                                                                 steeringwheel=0, gear=2)
-        elif gear_value == "N":
-            start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=0,
-                                                                                 steeringwheel=0, gear=0)
-        elif gear_value == "P":
-            start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=0,
-                                                                                 steeringwheel=0, gear=3)
+        start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
+                                                                             brake=0, clutch=0, parkingbrake=0,
+                                                                             steeringwheel=0, gear=gear_value)
+
         all_ego_events.append(self.VehicleDefines.define_ego_action_event(start_trig=start_trig,
                                                                           start_action=start_action,
                                                                           event_name=event_name,
@@ -545,12 +533,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -570,12 +558,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Ethernet_InvalidateE2EProtection")
@@ -594,12 +582,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Ethernet_SetSignalInvalid")
@@ -618,12 +606,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Ethernet_SuspendPDUTriggering")
@@ -642,12 +630,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_AcknowledgeCPMToastMessage")
@@ -666,12 +654,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_ChangeACCSpeed")
@@ -690,12 +678,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_ChangeVSLSpeed")
@@ -714,12 +702,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action(
@@ -739,12 +727,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_ConfigureDrivingFunction")
@@ -763,12 +751,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_ConfigureParkingFunction")
@@ -787,12 +775,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_PlaceHandCloseToDoorHandle")
@@ -811,12 +799,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_PressAPASoftKey")
@@ -835,12 +823,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_PressRMASoftKey")
@@ -859,12 +847,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_PressSteeringWheelButton")
@@ -883,12 +871,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetACCDistance")
@@ -907,12 +895,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetBeltState")
@@ -931,12 +919,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetCarwashMode")
@@ -955,12 +943,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetDrivingProgram")
@@ -979,12 +967,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action(
@@ -1004,12 +992,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetESPMode")
@@ -1028,12 +1016,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetHazardWarningLights")
@@ -1052,12 +1040,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetLockState")
@@ -1076,12 +1064,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetMirrorPosition")
@@ -1100,12 +1088,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetParkDisplayView")
@@ -1124,12 +1112,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetParkSwitchState")
@@ -1148,12 +1136,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetVehicleSpeedUnit")
@@ -1172,12 +1160,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetWinterTireSpeedLimiter")
@@ -1196,12 +1184,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SwitchACCVSLMode")
@@ -1220,12 +1208,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SwitchToACCDriving")
@@ -1244,12 +1232,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SwitchToVSLDriving")
@@ -1268,12 +1256,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_TakeHandsOff")
@@ -1292,12 +1280,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_ReleaseAcceleratorPedalRequest")
@@ -1316,12 +1304,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetADASISv2Attribute")
@@ -1340,12 +1328,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetAttentionAssist")
@@ -1364,12 +1352,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetECOAssistRequest")
@@ -1388,12 +1376,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetELVIRARecommendation")
@@ -1412,12 +1400,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetEPSHandsOffDetection")
@@ -1436,12 +1424,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetESPState")
@@ -1460,12 +1448,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action(
@@ -1485,12 +1473,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetIgnitionState")
@@ -1509,12 +1497,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetProductionMode")
@@ -1533,12 +1521,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetSnowChainMode")
@@ -1557,12 +1545,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetTireFriction")
@@ -1581,12 +1569,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetTireState")
@@ -1605,12 +1593,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetTrailerPlugState")
@@ -1629,12 +1617,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetTransportMode")
@@ -1653,12 +1641,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:TBA_RunDiagnosticService")
@@ -1678,12 +1666,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -1784,12 +1772,12 @@ class Ego_Acts:
         brake_value = EBTB_API_data.ego_parkingbrake(self.ego_pb_index, self.states_analysis)
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig_parkingbrake = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig_parkingbrake = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -1819,12 +1807,12 @@ class Ego_Acts:
         wheel_angle_value = EBTB_API_data.ego_steeringwheel_angle(self.ego_sw_index, self.states_analysis)
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig_steeringwheel = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig_steeringwheel = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -1893,12 +1881,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -1917,12 +1905,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -2439,12 +2427,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -2463,12 +2451,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -2487,12 +2475,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -2511,12 +2499,12 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -2535,16 +2523,41 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetSteeringWheelTorque")
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def sys_setdriver_responsivesness(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sys_SetDriverResponsiveness":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetDriverResponsiveness")
+
         all_ego_events.append(
             self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
                                                         event_name=event_name, action_name=action_name))

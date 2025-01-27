@@ -492,7 +492,7 @@ class BaseScenario:
         """
         try:
             global road_len, x_value, envp_lane_selection,road_id
-            landmark_start_value,road_id = EBTB_API_data.ego_landmark_start_init(paramlist_analysis=paramlist_analysis)
+            landmark_start_value = EBTB_API_data.ego_landmark_start_init(paramlist_analysis=paramlist_analysis)
             landmark_start_value = float(landmark_start_value)
             envp_landmark_offset = EBTB_API_data.get_landmark_offset_ego(paramlist_analysis=paramlist_analysis)
             envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=paramlist_analysis)
@@ -509,10 +509,13 @@ class BaseScenario:
             if landmark_start_value:
                 x_value = float(landmark_start_value + envp_landmark_offset)
             else:
-                if road_len is not None:
-                    x_value = float((road_len / 2) + envp_landmark_offset)
-                else:
-                    x_value = float(envp_landmark_offset)
+                return "Stop"
+                # if road_len is not None:
+                #     x_value = float((road_len / 2) + envp_landmark_offset)
+                # else:
+                #     x_value = float(envp_landmark_offset)
+
+            road_id,x_value = EBTB_API_data.ego_road_id(paramlist_analysis,x_value,landmark_start_value,xlmr_file=None)
 
             lane_selection_dict = {
                 "Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
@@ -538,22 +541,19 @@ class BaseScenario:
 
         """
         try:
+            ref_axis = EBTB_API_data.get_ref_axis(states_analysis=states_analysis,target_name=target_name)
 
-            try:
+            if ref_axis == "AbsSysLane":
                 global road_len
-
 
                 obj_landmark_offset = EBTB_API_data.get_landmark_offset(states_analysis=states_analysis,
                                                                         target_name=target_name)
 
                 obj_landmark_offset = float(obj_landmark_offset)
 
-
-
-                landmark_start,road_id1 = EBTB_API_data.obj_landmark_start_init(states_analysis=states_analysis,
+                landmark_start = EBTB_API_data.obj_landmark_start_init(states_analysis=states_analysis,
                                                                        target_name=target_name,
                                                                        paramlist_analysis=paramlist_analysis)
-
 
                 lane_offset = EBTB_API_data.get_obj_initialise_ver1(states_analysis=states_analysis,
                                                                     target_name=target_name)
@@ -569,12 +569,15 @@ class BaseScenario:
                 if landmark_start:
                     x_val = float(landmark_start + obj_landmark_offset)
                 else:
-                    if road_len is not None:
-                        x_val = float((road_len / 2) + obj_landmark_offset)
+                    return "Stop"
+                    # if road_len is not None:
+                    #     x_val = float((road_len / 2) + obj_landmark_offset)
+                    #
+                    # else:
+                    #     x_val = float(obj_landmark_offset)
 
-                    else:
-                        x_val = float(obj_landmark_offset)
-
+                road_id1, x_val = EBTB_API_data.obj_road_id(states_analysis, paramlist_analysis, target_name, x_val,
+                                                            landmark_start)
                 lane_selection_map = {
                     "Right1": -1,
                     "Right2": -2,
@@ -592,22 +595,16 @@ class BaseScenario:
 
                 y_val = lane_selection_map.get(obj_lane_selection, -4.625)  # Default to -4.625 if no match
 
-                self.VehicleDefines.target_initialize(init=init, step_time=step_time,road_id=road_id1,
+                self.VehicleDefines.target_initialize(init=init, step_time=step_time, road_id=road_id1,
                                                       targetname=target_name, x=x_val, y=y_val, offset=offset)
                 shared_data.obj_lane_init[target_name] = obj_lane_selection
 
-
-
-
-
-            except:
-
-
-                global x_value, envp_lane_selection,road_id
+            if ref_axis == "RelSysLane":
+                global x_value, envp_lane_selection, road_id
                 obj_lane_selection = envp_lane_selection
 
                 Longitudinal, Lateral, ref_obj = EBTB_API_data.get_obj_intialise(states_analysis=states_analysis,
-                                                                        target_name=target_name)
+                                                                                 target_name=target_name)
 
                 Longitudinal = float(Longitudinal)
                 x_val = x_value + Longitudinal
@@ -634,10 +631,12 @@ class BaseScenario:
                 y_val = lane_selection_map.get(obj_lane_selection, -4.625)
 
                 # Single call to target_initialize with the determined y value
-                self.VehicleDefines.target_initialize(init=init, step_time=step_time,road_id=road_id,
+                self.VehicleDefines.target_initialize(init=init, step_time=step_time, road_id=road_id,
                                                       targetname=target_name, x=x_val, y=y_val, offset=offset)
                 shared_data.obj_lane_init[target_name] = obj_lane_selection
 
 
+
+
         except:
-            pass
+            print("error")

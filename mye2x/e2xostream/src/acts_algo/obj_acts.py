@@ -66,12 +66,12 @@ class Obj_Acts:
                     action_name = f"{target_name}:action{action_count}"
 
             state_key = int(state_key)
-            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
             if event_count == 1:
                 start_trig = self.VehicleDefines.create_ego_event(value=10)
             else:
+                val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+                target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
                 start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                     element_name=f"{target}:action{val}", delay=0)
 
@@ -106,15 +106,14 @@ class Obj_Acts:
 
         dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name)
         abs_or_rel,entity = EBTB_API_data.obj_lateral_ref(self.states_analysis,target_name)
-        print("rel",abs_or_rel,entity)
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -148,12 +147,12 @@ class Obj_Acts:
         dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name)
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -182,12 +181,12 @@ class Obj_Acts:
 
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -213,14 +212,14 @@ class Obj_Acts:
                 action_name = f"{target_name}:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         entity,distance = EBTB_API_data.obj_set_lateral_relative(states_analysis=self.states_analysis,target_name=target_name)
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
@@ -244,12 +243,12 @@ class Obj_Acts:
                 action_name = f"{target_name}:action{action_count}"
 
         state_key = int(state_key)
-        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
-        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
 
         if event_count == 1:
             start_trig = self.VehicleDefines.create_ego_event(value=10)
         else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 

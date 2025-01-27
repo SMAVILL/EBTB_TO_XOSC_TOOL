@@ -842,6 +842,15 @@ class VehicleScenario:
         if gear == 0:
             override_controller_value_action.set_gear(active=False, value=gear)
         else:
+            if gear == "D":
+                gear = 1.0
+            elif gear == "R":
+                gear = 2.0
+            elif gear == "N":
+                gear = 0.0
+            elif gear == "R":
+                gear = 3.0
+
             override_controller_value_action.set_gear(active=True, value=gear)
 
         if steeringwheel == 0:

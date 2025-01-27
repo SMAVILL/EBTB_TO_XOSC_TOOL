@@ -140,6 +140,7 @@ class EgoScnearioActs:
         self.register_dispatch.register(OtherAPI.E_StepOut, self.e_stepout)
         self.register_dispatch.register(OtherAPI.E_SwitchToACCDriving, self.e_switchtoACCdriving)
         self.register_dispatch.register(OtherAPI.E_SwitchToVSLDriving, self.e_switchtoVSLDriving)
+        self.register_dispatch.register(EgoAPI.Sys_SetDriverResponsiveness,self.Sys_SetDriverResponsiveness)
 
 
     def check_api_dispatch_function(self, all_ego_events):
@@ -536,6 +537,10 @@ class EgoScnearioActs:
     def dri_SetSteeringWheelTorque(self, all_ego_events, state_key):
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.dri_SetSteeringWheelTorque(all_ego_events, state_key)
+
+    def Sys_SetDriverResponsiveness(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.sys_setdriver_responsivesness(all_ego_events, state_key)
 
 
 

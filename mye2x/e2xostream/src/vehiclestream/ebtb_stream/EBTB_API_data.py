@@ -608,7 +608,8 @@ def get_lane_selection_object(states_analysis, target_name):
             for action in actions:
                 if action.get('Action') == ObjAPI.Obj_Initialize:
                     for param in action.get('Parameters', []):
-                        lane_selection = param['LaneSelection']
+                        #lane_selection = param['LaneSelection']
+                        lane_selection = param.get('LaneSelection',0)
 
                         # Append the object action information
                         obj_key = f'{obj_id}_Obj_Initialize'
@@ -659,7 +660,7 @@ def get_obj_intialise(states_analysis,target_name):
                     for param in action.get('Parameters', []):
                         Longitudinal = param.get('DistanceLongitudinal',0)
                         Lateral = param.get('DistanceLateral',0)
-                        ref_obj = param['ReferenceObject']
+                        ref_obj = param.get('ReferenceObject',None)
 
 
                         obj_key = f'{obj_id}_Obj_Initialize'
@@ -701,6 +702,28 @@ def get_obj_initialise_ver1(states_analysis,target_name):
         return lane_offset
     else:
         return 0
+
+def get_ref_axis(states_analysis,target_name):
+    extracted_info = {}
+    for k, v in states_analysis.items():
+        for obj_id, actions in v.get('ObjectActions', {}).items():
+            for action in actions:
+                if action.get('Action') == ObjAPI.Obj_Initialize:
+                    for param in action.get('Parameters', []):
+                        ref_axis = param.get('ReferenceSystem', None)
+
+                        # Append the object action information
+                        obj_key = f'{obj_id}_Obj_Initialize'
+                        if obj_key not in extracted_info:
+                            extracted_info[obj_key] = []
+                        extracted_info[obj_key].append(
+                            {'ReferenceSystem': ref_axis})
+
+    key_to_access = f"{target_name}_Obj_Initialize"
+    if key_to_access in extracted_info:
+        extracted_value = extracted_info[key_to_access]
+        ref_axis = extracted_value[0]['ReferenceSystem']
+    return ref_axis
 
 def get_ego_initialise(paramlist_analysis):
     ego_actions = paramlist_analysis['Default']['EgoActions']
@@ -758,12 +781,11 @@ def ego_landmark_start_init(paramlist_analysis):
                 road_id = 0
                 for landmark in root.findall(".//landmark"):
                     if landmark.get('name') == landmark_start:
-                        print("match")
                         ds_value = landmark.get('ds')
                         road_id = landmark.get('roadId')
                         ds_value_float = float(ds_value)
 
-    return ds_value_float,road_id
+    return ds_value_float
 
 def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
     extracted_info = {}
@@ -827,7 +849,7 @@ def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
                         ds_value_float = float(ds_value)
 
     if ds_value_float:
-        return ds_value_float,road_id
+        return ds_value_float
     else:
         return 0,0
 
@@ -1290,6 +1312,261 @@ def obj_set_lateral_relative(states_analysis,target_name):
         distance = extracted_value[0]['Distance']
         entity = extracted_value[0]['ReferenceObject']
     return entity,distance
+
+
+
+import os
+import xml.etree.ElementTree as ET
+import re
+
+def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
+
+    # Step 1: Extract route name from paramlist_analysis
+    route_name = None
+    ego_actions = paramlist_analysis.get('Default', {}).get('EgoActions', [])
+    for ego_action in ego_actions:
+        if ego_action.get('Action') == 'EnvP_RoadNetwork':
+            parameters = ego_action.get('Parameters', [])
+            for parameter in parameters:
+                route_name = parameter.get('Route', None)
+                if route_name:
+                    break
+
+    if not route_name:
+        print("Route name not found in paramlist_analysis.")
+        return
+
+    # Define directories
+    current_directory = os.getcwd()
+    folder_xlmr = os.path.join(current_directory, "xlmrmaps")
+    folder_xodr = os.path.join(current_directory, "xodrmaps")
+
+    # Step 2: Extract xlmr_file from paramlist_analysis
+    for key, value in paramlist_analysis.items():
+        ego_actions = value.get('EgoActions', [])
+        for action in ego_actions:
+            if action.get('Action') == 'EnvP_RoadNetwork':
+                parameters = action.get('Parameters', [])
+                for param in parameters:
+                    xlmr_file = param.get('XlmrFile', None)
+                    if xlmr_file:
+                        break
+                if xlmr_file:
+                    break
+
+    if not xlmr_file:
+        print("XlmrFile not found in paramlist_analysis.")
+        return
+
+    # Clean and construct the xlmr file path
+    clean_xlmr_file = os.path.basename(xlmr_file)
+    xlmr_file_path = os.path.join(folder_xlmr, clean_xlmr_file)
+
+    # Step 3: Parse the .xlmr file to find road IDs
+    road_ids = []
+    if os.path.exists(xlmr_file_path):
+        with open(xlmr_file_path, 'r') as file:
+            content = file.read()
+
+        # Parse the XML content
+        root = ET.fromstring(content)
+        for route in root.findall(".//route"):
+            if route.attrib.get("name") == route_name:
+                road_ids = [road.attrib["id"] for road in route.findall(".//road")]
+                break  # Exit loop after finding the required route
+
+        print(f"Road IDs for route '{route_name}': {road_ids}")
+
+        # Extract the .xodr file name
+        match = re.search(r'<xodrFile>.*\/([^\/]+\.xodr)<\/xodrFile>', content)
+        xodr_file_name = match.group(1) if match else None
+    else:
+        print(f"Xlmr file not found: {xlmr_file_path}")
+        return
+
+    if not xodr_file_name:
+        print("No .xodr file name found in the xlmr file.")
+        return
+
+    # Step 4: Parse the corresponding .xodr file to calculate road lengths
+    xodr_file_path = os.path.join(folder_xodr, xodr_file_name)
+    if os.path.exists(xodr_file_path):
+        with open(xodr_file_path, 'r') as file:
+            content = file.read()
+
+        # Parse the XML content
+        road_id = 0
+        relative_position = 0
+
+        root = ET.fromstring(content)
+        road_lengths = {}  # Store road lengths with road IDs as keys
+
+        element_types = []
+
+        for road in root.findall(".//road"):
+            road_id = road.attrib.get("id")
+            road_length = float(road.attrib.get("length", 0.0))
+            if road_id in road_ids:
+                road_lengths[road_id] = road_length
+
+                link = road.find("link")
+                if link is not None:
+                    # Find all predecessor and successor tags
+                    for tag in link.findall("*"):
+                        # Get the elementType attribute if it exists
+                        element_type = tag.attrib.get("elementType")
+                        if element_type:  # Only add if elementType is present
+                            element_types.append(element_type)
+
+        print("Extracted elementTypes:", element_types)
+        if "junction" in element_types:
+            x_value = x_value-landmark_start
+        else:
+            x_value = x_value
+
+        # Step 5: Calculate cumulative road lengths and determine position
+        cumulative_length = 0.0
+        for road_id in road_ids:
+            road_length = road_lengths.get(road_id, 0.0)
+            cumulative_length += road_length
+
+            if x_value <= cumulative_length:
+                # Find the relative position within the current road
+                relative_position = x_value - (cumulative_length - road_length)
+                print(f"Road ID: {road_id}, Relative position: {relative_position}")
+                return road_id, relative_position
+
+        print("x_value exceeds total road length.")
+    else:
+        print(f"Xodr file not found: {xodr_file_path}")
+
+
+def obj_road_id(states_analysis,paramlist_analysis, target_name,x_value, landmark_start):
+    extracted_info = {}
+    for k, v in states_analysis.items():
+        for obj_id, actions in v.get('ObjectActions', {}).items():
+            for action in actions:
+                if action.get('Action') == ObjAPI.Obj_Initialize:
+                    for param in action.get('Parameters', []):
+                        route_name = param.get('Route', 'Not Available')
+
+                        # Append the object action information
+                        obj_key = f'{obj_id}_Obj_Initialize'
+                        if obj_key not in extracted_info:
+                            extracted_info[obj_key] = []
+                        extracted_info[obj_key].append(
+                            {'Route': route_name})
+
+    key_to_access = f"{target_name}_Obj_Initialize"
+    if key_to_access in extracted_info:
+        extracted_value = extracted_info[key_to_access]
+        route_name = (extracted_value[0]['Route'])
+
+
+    # Define directories
+    current_directory = os.getcwd()
+    folder_xlmr = os.path.join(current_directory, "xlmrmaps")
+    folder_xodr = os.path.join(current_directory, "xodrmaps")
+
+
+    # Step 2: Extract xlmr_file from paramlist_analysis
+    for key, value in paramlist_analysis.items():
+        ego_actions = value.get('EgoActions', [])
+        for action in ego_actions:
+            if action.get('Action') == 'EnvP_RoadNetwork':
+                parameters = action.get('Parameters', [])
+                for param in parameters:
+                    xlmr_file = param.get('XlmrFile', None)
+                    if xlmr_file:
+                        break
+                if xlmr_file:
+                    break
+
+    if not xlmr_file:
+        print("XlmrFile not found in paramlist_analysis.")
+        return
+
+    # Clean and construct the xlmr file path
+    clean_xlmr_file = os.path.basename(xlmr_file)
+    xlmr_file_path = os.path.join(folder_xlmr, clean_xlmr_file)
+
+    # Step 3: Parse the .xlmr file to find road IDs
+    road_ids = []
+    if os.path.exists(xlmr_file_path):
+        with open(xlmr_file_path, 'r') as file:
+            content = file.read()
+
+        # Parse the XML content
+        root = ET.fromstring(content)
+        for route in root.findall(".//route"):
+            if route.attrib.get("name") == route_name:
+                road_ids = [road.attrib["id"] for road in route.findall(".//road")]
+                break  # Exit loop after finding the required route
+
+        print(f"Road IDs for route '{route_name}': {road_ids}")
+
+        # Extract the .xodr file name
+        match = re.search(r'<xodrFile>.*\/([^\/]+\.xodr)<\/xodrFile>', content)
+        xodr_file_name = match.group(1) if match else None
+    else:
+        print(f"Xlmr file not found: {xlmr_file_path}")
+        return
+
+    if not xodr_file_name:
+        print("No .xodr file name found in the xlmr file.")
+        return
+
+    # Step 4: Parse the corresponding .xodr file to calculate road lengths
+    xodr_file_path = os.path.join(folder_xodr, xodr_file_name)
+    if os.path.exists(xodr_file_path):
+        with open(xodr_file_path, 'r') as file:
+            content = file.read()
+
+        # Parse the XML content
+        road_id = 0
+        relative_position = 0
+
+        root = ET.fromstring(content)
+        road_lengths = {}  # Store road lengths with road IDs as keys
+
+        element_types = []
+
+        for road in root.findall(".//road"):
+            road_id = road.attrib.get("id")
+            road_length = float(road.attrib.get("length", 0.0))
+            if road_id in road_ids:
+                road_lengths[road_id] = road_length
+
+                link = road.find("link")
+                if link is not None:
+                    # Find all predecessor and successor tags
+                    for tag in link.findall("*"):
+                        # Get the elementType attribute if it exists
+                        element_type = tag.attrib.get("elementType")
+                        if element_type:  # Only add if elementType is present
+                            element_types.append(element_type)
+
+        print("Extracted elementTypes:", element_types)
+        if "junction" in element_types:
+            x_value = x_value-landmark_start
+        else:
+            x_value = x_value
+
+        # Step 5: Calculate cumulative road lengths and determine position
+        cumulative_length = 0.0
+        for road_id in road_ids:
+            road_length = road_lengths.get(road_id, 0.0)
+            cumulative_length += road_length
+
+            if x_value <= cumulative_length:
+                # Find the relative position within the current road
+                relative_position = x_value - (cumulative_length - road_length)
+                print(f"Road ID: {road_id}, Relative position: {relative_position}")
+                return road_id, relative_position
+
+        print("x_value exceeds total road length.")
+    else:
+        print(f"Xodr file not found: {xodr_file_path}")
 
 
 
