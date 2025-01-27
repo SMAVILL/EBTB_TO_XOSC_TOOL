@@ -159,10 +159,6 @@ class FuncScenario(ScenarioGenerator):
             # Store the list of dictionaries in the result
             shared_data.res[state_key] = state_actions
 
-        # Output the updated dictionary
-        # import pprint
-        # pprint.pprint(shared_data.res)
-
         shared_data.filtered_dict = {}
 
         for key, actions in shared_data.res.items():
@@ -178,16 +174,34 @@ class FuncScenario(ScenarioGenerator):
                         for obj, obj_actions in object_actions.items():
                             for obj_action in obj_actions:
                                 if obj_action['Action'] == api_name:
-                                    object_id = obj_action['Parameters'][0].get('ObjectId', None)
+                                    object_id = obj_action['Parameters'][0].get('ObjectId') or obj_action['Parameters'][0].get('ObjectID')
                                     break
                     # Add to filtered dictionary
                     if action_count not in shared_data.filtered_dict:
                         shared_data.filtered_dict[action_count] = {'api_name': api_name, 'ObjectId': object_id}
 
-        # print(shared_data.filtered_dict)
+        # Modify state_e_mapping at the end
+        for state_key, api_name in shared_data.state_e_mapping.items():
+            # Initialize variables for action_count and object_id
+            action_count = None
+            object_id = None
 
+            # Locate action_count using the specific state_key in shared_data.res
+            for action in shared_data.res.get(state_key, []):
+                if action['api_name'] == api_name:
+                    action_count = action['action_count']
+                    break
 
+            # Determine ObjectID based on the state_key and API name
+            if api_name == "E_ObjectDistanceLaneBased":
+                # Extract ObjectID from filtered_dict using state_key reference
+                object_id = shared_data.filtered_dict.get(action_count, {}).get('ObjectId', None)
+            else:
+                # Use "SimOneDriver" for all other APIs
+                object_id = "SimOneDriver"
 
+            # Update state_e_mapping to include [api_name, action_count, object_id]
+            shared_data.state_e_mapping[state_key] = [api_name, action_count, object_id]
 
     def ego_maneuver_group_with_condition(self):
         """
@@ -280,18 +294,29 @@ class FuncScenario(ScenarioGenerator):
         # Global action with environment setting
         self.VehicleDefines.global_action(init=self.init)
 
+    ego_flag = 0
+    ego_error = None
     def EgoInitilize(self):
         # Initialize Ego
-        self.base_scenario.Ego_initialize(paramlist_analysis=self.paramlist_analysis,
+        result = self.base_scenario.Ego_initialize(paramlist_analysis=self.paramlist_analysis,
                                           step_time=self.step_time,
                                           init=self.init)
+        if result == "Stop":
+            FuncScenario.ego_flag = 1
+            FuncScenario.ego_error = "Parameters missing in EnvPRoadnetwork"
 
+    obj_flag = 0
+    obj_error = None
     def ObjectInitialize(self):
         # Initialize Target/Objects
         if len(self.obj_list) > 0:
             for i in self.obj_list:
-                self.base_scenario.Target_initialize(step_time=self.step_time, init=self.init, target_name=i,
+                res = self.base_scenario.Target_initialize(step_time=self.step_time, init=self.init, target_name=i,
                                                      states_analysis=self.states_analysis,paramlist_analysis=self.paramlist_analysis)
+
+                if res == "Stop":
+                    FuncScenario.obj_flag = 1
+                    FuncScenario.obj_error = "Parameters missing in Object Initialise"
 
 
 

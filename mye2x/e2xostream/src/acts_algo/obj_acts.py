@@ -106,7 +106,6 @@ class Obj_Acts:
 
         dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name)
         abs_or_rel,entity = EBTB_API_data.obj_lateral_ref(self.states_analysis,target_name)
-        print("rel",abs_or_rel,entity)
 
         state_key = int(state_key)
         val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]

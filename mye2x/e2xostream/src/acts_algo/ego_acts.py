@@ -71,6 +71,8 @@ class Ego_Acts:
         # shared_data.obj_lane_init={}
         shared_data.latest_lane_ego_ref = None
 
+        print(shared_data.state_e_mapping)
+
     def prepare_vehicle(self, all_ego_events, state_key):
         pass
 
@@ -514,22 +516,10 @@ class Ego_Acts:
             start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
                 element_name=f"{target}:action{val}", delay=0)
 
-        if gear_value == "D":
-            start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=0,
-                                                                                 steeringwheel=0, gear=1)
-        elif gear_value == "R":
-            start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=0,
-                                                                                 steeringwheel=0, gear=2)
-        elif gear_value == "N":
-            start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=0,
-                                                                                 steeringwheel=0, gear=0)
-        elif gear_value == "P":
-            start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
-                                                                                 brake=0, clutch=0, parkingbrake=0,
-                                                                                 steeringwheel=0, gear=3)
+        start_action = self.VehicleDefines.create_controller_override_action(throttle=0,
+                                                                             brake=0, clutch=0, parkingbrake=0,
+                                                                             steeringwheel=0, gear=gear_value)
+
         all_ego_events.append(self.VehicleDefines.define_ego_action_event(start_trig=start_trig,
                                                                           start_action=start_action,
                                                                           event_name=event_name,
@@ -2545,6 +2535,31 @@ class Ego_Acts:
                 element_name=f"{target}:action{val}", delay=0)
 
         start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetSteeringWheelTorque")
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def sys_setdriver_responsivesness(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sys_SetDriverResponsiveness":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+        val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+        target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetDriverResponsiveness")
+
         all_ego_events.append(
             self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
                                                         event_name=event_name, action_name=action_name))

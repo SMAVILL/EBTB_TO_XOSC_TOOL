@@ -74,6 +74,7 @@ Sys_SetTireFriction = "Sys_SetTireFriction"
 Sys_SetTireState = "Sys_SetTireState"
 Sys_SetTrailerPlugState = "Sys_SetTrailerPlugState"
 Sys_SetTransportMode = "Sys_SetTransportMode"
+Sys_SetDriverResponsiveness = "Sys_SetDriverResponsiveness"
 
 # System/Ego Vehicle
 SysP_Vehicle = "SysP_Vehicle"
