@@ -161,6 +161,12 @@ def get_obj_speed_transition_time(target_name,last_index,states_analysis):
 
 
 def xlmr_to_xodr_mapping(paramlist_analysis):
+    current_directory = os.getcwd()
+
+    subdirectory = "xlmrmaps"
+
+    xlmr_paths = os.path.join(current_directory, subdirectory)
+
     """
     Mapping xlmr to xodr
     Parameters
@@ -170,8 +176,6 @@ def xlmr_to_xodr_mapping(paramlist_analysis):
     Returns
     -------
     """
-    # Loop over paramlist_analysis and return XlmrFile key value
-    xlmr_file = "germany_hw_4lanes_rq31_10km_straight_v2.xlmr"
     for key, value in paramlist_analysis.items():
         ego_actions = value.get('EgoActions', [])
         for action in ego_actions:
@@ -184,12 +188,42 @@ def xlmr_to_xodr_mapping(paramlist_analysis):
                 else:
                     continue
                 break
+        xlmr_file_path1 = os.path.basename(xlmr_file)
+        xlmr_file_path = os.path.join(xlmr_paths,xlmr_file_path1)
 
-    # xlmr_file to xodr mapping
-    xodr_path = global_parameters.XLMR[
-        xlmr_file] if xlmr_file in global_parameters.XLMR else "dd878027-4265-43bd-9ff1-5fd9f688f1f7.xodr"
+        if os.path.exists(xlmr_file_path):
+            with open(xlmr_file_path, 'r') as file:
+                content = file.read()
 
-    return xodr_path
+            # Parse the XML content
+            root = ET.fromstring(content)
+
+
+            match = re.search(r'<xodrFile>.*\/([^\/]+\.xodr)<\/xodrFile>', content)
+            xodr_file_name = match.group(1) if match else None
+
+
+            print("Absolute path of .xodr file:", xodr_file_name)
+            return xodr_file_name
+
+
+
+    # if os.path.exists(xlmr_paths) and os.path.isdir(xlmr_paths):
+    #     # Iterate over files in the folder
+    #     for filename in os.listdir(xlmr_paths):
+    #         # Compare the filename with `xlmr_file_path`
+    #         if filename == xlmr_file_path:
+    #             file_path = os.path.join(xlmr_paths, filename)
+    #
+    #             # Read and print the file contents
+    #             tree = ET.parse(file_path)  # Replace 'your_file.xml' with your XML file path
+    #             root = tree.getroot()
+
+
+
+
+
+
 
 def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
 
@@ -242,7 +276,7 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                 if ds_value_float:
                     return ds_value_float, landmark_offset, obj_ref
                 else:
-                    return None,None, None
+                    return None,None,None
 
 
 
@@ -345,6 +379,40 @@ def extract_lenthoflane(paramlist_analysis, xlmr_file=None):
 def getroadnetwork(paramlist_analysis):
     xodr_path = xlmr_to_xodr_mapping(paramlist_analysis)
     return xodr_path
+
+def get_sign_entities(paramlist_analysis):
+    sign_list = []  # List to store sign IDs
+    sign_count = 0  # Counter for unique sign IDs
+    sign_details = {}
+
+    if 'Default' in paramlist_analysis and 'EgoActions' in paramlist_analysis['Default']:
+        for action in paramlist_analysis['Default']['EgoActions']:
+            if action.get('Action') == 'EnvP_TrafficSignClusterSetup' and 'Parameters' in action:
+                setup_parameters = action['Parameters'][0]  # Extract first parameter dictionary
+                holding_device_asset_id = (setup_parameters.get('HoldingDeviceAssetID').split('/')[0]
+                                           if setup_parameters.get('HoldingDeviceAssetID') else None)
+
+                asset_id = global_parameters.VEHICLE_CATEGORIES.get(holding_device_asset_id.lower())
+
+                if asset_id == "pole":
+                    sign_count += 1  # Increment counter
+                    sign_id = f"TrafficSign{sign_count}"  # Generate sign ID
+                    sign_list.append(sign_id)  # Store in the list
+
+                    vehicle_name = global_parameters.VEHICLE_NAME.get(asset_id.lower(), 'pole')
+                    width = default_properties.DEFAULT_SIZE_PROPERTIES.get('trafficsign')['width']
+                    length = default_properties.DEFAULT_SIZE_PROPERTIES.get('trafficsign')['length']
+                    height = default_properties.DEFAULT_SIZE_PROPERTIES.get('trafficsign')['height']
+
+                if sign_id and width and length and height:
+                    sign_details[sign_id] = [width, length, height, str(asset_id), vehicle_name]
+
+                else:
+                    sign_details[sign_id] = [1.26, 1.18, 10.25, str(asset_id), vehicle_name]
+
+
+    return sign_details,sign_list  # Return list of sign IDs
+
 
 
 def get_obj_entities(paramlist_analysis):
@@ -847,11 +915,12 @@ def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
                         ds_value = landmark.get('ds')
                         road_id = landmark.get('roadId')
                         ds_value_float = float(ds_value)
+                        print("ds val float",ds_value_float)
 
     if ds_value_float:
         return ds_value_float
     else:
-        return 0,0
+        return 0
 
 
 def ego_brake(ego_brake_index,states_analysis):
@@ -863,17 +932,18 @@ def ego_brake(ego_brake_index,states_analysis):
             if action.get('Action') == EgoAPI.Dri_SetBrakePedal:
                 for param in action.get('Parameters', []):
                     value_break = param.get('Position','Not Available')
+                    brake_torque = param.get('BrakeTorque','Not Available')
 
                     # Append to the list of extracted information for Ego's speed and transition time
                     if EgoAPI.Dri_SetBrakePedal not in extracted_info_brake:
                         extracted_info_brake[EgoAPI.Dri_SetBrakePedal] = []
 
                     extracted_info_brake[EgoAPI.Dri_SetBrakePedal].append(
-                        {'Position': value_break}
+                        {'Position': value_break, 'BrakeTorque':brake_torque}
                     )
-
     # Default values for speed and transition time
     value_break = 0
+    brake_torque = 0
     key = EgoAPI.Dri_SetBrakePedal
 
     # Initialize last_index_ego for this action if not already initialized
@@ -890,13 +960,15 @@ def ego_brake(ego_brake_index,states_analysis):
             current_action = actions[ego_brake_index[key]]
 
             value_break = current_action['Position']
-            if value_break != 'Not Available':
-                try:
-                    value_break = value_break
-                except ValueError:
-                    print(f"Invalid speed value: {value_break}")
-                    value_break = 0
+            brake_torque = current_action['BrakeTorque']
 
+
+            if brake_torque != "Not Available":
+                brake_torque = float(brake_torque)
+                brake = (0.00625*brake_torque)
+
+            elif value_break != "Not Available":
+                brake = value_break
 
             # Increment the index for the next call
             ego_brake_index[key] += 1
@@ -904,7 +976,7 @@ def ego_brake(ego_brake_index,states_analysis):
         # Handle the case where all actions are processed
         else:
             pass
-    return value_break
+    return brake
 
 def ego_throttle(ego_throttle_index,states_analysis):
     extracted_info_throttle = {}
@@ -1313,6 +1385,38 @@ def obj_set_lateral_relative(states_analysis,target_name):
         entity = extracted_value[0]['ReferenceObject']
     return entity,distance
 
+def obj_set_lateral_relative_position(states_analysis,target_name):
+    extracted_info = {}
+    for k, v in states_analysis.items():
+        for obj_id, actions in v.get('ObjectActions', {}).items():
+            for action in actions:
+                if action.get('Action') == ObjAPI.Obj_SetLateralRelativePosition:
+                    for param in action.get('Parameters', []):
+                        displacement = param.get('Displacement', None)
+                        entity = param.get('ReferenceObject',None)
+
+                    for unit in action.get('unit',[]):
+                        units = unit.get('Displacement',None)
+
+                        # Append the object action information
+                        obj_key = f'{obj_id}Obj_SetLateralRelativePosition'
+                        if obj_key not in extracted_info:
+                            extracted_info[obj_key] = []
+                        extracted_info[obj_key].append(
+                            {'Displacement': displacement,'ReferenceObject': entity, 'Unit':units})
+
+    displacement = None
+    entity = None
+    units = None
+    key_to_access = f"{target_name}Obj_SetLateralRelativePosition"
+    if key_to_access in extracted_info:
+        extracted_value = extracted_info[key_to_access]
+        displacement = extracted_value[0]['Displacement']
+        entity = extracted_value[0]['ReferenceObject']
+        units = extracted_value[0]['Unit']
+
+    return entity,displacement,units
+
 
 
 import os
@@ -1370,16 +1474,24 @@ def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
 
         # Parse the XML content
         root = ET.fromstring(content)
+        route_found = False  # Flag to check if route_name exists in xlmr file
         for route in root.findall(".//route"):
             if route.attrib.get("name") == route_name:
                 road_ids = [road.attrib["id"] for road in route.findall(".//road")]
+                route_found = True
                 break  # Exit loop after finding the required route
+
+        if not route_found:
+            print(f"Route name '{route_name}' not found in xlmr file. Returning ('None', 'Stop').")
+            return "Stop",None  # Return a flag instead of stopping execution
 
         print(f"Road IDs for route '{route_name}': {road_ids}")
 
         # Extract the .xodr file name
         match = re.search(r'<xodrFile>.*\/([^\/]+\.xodr)<\/xodrFile>', content)
         xodr_file_name = match.group(1) if match else None
+
+
     else:
         print(f"Xlmr file not found: {xlmr_file_path}")
         return
@@ -1387,6 +1499,32 @@ def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
     if not xodr_file_name:
         print("No .xodr file name found in the xlmr file.")
         return
+
+    # Step 3: Parse the .xlmr file to find road IDs
+    # road_ids = []
+    # if os.path.exists(xlmr_file_path):
+    #     with open(xlmr_file_path, 'r') as file:
+    #         content = file.read()
+    #
+    #     # Parse the XML content
+    #     root = ET.fromstring(content)
+    #     for route in root.findall(".//route"):
+    #         if route.attrib.get("name") == route_name:
+    #             road_ids = [road.attrib["id"] for road in route.findall(".//road")]
+    #             break  # Exit loop after finding the required route
+    #
+    #     print(f"Road IDs for route '{route_name}': {road_ids}")
+    #
+    #     # Extract the .xodr file name
+    #     match = re.search(r'<xodrFile>.*\/([^\/]+\.xodr)<\/xodrFile>', content)
+    #     xodr_file_name = match.group(1) if match else None
+    # else:
+    #     print(f"Xlmr file not found: {xlmr_file_path}")
+    #     return
+    #
+    # if not xodr_file_name:
+    #     print("No .xodr file name found in the xlmr file.")
+    #     return
 
     # Step 4: Parse the corresponding .xodr file to calculate road lengths
     xodr_file_path = os.path.join(folder_xodr, xodr_file_name)
@@ -1498,10 +1636,17 @@ def obj_road_id(states_analysis,paramlist_analysis, target_name,x_value, landmar
 
         # Parse the XML content
         root = ET.fromstring(content)
+        route_found1 = False
         for route in root.findall(".//route"):
             if route.attrib.get("name") == route_name:
                 road_ids = [road.attrib["id"] for road in route.findall(".//road")]
+                route_found1 = True
                 break  # Exit loop after finding the required route
+
+        if not route_found1:
+            print(f"Route name '{route_name}' not found in xlmr file. Returning ('None', 'Stop').")
+            return "Stop",None  # Return a flag instead of stopping execution
+
 
         print(f"Road IDs for route '{route_name}': {road_ids}")
 
@@ -1567,6 +1712,223 @@ def obj_road_id(states_analysis,paramlist_analysis, target_name,x_value, landmar
         print("x_value exceeds total road length.")
     else:
         print(f"Xodr file not found: {xodr_file_path}")
+
+import os
+
+def ego_xlmr_map(paramlist_analysis):
+    global landmark_type
+
+    ego_actions = paramlist_analysis['Default']['EgoActions']
+    for ego_action in ego_actions:
+        if ego_action['Action'] == 'EnvP_RoadNetwork':  # Check for specific action
+            parameters = ego_action.get('Parameters', [])  # Safely get 'Parameters' key
+            for parameter in parameters:
+                landmark_start = parameter.get('LandmarkStart')
+
+    current_directory = os.getcwd()
+    subdirectory = "xlmrmaps"
+    xlmr_paths = os.path.join(current_directory, subdirectory)
+
+    xlmr_file = None  # Initialize xlmr_file to handle cases where it's not set
+    for key, value in paramlist_analysis.items():
+        ego_actions = value.get('EgoActions', [])
+        for action in ego_actions:
+            if action.get('Action', []) == OtherAPI.EnvP_RoadNetwork:
+                parameters = action.get('Parameters', [])
+                for param in parameters:
+                    if AMC.XlmrFile in param:
+                        xlmr_file = param[AMC.XlmrFile]
+                        break
+                if xlmr_file:
+                    break
+        if xlmr_file:
+            break
+
+    if not xlmr_file:
+        return None  # Return None if no xlmr_file is found
+
+    xlmr_file_path = os.path.basename(xlmr_file)
+
+    if os.path.exists(xlmr_paths) and os.path.isdir(xlmr_paths):
+        # Iterate over files in the folder
+        for filename in os.listdir(xlmr_paths):
+            # Compare the filename with `xlmr_file_path`
+            if filename == xlmr_file_path:
+                file_path = os.path.join(xlmr_paths, filename)
+                return file_path  # Return the matching file path
+
+    # If no match is found, return None
+    return None
+
+
+def ego_longitudinal_axis(paramlist_analysis,x_value):
+    ego_longitudinal_axis = None
+    ego_actions = paramlist_analysis['Default']['EgoActions']
+    for ego_action in ego_actions:
+        if ego_action['Action'] == 'EnvP_RoadNetwork':  # Check for specific action
+            parameters = ego_action.get('Parameters', [])  # Safely get 'Parameters' key
+            for parameter in parameters:
+                ego_longitudinal_axis = parameter.get('LongitudinalAxis')
+
+    if ego_longitudinal_axis == "Front":
+        x_value = x_value +3
+
+    if ego_longitudinal_axis == "Middle":
+        x_value = x_value
+
+    if ego_longitudinal_axis == "Rear":
+        x_value = x_value -3
+    return x_value
+
+def obj_longitudinal_axis(states_analysis,target_name,x_value):
+    extracted_info = {}
+    Longitudinal_axis = None
+    for k, v in states_analysis.items():
+        for obj_id, actions in v.get('ObjectActions', {}).items():
+            for action in actions:
+                if action.get('Action') == ObjAPI.Obj_Initialize:
+                    for param in action.get('Parameters', []):
+                        Longitudinal_axis = param.get('LongitudinalAxis', None)
+
+                        obj_key = f'{obj_id}_Obj_Initialize'
+                        if obj_key not in extracted_info:
+                            extracted_info[obj_key] = []
+                        extracted_info[obj_key].append(
+                            {'LongitudinalAxis': Longitudinal_axis})
+
+    key_to_access = f"{target_name}_Obj_Initialize"
+    if key_to_access in extracted_info:
+        extracted_value = extracted_info[key_to_access]
+        Longitudinal_axis = extracted_value[0]['LongitudinalAxis']
+
+    if Longitudinal_axis == "Front":
+        x_value = x_value +3
+
+    if Longitudinal_axis == "Middle":
+        x_value = x_value
+
+    if Longitudinal_axis == "Rear":
+        x_value = x_value -3
+
+    return x_value
+
+
+def traffic_sign_generator(paramlist_analysis, param_name, target_name):
+    values = {}  # Use a dictionary instead of a list
+    sign_count = 0  # Initialize sign counter
+
+    if 'Default' in paramlist_analysis and 'EgoActions' in paramlist_analysis['Default']:
+        for action in paramlist_analysis['Default']['EgoActions']:
+            if action['Action'] == 'EnvP_TrafficSignClusterPosition' and action['Parameters']:
+                for param in action['Parameters']:
+                    if param_name in param:
+                        sign_count += 1  # Increment sign count
+                        sign_id = f"TrafficSign{sign_count}"  # Generate unique sign ID
+                        values[sign_id] = param[param_name]  # Store in dictionary
+
+
+    key_to_access = f"{target_name}"
+
+    if key_to_access in values:
+        long_offset_gen = float(values[key_to_access])
+        return long_offset_gen  # Return extracted float value
+
+    return None  # Return None if the key is not found
+
+
+
+
+def traffic_sign_generator_lm_start(paramlist_analysis, param_name, target_name):
+    values = {}  # Use a dictionary instead of a list
+    sign_count = 0  # Initialize sign counter
+
+    if 'Default' in paramlist_analysis and 'EgoActions' in paramlist_analysis['Default']:
+        for action in paramlist_analysis['Default']['EgoActions']:
+            if action['Action'] == 'EnvP_TrafficSignClusterPosition' and action['Parameters']:
+                for param in action['Parameters']:
+                    if param_name in param:
+                        sign_count += 1  # Increment sign count
+                        sign_id = f"TrafficSign{sign_count}"  # Generate unique sign ID
+                        values[sign_id] = param[param_name]  # Store in dictionary
+
+
+    key_to_access = f"{target_name}"
+
+    if key_to_access in values:
+        long_offset_gen = values[key_to_access]
+        return long_offset_gen  # Return extracted float value
+
+    return None  # Return None if the key is not found
+
+def lm_start_val(lm_start,paramlist_analysis):
+    current_directory = os.getcwd()
+
+    subdirectory = "xlmrmaps"
+
+    xlmr_paths = os.path.join(current_directory, subdirectory)
+
+    for key, value in paramlist_analysis.items():
+        ego_actions = value.get('EgoActions', [])
+        for action in ego_actions:
+            if action.get('Action', []) == OtherAPI.EnvP_RoadNetwork:
+                parameters = action.get('Parameters', [])
+                for param in parameters:
+                    if AMC.XlmrFile in param:
+                        xlmr_file = param[AMC.XlmrFile]
+                        break
+                else:
+                    continue
+                break
+        xlmr_file_path = os.path.basename(xlmr_file)
+
+    if os.path.exists(xlmr_paths) and os.path.isdir(xlmr_paths):
+        # Iterate over files in the folder
+        for filename in os.listdir(xlmr_paths):
+            # Compare the filename with `xlmr_file_path`
+            if filename == xlmr_file_path:
+                file_path = os.path.join(xlmr_paths, filename)
+
+                # Read and print the file contents
+                tree = ET.parse(file_path)  # Replace 'your_file.xml' with your XML file path
+                root = tree.getroot()
+
+                ds_value_float = None
+                for landmark in root.findall(".//trafficsignanchor"):
+                    if landmark.get('name') == lm_start:
+                        ds_value = landmark.get('ds')
+                        ds_value_float = float(ds_value)
+
+    if ds_value_float:
+        return ds_value_float
+    else:
+        return 0
+
+
+
+def get_sign_entities_degree(paramlist_analysis, param_name, target_name):
+    values = {}  # Use a dictionary instead of a list
+    sign_count = 0  # Initialize sign counter
+
+    if 'Default' in paramlist_analysis and 'EgoActions' in paramlist_analysis['Default']:
+        for action in paramlist_analysis['Default']['EgoActions']:
+            if action['Action'] == 'EnvP_TrafficSignClusterPosition' and action['Parameters']:
+                for param in action['Parameters']:
+                    if param_name in param:
+                        sign_count += 1  # Increment sign count
+                        sign_id = f"TrafficSign{sign_count}"  # Generate unique sign ID
+                        values[sign_id] = param[param_name]  # Store in dictionary
+
+
+    key_to_access = f"{target_name}"
+
+    if key_to_access in values:
+        long_offset_gen = float(values[key_to_access])
+        return long_offset_gen  # Return extracted float value
+
+    return None  # Return None if the key is not found
+
+
+
 
 
 

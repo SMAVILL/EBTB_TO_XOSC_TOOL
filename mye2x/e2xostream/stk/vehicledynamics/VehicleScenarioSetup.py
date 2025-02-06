@@ -132,16 +132,9 @@ class VehicleScenario:
                             trajectory=trajectory, latitude=0, longitude=0, height=0)
 
     def target_initialize(self, init, step_time,road_id, targetname="Obj1", x=10, y=-4.625,offset=0):
-        # targetspeed = xosc.AbsoluteSpeedAction(ini_speed, step_time)
-        # targetstart = xosc.TeleportAction(xosc.WorldPosition(x, y, 0, 0, 0, 0))
-        # init.add_init_action(targetname, targetspeed)
-        # init.add_init_action(targetname, targetstart)
 
         # Create a trajectory
         trajectory = xosc.Trajectory("example_trajectory", closed=False)
-        # Add a polyline to the trajectory (example)
-        # polyline = xosc.Polyline([0.0, 1.0], [xosc.WorldPosition(0, 0), xosc.WorldPosition(10, 10)])
-        # trajectory.add_shape(polyline)
 
         # if statements for different positions based on EBTB API's
         initialize_position(init, targetname, step_time,
@@ -155,6 +148,25 @@ class VehicleScenario:
                             d_lane=0,
                             route_ref=0,
                             trajectory=trajectory, latitude=0, longitude=0, height=0)
+
+    def traffic_sign_initialize(self,init,step_time,road_id,t,s,towards,target_name = "TrafficSign1"):
+
+        # Create a trajectory
+        trajectory = xosc.Trajectory("example_trajectory", closed=False)
+
+        # if statements for different positions based on EBTB API's
+        initialize_position(init, target_name, step_time,
+                            position_types=["RoadPosition"],
+                            init_speed=0,
+                            x=0, y=0, z=0, h=0, p=0, r=0,
+                            dx=0, dy=0, dz=0,
+                            road_id=road_id, s=s, t=t,
+                            ds=0, dt=0,
+                            lane_id=0, offset=0,
+                            d_lane=0,
+                            route_ref=0,
+                            trajectory=trajectory, latitude=0, longitude=0, height=0)
+
 
 
     def create_maneuver_group(self, targetname, event):
@@ -219,6 +231,18 @@ class VehicleScenario:
                         return later_control_action
         except Exception as e:
             print(e)
+    def create_obj_lateral_rel_position(self,target_name,units,entity,displacement):
+        displacement = float(displacement)
+        if entity == "SysVehicle":
+            entity = "Ego"
+
+        if units == "%":
+            displacement = displacement * 1.86 * 0.01
+
+        later_control_act = xosc.RelativeLaneOffsetAction(displacement, entity,
+                                                             shape=xosc.DynamicsShapes.linear,
+                                                             maxlatacc=10, continuous=True)
+        return later_control_act
 
     def obj_relative_position(self,target_name,state_data,entity,distance):
         if entity == "SysVehicle":
@@ -334,7 +358,7 @@ class VehicleScenario:
 
     def create_time_headway_condition_trigger(self, headway, relational_operator, target_entity, entity_name):
         if target_entity == "SysVehicle":
-            target_entity == "Ego"
+            target_entity = "Ego"
 
         if relational_operator == "Less":
             time_headway_cond = xosc.TimeHeadwayCondition(target_entity, headway, xosc.Rule.lessThan)
@@ -342,7 +366,7 @@ class VehicleScenario:
             time_headway_cond = xosc.TimeHeadwayCondition(target_entity, headway, xosc.Rule.greaterThan)
 
         if entity_name == "SysVehicle":
-            entity_name == "Ego"
+            entity_name = "Ego"
 
         time_headway_trig = xosc.EntityTrigger(
             "time_headway_trigger",
@@ -432,7 +456,7 @@ class VehicleScenario:
 
     def create_relative_distance_condition_trigger(self, distance, relational_operator, target_entity, object_id):
         if relational_operator == "Auto" or "None":
-            relative_distance_cond = xosc.RelativeDistanceCondition(distance, xosc.Rule.equalTo,
+            relative_distance_cond = xosc.RelativeDistanceCondition(distance, xosc.Rule.lessThan,
                                                                     xosc.RelativeDistanceType.longitudinal,
                                                                     object_id)
         if relational_operator == "Less":
@@ -467,7 +491,7 @@ class VehicleScenario:
         return acceleration_trig
 
     def create_reach_position_condition_trigger(self, x=0.0,y=0.0,tolerance=1.0):
-        entity_name = "SimOneDriver"
+        entity_name = "Ego"
         z = 0.0
 
         position = xosc.WorldPosition(x, y, z, 0)
@@ -848,7 +872,7 @@ class VehicleScenario:
                 gear = 2.0
             elif gear == "N":
                 gear = 0.0
-            elif gear == "R":
+            elif gear == "P":
                 gear = 3.0
 
             override_controller_value_action.set_gear(active=True, value=gear)

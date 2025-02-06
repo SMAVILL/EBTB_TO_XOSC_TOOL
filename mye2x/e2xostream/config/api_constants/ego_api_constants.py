@@ -75,6 +75,9 @@ Sys_SetTireState = "Sys_SetTireState"
 Sys_SetTrailerPlugState = "Sys_SetTrailerPlugState"
 Sys_SetTransportMode = "Sys_SetTransportMode"
 Sys_SetDriverResponsiveness = "Sys_SetDriverResponsiveness"
+SysP_EVCParameter = "SysP_EVCParameter"
+Sys_SetADASISv2Segment = "Sys_SetADASISv2Segment"
+Sys_SetProductionAndTransportMode = "Sys_SetProductionAndTransportMode"
 
 # System/Ego Vehicle
 SysP_Vehicle = "SysP_Vehicle"

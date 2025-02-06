@@ -55,4 +55,12 @@ E_TimeToCollision = "E_TimeToCollision"
 EnvP_ParkingBay = "EnvP_ParkingBay"
 EnvP_ParkingBayStyle = "EnvP_ParkingBayStyle"
 EnvP_RoadNetwork = "EnvP_RoadNetwork"
+EnvP_TrafficSignClusterSetup = "EnvP_TrafficSignClusterSetup"
+
+#Sen
+Sen_SetCornerRadarFrontState = "Sen_SetCornerRadarFrontState"
+Sen_SetCornerRadarRearState = "Sen_SetCornerRadarRearState"
+Sen_SetLongRangeRadarState = "Sen_SetLongRangeRadarState"
+Sen_SetMidRangeRadarState = "Sen_SetMidRangeRadarState"
+Sen_SetUltraSonicSensorState = "Sen_SetUltraSonicSensorState"
 

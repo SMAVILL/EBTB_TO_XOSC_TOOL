@@ -50,7 +50,6 @@ class Obj_Acts:
         self.last_index = {}
 
 
-
     # def Obj_Accelration_act(self, all_target_events,state_key,target_name):
     #     pass
 
@@ -226,6 +225,36 @@ class Obj_Acts:
         start_action = self.VehicleDefines.obj_relative_position(target_name,
                                                                     state_data=self.states_analysis,
                                                                     entity=entity,distance=distance)
+        target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
+                                                                           start_action=start_action,
+                                                                           event_name=event_name,
+                                                                           action_name=action_name)
+
+        all_target_events.append(target_next_event)
+        shared_data.event_counter_obj += 1
+
+    def obj_setlateral_relative_position(self, all_target_events, state_key, target_name):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Obj_SetLateralRelativePosition":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"{target_name}:action{action_count}"
+
+        state_key = int(state_key)
+        entity, displacement,units = EBTB_API_data.obj_set_lateral_relative_position(states_analysis=self.states_analysis,target_name=target_name)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_obj_lateral_rel_position(target_name,units,
+                                                                    entity,displacement)
+
         target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
                                                                            start_action=start_action,
                                                                            event_name=event_name,

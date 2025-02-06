@@ -256,8 +256,8 @@ if __name__ == "__main__":
     try:
         print("try")
 
-        sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
-        sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
+        sharepath = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
+        sharepath1 = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
         # logger.info("Script execution started.")
         try:
@@ -265,8 +265,8 @@ if __name__ == "__main__":
 
             xml_file_path, function, report_path, esmini_path = args_data()
 
-            sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
-            sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
+            sharepath = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
+            sharepath1 = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
 
             #Check access for both shared paths

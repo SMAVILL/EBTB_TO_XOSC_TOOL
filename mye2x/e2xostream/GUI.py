@@ -424,6 +424,9 @@ button.custom-button {
                 if "[WinError 2]" in error_part:
                     continue
 
+                if "syntax error: line 1, column 0" in error_part:
+                    error_part = error_part.replace("syntax error: line 1, column 0", "APIs missing in EBTB")
+
                 # Split into error description and file path based on the first " - "
 
                 error_description, file_path = error_part.split(" - ", 1)
@@ -656,3 +659,5 @@ button.custom-button {
     # Step 5: Open the HTML file in the web browser
     full_path = os.path.abspath(os.path.join(report_folder, "EBTB_TO_XOSC_Conv_Status.html"))
     webbrowser.open(f"file://{full_path}")
+
+

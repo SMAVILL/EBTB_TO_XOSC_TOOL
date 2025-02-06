@@ -462,3 +462,4 @@ DEFAULT_SIZE_PROPERTIES = {
         'roadsideobjects' : {'width': 0.66, 'length': 1.54, 'height': 0.99},
         'trafficsign' : {'width': 1.26, 'length': 1.18, 'height': 10.25}
     }
+

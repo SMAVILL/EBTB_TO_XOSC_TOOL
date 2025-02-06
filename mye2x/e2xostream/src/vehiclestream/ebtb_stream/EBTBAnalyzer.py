@@ -158,7 +158,7 @@ def process_entries(root, keywords, tag):
             entry = {
                 "tag": child.tag,
                 "parameters": [{"tag": param.tag, "attributes": param.attrib,
-                                "value": param.attrib.get('value', '')} for param in child]
+                                "value": param.attrib.get('value', ''),"unit":param.attrib.get('unit','')} for param in child]
             }
             categorize_actions(entry, info[element_id], keywords)
 
@@ -200,7 +200,8 @@ def construct_analysis_dict(info):
         for object_id, actions in details["objects"].items():
             object_actions = [{
                 "Action": action['tag'],
-                "Parameters": [{param['tag']: param['value'] for param in action['parameters']}]
+                "Parameters": [{param['tag']: param['value'] for param in action['parameters']}],
+                "unit":[{param['tag']: param['unit'] for param in action['parameters']}]
             } for action in actions]
             element_dict["ObjectActions"][object_id] = object_actions
         analysis_dict[element_id] = element_dict
@@ -238,7 +239,7 @@ def main(file_path):
     keywords = {
         "ego": ["Dri_", "Sys_", "Ego_", "SysP_", "EnvP_", "TBA_","E_SysVehicleVelocity","E_Time","E_DistanceTimeBased","Ethernet_","E_TimeToCollision","E_ObjectCollision","E_Landmark","E_ConfigurationCollisionAvoidanceFunction","E_ConfigurationDrivingFunction",
                 "E_PrepareVehicle","E_ADASState","E_ChangeACCSpeed","E_ChangeVSLSpeed","E_CompareSignal","E_DiagnosticResult","E_IDCSystemState","E_ParkAppActionFinished","E_ParkingFinished",
-                "E_ParkingSpaceDetected","E_SetBeltState","E_StepOut","E_SwitchToACCDriving","E_SwitchToVSLDriving"],
+                "E_ParkingSpaceDetected","E_SetBeltState","E_StepOut","E_SwitchToACCDriving","E_SwitchToVSLDriving","Sen_"],
         "objects": ["Obj_", "Object", "ObjP_","E_ObjectDistanceLaneBased"]
     }
 
