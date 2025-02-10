@@ -30,6 +30,7 @@ for root, dirs, files in os.walk(dir_path):
 
 
 class FuncScenario(ScenarioGenerator):
+
     def __init__(self, egoname, states_analysis, paramlist_analysis, state_events, param_events, esmini_path):
 
         super().__init__()
@@ -87,7 +88,6 @@ class FuncScenario(ScenarioGenerator):
             for obj_actions in value.get("ObjectActions", {}).values():
                 actions.extend(action["Action"] for action in obj_actions)
             result[key] = actions
-
 
 
         shared_data.state_e_mapping = {}
@@ -206,9 +206,6 @@ class FuncScenario(ScenarioGenerator):
             # Update state_e_mapping to include [api_name, action_count, object_id]
             shared_data.state_e_mapping[state_key] = [api_name, action_count, object_id]
 
-            print(shared_data.res)
-
-
     def ego_maneuver_group_with_condition(self):
         """
         Create manuever group with condition
@@ -301,6 +298,7 @@ class FuncScenario(ScenarioGenerator):
             paramlist_analysis=self.paramlist_analysis)
 
     def GlobalEnvironment(self):
+
         # Global action with environment setting
         self.VehicleDefines.global_action(init=self.init)
 
@@ -350,6 +348,7 @@ class FuncScenario(ScenarioGenerator):
                 self.act.add_maneuver_group(target_mnvgr)
 
     def scenario(self, **kwargs):
+
         """
         scenario create and define.
         Parameters
@@ -403,6 +402,7 @@ def execute_sce_proc(xml_file_path, report_path, esmini_path):
     -------
 
     """
+    print("enter",xml_file_path)
     states_analysis, paramlist_analysis, state_events, param_events = EBTBAnalyzer.main(xml_file_path)
 
     Func_Sce = FuncScenario(egoname="Ego", states_analysis=states_analysis, paramlist_analysis=paramlist_analysis,

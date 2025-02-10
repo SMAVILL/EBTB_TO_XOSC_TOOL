@@ -258,7 +258,6 @@ def main(file_path):
     states_analysis = construct_analysis_dict(states_info)
     paramlist_analysis = construct_analysis_dict(paramlist_info)
 
-
     return states_analysis, paramlist_analysis, state_events, param_events
 
 

@@ -1,7 +1,7 @@
 import os
 import sys
 import xml.etree.ElementTree as ET
-
+from pathlib import Path
 
 from e2xostream.config import default_properties, global_parameters, settings
 from e2xostream.stk.vehicledynamics.DataControl import DataControls as datacontrol
@@ -161,11 +161,14 @@ def get_obj_speed_transition_time(target_name,last_index,states_analysis):
 
 
 def xlmr_to_xodr_mapping(paramlist_analysis):
+    from e2xostream.src.E2X_Convert import E2XOStream
+
     current_directory = os.getcwd()
-
-    subdirectory = "xlmrmaps"
-
-    xlmr_paths = os.path.join(current_directory, subdirectory)
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    xlmr_paths = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
+    print("xlmr path",xlmr_paths)
 
     """
     Mapping xlmr to xodr
@@ -207,24 +210,6 @@ def xlmr_to_xodr_mapping(paramlist_analysis):
             return xodr_file_name
 
 
-
-    # if os.path.exists(xlmr_paths) and os.path.isdir(xlmr_paths):
-    #     # Iterate over files in the folder
-    #     for filename in os.listdir(xlmr_paths):
-    #         # Compare the filename with `xlmr_file_path`
-    #         if filename == xlmr_file_path:
-    #             file_path = os.path.join(xlmr_paths, filename)
-    #
-    #             # Read and print the file contents
-    #             tree = ET.parse(file_path)  # Replace 'your_file.xml' with your XML file path
-    #             root = tree.getroot()
-
-
-
-
-
-
-
 def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
 
     global landmark_type
@@ -236,11 +221,14 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                     landmark_offset = action.get('Parameters', [{}])[0].get('LandmarkOffset', 0)
                     obj_ref = action.get('Parameters', [{}])[0].get('Object', 0)
 
+    from e2xostream.src.E2X_Convert import E2XOStream
+
     current_directory = os.getcwd()
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    xlmr_paths = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
 
-    subdirectory = "xlmrmaps"
-
-    xlmr_paths = os.path.join(current_directory, subdirectory)
 
     for key, value in paramlist_analysis.items():
         ego_actions = value.get('EgoActions', [])
@@ -276,17 +264,22 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                 if ds_value_float:
                     return ds_value_float, landmark_offset, obj_ref
                 else:
-                    return None,None,None
+                    return None,None, None
 
 
 
 def extract_lenthoflane(paramlist_analysis, xlmr_file=None):
     current_directory = os.getcwd()
 
-    subdirectory = "xlmrmaps"
     subdirectory2 = "xodrmaps"
 
-    folder_path2 = os.path.join(current_directory, subdirectory)
+    from e2xostream.src.E2X_Convert import E2XOStream
+
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    folder_path2 = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
+
     folder_path = os.path.join(current_directory, subdirectory2)
 
     for key, value in paramlist_analysis.items():
@@ -814,11 +807,15 @@ def ego_landmark_start_init(paramlist_analysis):
             for parameter in parameters:
                 landmark_start = parameter.get('LandmarkStart')
 
+
+    from e2xostream.src.E2X_Convert import E2XOStream
+
     current_directory = os.getcwd()
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    xlmr_paths = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
 
-    subdirectory = "xlmrmaps"
-
-    xlmr_paths = os.path.join(current_directory, subdirectory)
 
     for key, value in paramlist_analysis.items():
         ego_actions = value.get('EgoActions', [])
@@ -877,11 +874,13 @@ def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
         landmark_start = (extracted_value[0]['LandmarkStart'])
 
 
+    from e2xostream.src.E2X_Convert import E2XOStream
+
     current_directory = os.getcwd()
-
-    subdirectory = "xlmrmaps"
-
-    xlmr_paths = os.path.join(current_directory, subdirectory)
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    xlmr_paths = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
 
     for key, value in paramlist_analysis.items():
         ego_actions = value.get('EgoActions', [])
@@ -1070,7 +1069,7 @@ def ego_switchgear(ego_gear_index,states_analysis):
                 try:
                     value_gear = value_gear
                 except ValueError:
-                    print(f"Invalid speed value: {value_gear}")
+                    print(f"Invalid gear value: {value_gear}")
                     value_gear = 0
 
             # Increment the index for the next call
@@ -1080,6 +1079,69 @@ def ego_switchgear(ego_gear_index,states_analysis):
         else:
             pass
     return value_gear
+
+
+
+def dri_change_lane(ego_lane_index,states_analysis):
+    extracted_info_lanechange = {}
+
+    # Iterate over the states analysis dictionary
+    for k, v in states_analysis.items():
+        for action in v.get('EgoActions', []):
+            if action.get('Action') == EgoAPI.Dri_ChangeLane:
+
+                for param in action.get('Parameters', []):
+                    direction = param.get('Direction', 'Not Available')
+                    count = param.get('Count', 1)
+                    target_disp = param.get('TargetDisplacement', 0)
+
+                    # Append to the list of extracted information for Ego's speed and transition time
+                    if EgoAPI.Dri_ChangeLane not in extracted_info_lanechange:
+                        extracted_info_lanechange[EgoAPI.Dri_ChangeLane] = []
+
+                    extracted_info_lanechange[EgoAPI.Dri_ChangeLane].append(
+                        {'Direction': direction,'Count': count,'TargetDisplacement': target_disp }
+                    )
+    # Default values for speed and transition time
+    direction = 0
+    count = 1
+    target_disp = 0
+    key = EgoAPI.Dri_ChangeLane
+
+    # Initialize last_index_ego for this action if not already initialized
+    if key not in ego_lane_index:
+        ego_lane_index[key] = 0
+
+    # If there are actions for Ego's longitudinal speed, access them sequentially
+    if key in extracted_info_lanechange:
+        actions = extracted_info_lanechange[key]
+
+        # Ensure that the index does not exceed the length of the actions list
+        if ego_lane_index[key] < len(actions):
+            current_action = actions[ego_lane_index[key]]
+
+            direction = current_action['Direction']
+            count = current_action['Count']
+            target_disp = current_action['TargetDisplacement']
+
+            if direction != 'Not Available':
+                try:
+                    direction = direction
+                    count = count
+                    target_disp = target_disp
+                except ValueError:
+                    print(f"Invalid value: {direction}")
+                    direction = 0
+                    count = 1
+                    target_disp = 0
+
+            # Increment the index for the next call
+            ego_lane_index[key] += 1
+
+        # Handle the case where all actions are processed
+        else:
+            pass
+    return direction,count,target_disp
 
 def ego_parkingbrake(ego_pb_index,states_analysis):
     extracted_info_pb = {}
@@ -1256,7 +1318,7 @@ def ego_set_lateral_disp(ego_lateraldisp_index,states_analysis):
                     )
 
 
-    dispvalue = 0
+    dispvalue = 0.0
     key = EgoAPI.Dri_SetLateralDisplacement
 
     # Initialize last_index_ego for this action if not already initialized
@@ -1277,7 +1339,7 @@ def ego_set_lateral_disp(ego_lateraldisp_index,states_analysis):
                     dispvalue = dispvalue
                 except ValueError:
                     print(f"Invalid disp value: {dispvalue}")
-                    dispvalue = 0
+                    dispvalue = 0.0
 
             # Increment the index for the next call
             ego_lateraldisp_index[key] += 1
@@ -1441,8 +1503,14 @@ def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
         return
 
     # Define directories
+
+    from e2xostream.src.E2X_Convert import E2XOStream
+
     current_directory = os.getcwd()
-    folder_xlmr = os.path.join(current_directory, "xlmrmaps")
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    folder_xlmr = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
     folder_xodr = os.path.join(current_directory, "xodrmaps")
 
     # Step 2: Extract xlmr_file from paramlist_analysis
@@ -1499,32 +1567,6 @@ def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
     if not xodr_file_name:
         print("No .xodr file name found in the xlmr file.")
         return
-
-    # Step 3: Parse the .xlmr file to find road IDs
-    # road_ids = []
-    # if os.path.exists(xlmr_file_path):
-    #     with open(xlmr_file_path, 'r') as file:
-    #         content = file.read()
-    #
-    #     # Parse the XML content
-    #     root = ET.fromstring(content)
-    #     for route in root.findall(".//route"):
-    #         if route.attrib.get("name") == route_name:
-    #             road_ids = [road.attrib["id"] for road in route.findall(".//road")]
-    #             break  # Exit loop after finding the required route
-    #
-    #     print(f"Road IDs for route '{route_name}': {road_ids}")
-    #
-    #     # Extract the .xodr file name
-    #     match = re.search(r'<xodrFile>.*\/([^\/]+\.xodr)<\/xodrFile>', content)
-    #     xodr_file_name = match.group(1) if match else None
-    # else:
-    #     print(f"Xlmr file not found: {xlmr_file_path}")
-    #     return
-    #
-    # if not xodr_file_name:
-    #     print("No .xodr file name found in the xlmr file.")
-    #     return
 
     # Step 4: Parse the corresponding .xodr file to calculate road lengths
     xodr_file_path = os.path.join(folder_xodr, xodr_file_name)
@@ -1602,8 +1644,13 @@ def obj_road_id(states_analysis,paramlist_analysis, target_name,x_value, landmar
 
 
     # Define directories
+    from e2xostream.src.E2X_Convert import E2XOStream
+
     current_directory = os.getcwd()
-    folder_xlmr = os.path.join(current_directory, "xlmrmaps")
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    folder_xlmr = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
     folder_xodr = os.path.join(current_directory, "xodrmaps")
 
 
@@ -1725,9 +1772,13 @@ def ego_xlmr_map(paramlist_analysis):
             for parameter in parameters:
                 landmark_start = parameter.get('LandmarkStart')
 
+    from e2xostream.src.E2X_Convert import E2XOStream
+
     current_directory = os.getcwd()
-    subdirectory = "xlmrmaps"
-    xlmr_paths = os.path.join(current_directory, subdirectory)
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    xlmr_paths = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
 
     xlmr_file = None  # Initialize xlmr_file to handle cases where it's not set
     for key, value in paramlist_analysis.items():
@@ -1863,9 +1914,12 @@ def traffic_sign_generator_lm_start(paramlist_analysis, param_name, target_name)
 def lm_start_val(lm_start,paramlist_analysis):
     current_directory = os.getcwd()
 
-    subdirectory = "xlmrmaps"
+    from e2xostream.src.E2X_Convert import E2XOStream
 
-    xlmr_paths = os.path.join(current_directory, subdirectory)
+    subdirectory_new = "xlmrmaps"
+    subdirectory = E2XOStream.xml_file_path_ver1
+    subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
+    xlmr_paths = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
 
     for key, value in paramlist_analysis.items():
         ego_actions = value.get('EgoActions', [])
@@ -1926,10 +1980,6 @@ def get_sign_entities_degree(paramlist_analysis, param_name, target_name):
         return long_offset_gen  # Return extracted float value
 
     return None  # Return None if the key is not found
-
-
-
-
 
 
 

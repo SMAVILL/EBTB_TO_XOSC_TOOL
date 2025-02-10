@@ -214,6 +214,8 @@ class VehicleScenario:
         return lateral_reference_action
 
     def create_obj_lateral_distance_action(self, value,target_name, entity,abs_or_rel, state_data=None):
+        if entity == "SysVehicle":
+            entity = "Ego"
         try:
             for k, v in state_data.items():
                 for kv, vv in v["ObjectActions"].items():
@@ -260,21 +262,21 @@ class VehicleScenario:
                 ("Right3", "Right"): -4,
                 ("Right4", "Right"): -5,
                 ("Right5", "Right"): -6,
-                ("Left2", "Right"): 1,
-                ("Left3", "Right"): 2,
-                ("Left4", "Right"): 3,
-                ("Left5", "Right"): 4,
-                ("Left6", "Right"): 5,
+                ("Left1","Right") : 2,
+                ("Left2", "Right"): 3,
+                ("Left3", "Right"): 4,
+                ("Left4", "Right"): 5,
+                ("Left5", "Right"): 6,
                 ("Right2", "Left"): -1,
                 ("Right3", "Left"): -2,
                 ("Right4", "Left"): -3,
                 ("Right5", "Left"): -4,
                 ("Right6", "Left"): -5,
-                ("Left1", "Left"): 2,
-                ("Left2", "Left"): 3,
-                ("Left3", "Left"): 4,
-                ("Left4", "Left"): 5,
-                ("Left5", "Left"): 6,
+                ("Left2", "Left"): 1,
+                ("Left3", "Left"): 2,
+                ("Left4", "Left"): 3,
+                ("Left5", "Left"): 4,
+                ("Left6", "Left"): 5,
             }
 
             # Retrieve lane change value
@@ -302,6 +304,50 @@ class VehicleScenario:
             return lane_change_action,upd_lane
         except Exception as e:
             print(e)
+
+    def create_lanechange_ego(self, present_lane,direction,count,target_disp):
+        try:
+
+            lane_selection_dict = {
+                "Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
+                "Left1": 1, "Left2": 2, "Left3": 3, "Left4": 4, "Left5": 5, "Left6": 6
+            }
+
+            lane_current = lane_selection_dict.get(present_lane)
+
+            if direction == "Right":
+                count = -int(count)
+            if direction == "Left":
+                count = int(count)
+
+            lane_current = int(lane_current)
+            final_lane = lane_current
+
+            # Step-wise addition, skipping 0
+            step = -1 if count > 0 else 1  # Determine direction
+
+            for _ in range(abs(count)):  # Loop for the count value
+                final_lane += step
+                if final_lane == 0:  # If 0 is encountered, skip it
+                    final_lane += step
+
+            print("Final Lane:", final_lane)
+
+            if final_lane is not None:
+                lane_change_action = xosc.AbsoluteLaneChangeAction(
+                    final_lane,
+                    transition_dynamics=xosc.TransitionDynamics(
+                        xosc.DynamicsShapes.linear,
+                        xosc.DynamicsDimension.time,
+                        value= 1,
+                    ),
+                    target_lane_offset=target_disp,
+                )
+
+            return lane_change_action
+        except Exception as e:
+            print(e)
+
 
     def create_set_indicator_state(self, State_Indicator, State_Duration):
         # Create an instance of ColorRGB with the correct parameter types

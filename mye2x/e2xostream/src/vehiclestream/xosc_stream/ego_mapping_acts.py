@@ -47,8 +47,10 @@ class EgoScnearioActs:
 
 
 
-
     def __call__(self, all_ego_events):
+        # if "SysP_EVCParameter" in str(self.param_events):
+        #     self.SysP_EVCParameter(all_ego_events, state_key=1)
+
         self.maneuver_api_mapping()
         self.check_api_dispatch_function(all_ego_events)
 
@@ -148,7 +150,10 @@ class EgoScnearioActs:
         self.register_dispatch.register(OtherAPI.Sen_SetUltraSonicSensorState,self.Sen_SetUltraSonicSensorState)
         self.register_dispatch.register(EgoAPI.Sys_SetADASISv2Segment, self.Sys_SetADASISv2Segment)
         self.register_dispatch.register(EgoAPI.Sys_SetProductionAndTransportMode, self.Sys_SetProductionAndTransportMode)
-
+        self.register_dispatch.register(EgoAPI.Dri_SetPTSMode,self.Dri_SetPTSMode)
+        self.register_dispatch.register(EgoAPI.Sys_SetOutsideTemperatureSensorState,self.Sys_SetOutsideTemperatureSensorState)
+        self.register_dispatch.register(EgoAPI.Dri_ChangeLane,self.Dri_ChangeLane)
+        self.register_dispatch.register(EgoAPI.Sys_SetADASISv2LiveTraffic,self.Sys_SetADASISv2LiveTraffic)
         #self.register_dispatch.register(EgoAPI.SysP_EVCParameter,self.SysP_EVCParameter)
 
 
@@ -578,6 +583,27 @@ class EgoScnearioActs:
     def Sys_SetProductionAndTransportMode(self, all_ego_events, state_key):
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.Sys_SetProductionAndTransportMode(all_ego_events, state_key)
+
+    def Dri_SetPTSMode(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Dri_SetPTSMode(all_ego_events, state_key)
+
+    def Sys_SetOutsideTemperatureSensorState(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sys_SetOutsideTemperatureSensorState(all_ego_events, state_key)
+
+    def Dri_ChangeLane(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Dri_ChangeLane(all_ego_events, state_key)
+
+    def Sys_SetADASISv2LiveTraffic(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sys_SetADASISv2LiveTraffic(all_ego_events, state_key)
+
+    # def SysP_EVCParameter(self, all_ego_events,state_key=1):
+    #     print("sysp")
+    #     if EgoScnearioActs.flag == 0:
+    #         self.EGO_algo_acts.SysP_EVCParameter(all_ego_events, state_key =1)
 
 
 
