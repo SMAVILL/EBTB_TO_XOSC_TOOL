@@ -47,8 +47,10 @@ class EgoScnearioActs:
 
 
 
-
     def __call__(self, all_ego_events):
+        # if "SysP_EVCParameter" in str(self.param_events):
+        #     self.SysP_EVCParameter(all_ego_events, state_key=1)
+
         self.maneuver_api_mapping()
         self.check_api_dispatch_function(all_ego_events)
 
@@ -141,6 +143,18 @@ class EgoScnearioActs:
         self.register_dispatch.register(OtherAPI.E_SwitchToACCDriving, self.e_switchtoACCdriving)
         self.register_dispatch.register(OtherAPI.E_SwitchToVSLDriving, self.e_switchtoVSLDriving)
         self.register_dispatch.register(EgoAPI.Sys_SetDriverResponsiveness,self.Sys_SetDriverResponsiveness)
+        self.register_dispatch.register(OtherAPI.Sen_SetCornerRadarFrontState,self.Sen_SetCornerRadarFrontState)
+        self.register_dispatch.register(OtherAPI.Sen_SetCornerRadarRearState,self.Sen_SetCornerRadarRearState)
+        self.register_dispatch.register(OtherAPI.Sen_SetLongRangeRadarState,self.Sen_SetLongRangeRadarState)
+        self.register_dispatch.register(OtherAPI.Sen_SetMidRangeRadarState,self.Sen_SetMidRangeRadarState)
+        self.register_dispatch.register(OtherAPI.Sen_SetUltraSonicSensorState,self.Sen_SetUltraSonicSensorState)
+        self.register_dispatch.register(EgoAPI.Sys_SetADASISv2Segment, self.Sys_SetADASISv2Segment)
+        self.register_dispatch.register(EgoAPI.Sys_SetProductionAndTransportMode, self.Sys_SetProductionAndTransportMode)
+        self.register_dispatch.register(EgoAPI.Dri_SetPTSMode,self.Dri_SetPTSMode)
+        self.register_dispatch.register(EgoAPI.Sys_SetOutsideTemperatureSensorState,self.Sys_SetOutsideTemperatureSensorState)
+        self.register_dispatch.register(EgoAPI.Dri_ChangeLane,self.Dri_ChangeLane)
+        self.register_dispatch.register(EgoAPI.Sys_SetADASISv2LiveTraffic,self.Sys_SetADASISv2LiveTraffic)
+        #self.register_dispatch.register(EgoAPI.SysP_EVCParameter,self.SysP_EVCParameter)
 
 
     def check_api_dispatch_function(self, all_ego_events):
@@ -541,6 +555,55 @@ class EgoScnearioActs:
     def Sys_SetDriverResponsiveness(self, all_ego_events, state_key):
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.sys_setdriver_responsivesness(all_ego_events, state_key)
+
+    def Sen_SetCornerRadarFrontState(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sen_SetCornerRadarFrontState(all_ego_events, state_key)
+
+    def Sen_SetCornerRadarRearState(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sen_SetCornerRadarRearState(all_ego_events, state_key)
+
+    def Sen_SetLongRangeRadarState(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sen_SetLongRangeRadarState(all_ego_events, state_key)
+
+    def Sen_SetMidRangeRadarState(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sen_SetMidRangeRadarState(all_ego_events, state_key)
+
+    def Sen_SetUltraSonicSensorState(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sen_SetUltraSonicSensorState(all_ego_events, state_key)
+
+    def Sys_SetADASISv2Segment(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sys_SetADASISv2Segment(all_ego_events, state_key)
+
+    def Sys_SetProductionAndTransportMode(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sys_SetProductionAndTransportMode(all_ego_events, state_key)
+
+    def Dri_SetPTSMode(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Dri_SetPTSMode(all_ego_events, state_key)
+
+    def Sys_SetOutsideTemperatureSensorState(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sys_SetOutsideTemperatureSensorState(all_ego_events, state_key)
+
+    def Dri_ChangeLane(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Dri_ChangeLane(all_ego_events, state_key)
+
+    def Sys_SetADASISv2LiveTraffic(self, all_ego_events, state_key):
+        if EgoScnearioActs.flag == 0:
+            self.EGO_algo_acts.Sys_SetADASISv2LiveTraffic(all_ego_events, state_key)
+
+    # def SysP_EVCParameter(self, all_ego_events,state_key=1):
+    #     print("sysp")
+    #     if EgoScnearioActs.flag == 0:
+    #         self.EGO_algo_acts.SysP_EVCParameter(all_ego_events, state_key =1)
 
 
 

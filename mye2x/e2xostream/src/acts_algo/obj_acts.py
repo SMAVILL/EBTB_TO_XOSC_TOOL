@@ -48,7 +48,8 @@ class Obj_Acts:
         self.lane = 0
         shared_data.event_counter_obj = 1
         self.last_index = {}
-
+        self.last_processed_action = -1
+        self.last_processed = None
 
 
     # def Obj_Accelration_act(self, all_target_events,state_key,target_name):
@@ -234,6 +235,36 @@ class Obj_Acts:
         all_target_events.append(target_next_event)
         shared_data.event_counter_obj += 1
 
+    def obj_setlateral_relative_position(self, all_target_events, state_key, target_name):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Obj_SetLateralRelativePosition":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"{target_name}:action{action_count}"
+
+        state_key = int(state_key)
+        entity, displacement,units = EBTB_API_data.obj_set_lateral_relative_position(states_analysis=self.states_analysis,target_name=target_name)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_obj_lateral_rel_position(target_name,units,
+                                                                    entity,displacement)
+
+        target_next_event = self.VehicleDefines.define_target_action_event(start_trig=start_trig,
+                                                                           start_action=start_action,
+                                                                           event_name=event_name,
+                                                                           action_name=action_name)
+
+        all_target_events.append(target_next_event)
+        shared_data.event_counter_obj += 1
+
     def obj_deactivate(self, all_target_events, state_key, target_name):
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Obj_Deactivate":
@@ -262,9 +293,8 @@ class Obj_Acts:
         all_target_events.append(target_next_event)
         shared_data.event_counter_obj += 1
 
-
-
     def obj_E_ObjectDistanceLaneBased(self, all_target_events, state_key, target_name):
+
         # Define event and action names
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ObjectDistanceLaneBased":
@@ -273,59 +303,65 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
-        shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased",action_count,target_name)
+        shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased", action_count, target_name)
 
         # Initialize tracking variables if not already done
-        if not hasattr(self, 'last_processed_action'):
-            self.last_processed_action = None
+        if not hasattr(self, 'last_processed_key'):
+            self.last_processed = None
+        if not hasattr(self, 'last_processed_action_index'):
+            self.last_processed_action = -1
 
-        for key in self.states_analysis.keys():
-            object_entries = self.states_analysis[key].get('ObjectActions', [])
+        keys = list(self.states_analysis.keys())
+        start_key_index = keys.index(self.last_processed) + 1 if self.last_processed else 0
+
+        for key in keys[start_key_index:]:
+            object_entries = self.states_analysis[key].get('ObjectActions', {})
+
+            # Ensure dictionary structure for object actions
             for obj, actions in object_entries.items():
-                for idx, action_info in enumerate(actions):
+                start_action_index = self.last_processed_action + 1 if self.last_processed == key else 0
+
+                for idx in range(start_action_index, len(actions)):
+                    action_info = actions[idx]
                     action = action_info.get('Action', None)
 
                     if action == "E_ObjectDistanceLaneBased":
-                        # Create a unique identifier for the action
                         parameters = action_info.get('Parameters', [])
                         distance_value = parameters[0].get("Distance")
                         relational_operator = parameters[0].get("RelationalOperator")
                         reference_object = parameters[0].get("ReferenceObject")
                         object_id = parameters[0].get("ObjectID")
-                        action_identifier = (key, obj, idx)
 
-                        # Skip if this action was processed already
-                        if action_identifier == self.last_processed_action:
-                            continue
+                        if target_name == object_id:
 
                         # Process the action
-                        if event_count == 1:
-                            start_trig = self.VehicleDefines.create_target_event(value=10)
-                        else:
-                            start_trig = self.VehicleDefines.create_relative_distance_condition_trigger(
-                                distance_value, relational_operator, reference_object, object_id
+                            if event_count == 1:
+                                start_trig = self.VehicleDefines.create_target_event(value=10)
+                            else:
+                                start_trig = self.VehicleDefines.create_relative_distance_condition_trigger(
+                                    distance_value, relational_operator, reference_object, object_id
+                                )
+
+                            start_action = self.VehicleDefines.create_custom_command_action(
+                                "Signal add:E_ObjectDistanceLaneBased"
                             )
 
-                        start_action = self.VehicleDefines.create_custom_command_action(
-                            "Signal add:E_ObjectDistanceLaneBased"
-                        )
-
-                        all_target_events.append(
-                            self.VehicleDefines.define_target_action_event(
-                                start_trig=start_trig,
-                                start_action=start_action,
-                                event_name=event_name,
-                                action_name=action_name,
+                            all_target_events.append(
+                                self.VehicleDefines.define_target_action_event(
+                                    start_trig=start_trig,
+                                    start_action=start_action,
+                                    event_name=event_name,
+                                    action_name=action_name,
+                                )
                             )
-                        )
 
-                        print(f"Processed event {event_name} for {action_name}")
+                            # Update tracking variables
+                            shared_data.event_counter_obj += 1
+                            self.last_processed = key
+                            self.last_processed_action = idx
 
-                        # Update the tracking variables
-                        self.last_processed_action = action_identifier
-                        shared_data.event_counter_obj += 1
-
-                        # Exit the loop after processing one action
-                        return
+            # Reset tracking variables if all actions are processed
+            self.last_processed = None
+            self.last_processed_action = -1
 
 

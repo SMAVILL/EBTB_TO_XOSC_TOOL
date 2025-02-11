@@ -140,8 +140,42 @@ class BaseScenario:
 
         vehicle_entities.add_scenario_object(egoname, ego_veh)
 
+    def define_traffic_sign_entities(self,properties,vehicle_entities,paramlist_analysis):
+        """
+        Define traffic sign entities
+        Parameters
+        ----------
+        properties
+
+        Returns
+        -------
+
+        """
+        try:
+            sign_entities, sign_list = EBTB_API_data.get_sign_entities(paramlist_analysis=paramlist_analysis)
+
+            for obj, value in sign_entities.items():
+                print(obj)
+                property_traffic = properties.get('pole')
+
+                pro1 = property_traffic.get('Obj3')
+                sign_obj = self.VehicleDefines.target_vehicle_and_entities(target_name=obj, model="Defaced Sign 09",
+                                                                         default_cat=False,
+                                                                         entity_type='MiscObject',
+                                                                         properties=pro1,
+                                                                         vehicle_category=value[3],
+                                                                         width=float(value[0]),
+                                                                         length=float(value[1]),
+                                                                         height=float(value[2]))
+
+                vehicle_entities.add_scenario_object(obj, sign_obj)
+
+            return sign_entities, sign_list
+        except:
+            pass
+
+
     def define_target_entities(self, properties, paramlist_analysis, vehicle_entities):
-        # print("yes7",properties)
         """
         Define target entities
         Parameters
@@ -491,46 +525,81 @@ class BaseScenario:
 
         """
         try:
-            global road_len, x_value, envp_lane_selection,road_id
-            landmark_start_value = EBTB_API_data.ego_landmark_start_init(paramlist_analysis=paramlist_analysis)
-            landmark_start_value = float(landmark_start_value)
-            envp_landmark_offset = EBTB_API_data.get_landmark_offset_ego(paramlist_analysis=paramlist_analysis)
-            envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=paramlist_analysis)
-            road_len = EBTB_API_data.extract_lenthoflane(paramlist_analysis=paramlist_analysis)
-            offset = EBTB_API_data.get_ego_initialise(paramlist_analysis=paramlist_analysis)
+            global road_len, x_value, envp_lane_selection,road_id,x_param
+            xlmr_file = EBTB_API_data.ego_xlmr_map(paramlist_analysis=paramlist_analysis)
+            if xlmr_file:
+                landmark_start_value = EBTB_API_data.ego_landmark_start_init(paramlist_analysis=paramlist_analysis)
+                landmark_start_value = float(landmark_start_value)
+                envp_landmark_offset = EBTB_API_data.get_landmark_offset_ego(paramlist_analysis=paramlist_analysis)
+                envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=paramlist_analysis)
+                offset = EBTB_API_data.get_ego_initialise(paramlist_analysis=paramlist_analysis)
 
-            envp_landmark_offset = float(envp_landmark_offset)
+                envp_landmark_offset = float(envp_landmark_offset)
 
-            if offset is not None:
-                offset = float(offset)
-            else:
-                offset = 0
+                if offset is not None:
+                    offset = float(offset)
+                else:
+                    offset = 0
 
-            if landmark_start_value:
-                x_value = float(landmark_start_value + envp_landmark_offset)
+                if landmark_start_value:
+                    x_value = float(landmark_start_value + envp_landmark_offset)
+                else:
+                    return "Stop"
+
+                road_id,x_value = EBTB_API_data.ego_road_id(paramlist_analysis,x_value,landmark_start_value,xlmr_file=None)
+
+                if road_id != "Stop":
+
+                    x_param = x_value
+                    x_value = EBTB_API_data.ego_longitudinal_axis(paramlist_analysis,x_value)
+
+                    lane_selection_dict = {
+                        "Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
+                        "Left1": 1, "Left2": 2, "Left3": 3, "Left4": 4, "Left5": 5, "Left6": 6
+                    }
+
+                    # Default value for unmatched lane selection
+                    y_value = lane_selection_dict.get(envp_lane_selection, -4.625)
+
+                    # Calling the ego_initialize method with the selected or default y value
+                    self.VehicleDefines.ego_initialize(init=init, step_time=step_time, road_id=road_id,
+                                                       y=y_value, x=x_value, offset=offset)
+                else:
+                    return "Stop"
+
             else:
                 return "Stop"
-                # if road_len is not None:
-                #     x_value = float((road_len / 2) + envp_landmark_offset)
-                # else:
-                #     x_value = float(envp_landmark_offset)
-
-            road_id,x_value = EBTB_API_data.ego_road_id(paramlist_analysis,x_value,landmark_start_value,xlmr_file=None)
-
-            lane_selection_dict = {
-                "Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
-                "Left1": 1, "Left2": 2, "Left3": 3, "Left4": 4, "Left5": 5, "Left6": 6
-            }
-
-            # Default value for unmatched lane selection
-            y_value = lane_selection_dict.get(envp_lane_selection, -4.625)
-
-            # Calling the ego_initialize method with the selected or default y value
-            self.VehicleDefines.ego_initialize(init=init, step_time=step_time, road_id=road_id,
-                                               y=y_value, x=x_value, offset=offset)
 
         except:
             print("err")
+
+    # def traffic_sign_initialize(self,init,step_time,paramlist_analysis):
+    def SignTrafficInitalize(self,init, step_time,target_name,states_analysis, paramlist_analysis):
+        """
+        Sign traffic initialize
+        Returns
+        -------
+
+        """
+        global road_id
+        t = 0
+        road = road_id
+        long_offset_gen = EBTB_API_data.traffic_sign_generator(paramlist_analysis, "LongitudinalOffset",target_name)
+        if long_offset_gen:
+            long_offset_gen = float(long_offset_gen)
+        else:
+            long_offset_gen = 0
+
+        lm_start = EBTB_API_data.traffic_sign_generator_lm_start(paramlist_analysis,"TrafficSignAnchor",target_name)
+        lm_start_value = EBTB_API_data.lm_start_val(lm_start,paramlist_analysis=paramlist_analysis)
+        degree = EBTB_API_data.get_sign_entities_degree(paramlist_analysis,"HeadingOffset",target_name)
+
+        if lm_start_value:
+            lm_start_value = float(lm_start_value)
+            x_vals = lm_start_value+long_offset_gen
+            self.VehicleDefines.traffic_sign_initialize(init=init, step_time=step_time,road_id=road,target_name=target_name,t=0,s=x_vals,towards=degree)
+
+
 
     def Target_initialize(self, init, step_time, target_name, states_analysis, paramlist_analysis, overlap_data=None):
         from e2xostream.src.vehiclestream.xosc_stream.XOSCScenarioDevelop import FuncScenario as funcscenario
@@ -570,46 +639,50 @@ class BaseScenario:
                     x_val = float(landmark_start + obj_landmark_offset)
                 else:
                     return "Stop"
-                    # if road_len is not None:
-                    #     x_val = float((road_len / 2) + obj_landmark_offset)
-                    #
-                    # else:
-                    #     x_val = float(obj_landmark_offset)
+
 
                 road_id1, x_val = EBTB_API_data.obj_road_id(states_analysis, paramlist_analysis, target_name, x_val,
                                                             landmark_start)
-                lane_selection_map = {
-                    "Right1": -1,
-                    "Right2": -2,
-                    "Right3": -3,
-                    "Right4": -4,
-                    "Right5": -5,
-                    "Right6": -6,
-                    "Left1": 1,
-                    "Left2": 2,
-                    "Left3": 3,
-                    "Left4": 4,
-                    "Left5": 5,
-                    "Left6": 6
-                }
 
-                y_val = lane_selection_map.get(obj_lane_selection, -4.625)  # Default to -4.625 if no match
+                if road_id1 != "Stop":
+                    x_val = EBTB_API_data.obj_longitudinal_axis(states_analysis,target_name,x_val)
+                    lane_selection_map = {
+                        "Right1": -1,
+                        "Right2": -2,
+                        "Right3": -3,
+                        "Right4": -4,
+                        "Right5": -5,
+                        "Right6": -6,
+                        "Left1": 1,
+                        "Left2": 2,
+                        "Left3": 3,
+                        "Left4": 4,
+                        "Left5": 5,
+                        "Left6": 6
+                    }
 
-                self.VehicleDefines.target_initialize(init=init, step_time=step_time, road_id=road_id1,
-                                                      targetname=target_name, x=x_val, y=y_val, offset=offset)
-                shared_data.obj_lane_init[target_name] = obj_lane_selection
+                    y_val = lane_selection_map.get(obj_lane_selection, -4.625)  # Default to -4.625 if no match
+
+                    self.VehicleDefines.target_initialize(init=init, step_time=step_time, road_id=road_id1,
+                                                          targetname=target_name, x=x_val, y=y_val, offset=offset)
+                    shared_data.obj_lane_init[target_name] = obj_lane_selection
+
+                else:
+                    return "Stop"
 
             if ref_axis == "RelSysLane":
-                global x_value, envp_lane_selection, road_id
+                global x_value, envp_lane_selection, road_id,x_param
                 obj_lane_selection = envp_lane_selection
 
                 Longitudinal, Lateral, ref_obj = EBTB_API_data.get_obj_intialise(states_analysis=states_analysis,
                                                                                  target_name=target_name)
 
                 Longitudinal = float(Longitudinal)
-                x_val = x_value + Longitudinal
+                x_val = x_param + Longitudinal
                 x_val = float(x_val)
                 offset = float(Lateral)
+
+                x_val = EBTB_API_data.obj_longitudinal_axis(states_analysis,target_name,x_val)
 
                 # Dictionary mapping obj_lane_selection to corresponding y values
                 lane_selection_map = {
@@ -634,9 +707,6 @@ class BaseScenario:
                 self.VehicleDefines.target_initialize(init=init, step_time=step_time, road_id=road_id,
                                                       targetname=target_name, x=x_val, y=y_val, offset=offset)
                 shared_data.obj_lane_init[target_name] = obj_lane_selection
-
-
-
 
         except:
             print("error")

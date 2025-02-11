@@ -22,6 +22,7 @@ class E2XOStream:
         self.Kwargs = kwargs
 
     def XOSCStream(self, destination_directory, original_file_path, xml_file_path, report_path, esmini_path):
+        E2XOStream.xml_file_path_ver1 = xml_file_path
 
         """
         Define scenario streamline
@@ -41,6 +42,8 @@ class E2XOStream:
         original_file_path = os.path.join(original_file_path, "XOSCScenarioDevelop0.xosc")
         new_file_path = str(Path(xml_file_path).stem) + ".xosc"
         E2XOStream.new_file_path = report_path + "/" +new_file_path
+
+        print("*********",new_file_path, E2XOStream.new_file_path)
         XSD.execute_sce_proc(xml_file_path=xml_file_path, report_path=report_path, esmini_path=esmini_path)
         if not destination_directory.exists():
             destination_directory.mkdir(parents=True, exist_ok=True)

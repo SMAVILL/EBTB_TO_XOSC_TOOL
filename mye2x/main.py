@@ -25,7 +25,10 @@ username = getpass.getuser()
 print("Username:", username)
 
 # Initialize ebtb path
+print("Initializing GUI")
 ebtb = GUI.ebtb_GUI()
+print("GUI Initialized")
+
 
 
 reports_path = os.path.join(ebtb, 'report')
@@ -101,6 +104,7 @@ def create_path_if_not_exists(path):
 
 
 def find_and_read_xebtb_files(directory):
+
     """
     Find the EBTB files and read the content
     """
@@ -120,7 +124,7 @@ def find_and_read_xebtb_files(directory):
     return ebtb_files
 
 
-# ebtb = GUI.ebtb_GUI()
+
 
 def args_data():
     """
@@ -187,37 +191,96 @@ def copy_xodr_share_to_local(sharepath, local_path):
             print(f"Skipping directory: {dir1}")  # Debug: Log skipped directories
 
 
-def copy_xlmr_share_to_local(sharepath1, local_path):
-    files_list = []
-    if not os.path.isdir(local_path):
-        os.makedirs(local_path, exist_ok=True)
 
-    # Define the pattern to match XML files
-    pattern = r".*\.xlmr$"
+def list_files_in_directory(directory_path):
+    try:
+        files = [entry for entry in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, entry))]
+        print(files)
+        return files
+    except FileNotFoundError:
+        print(f"The directory {directory_path} does not exist.")
+        return []
+    except PermissionError:
+        print(f"Permission denied to access {directory_path}.")
+        return []
 
-    # Traverse the directory structure
-    for dir1, subdir, files in os.walk(sharepath1):
-        if os.path.basename(dir1) == "XLMR":
 
-            for name in files:
-                if re.match(pattern, name):  # Match XODR files
-                    files_list.append(name)
-                    src = os.path.join(dir1, name)
-                    dest = os.path.join(local_path, name)
+def resolve_relative_path(base_path, relative_path):
+    """
+    Resolves `../../` in relative paths and constructs the correct absolute path.
+    """
+    # Count occurrences of "../" to determine levels up
+    level_up_count = relative_path.count("../")
 
-                    try:
-                        shutil.copy(src, dest)
-                    except Exception as e:
-                        print(f"Error copying file {name}: {e}")  # Log specific errors
+    # Remove "../" occurrences to get the actual filename
+    cleaned_filename = relative_path.replace("../", "").strip("/")
 
-        else:
-            print(f"Skipping directory: {dir1}")  # Debug: Log skipped directories
+    # Traverse up in the directory hierarchy
+    for _ in range(level_up_count):
+        base_path = os.path.dirname(base_path)
+
+    return os.path.join(base_path, cleaned_filename)
+
+
+def extract_and_copy_files(directory_path, text_file_path, destination_base_dir):
+    filenames = list_files_in_directory(directory_path)
+    joined_paths = []
+
+    try:
+        with open(text_file_path, 'r') as file:
+            lines = file.readlines()
+
+        for line in lines:
+            parts = line.strip().split('=:=')
+            if len(parts) == 2:
+                part1, part2 = parts
+
+                # Extract the filename from part1
+                file_name_in_part1 = os.path.basename(part1)
+
+                if file_name_in_part1 in filenames:
+                    print(file_name_in_part1)
+
+                    # Determine the base directory from part1
+                    directory_path_part1 = os.path.dirname(part1)
+                    print("Base Directory:", directory_path_part1)
+
+                    # Resolve the correct path for the .xlmr file
+                    resolved_xlmr_path = resolve_relative_path(directory_path_part1, part2)
+                    print("Resolved XLMR Path:", resolved_xlmr_path)
+
+                    joined_paths.append(resolved_xlmr_path)
+
+                    # Create a new directory for the .xebtb file
+                    new_dir = os.path.join(destination_base_dir, os.path.splitext(file_name_in_part1)[0])
+                    os.makedirs(new_dir, exist_ok=True)
+
+                    if resolved_xlmr_path.startswith(r"\\"):
+                        resolved_xlmr_path = r"\\?\UNC" + resolved_xlmr_path[1:]
+
+                    resolved_xlmr_path = resolved_xlmr_path.strip()
+                    resolved_xlmr_path = resolved_xlmr_path.encode("utf-8").decode("utf-8")
+
+                    # Copy the .xlmr file to the new directory
+                    if os.path.exists(resolved_xlmr_path):
+                        print(f"✅ File found: {resolved_xlmr_path}")
+                        shutil.copy(resolved_xlmr_path, new_dir)
+                    else:
+                        print(f"❌ File does NOT exist: '{resolved_xlmr_path}'")
+
+    except FileNotFoundError:
+        print(f"The file {text_file_path} does not exist.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    return joined_paths
 
 
 import os
 import getpass
 import tkinter as tk
 from tkinter import messagebox
+
 
 
 def show_popup(message, title="Access Error"):
@@ -256,8 +319,8 @@ if __name__ == "__main__":
     try:
         print("try")
 
-        sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
-        sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
+        sharepath = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
+        #sharepath1 = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
         # logger.info("Script execution started.")
         try:
@@ -265,25 +328,27 @@ if __name__ == "__main__":
 
             xml_file_path, function, report_path, esmini_path = args_data()
 
-            sharepath = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
-            sharepath1 = r"\\srtif007\RDI-CEA\Projects\Artemis\03_ADAS\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
+            sharepath = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
+            #sharepath1 = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
 
             #Check access for both shared paths
             if not check_shared_path_access(sharepath):
                 sys.exit(1)  # Exit if access to the first path is denied
 
-            if not check_shared_path_access(sharepath1):
-                sys.exit(1)  # Exit if access to the second path is denied
+            # if not check_shared_path_access(sharepath1):
+            #     sys.exit(1)  # Exit if access to the second path is denied
 
             local_path = Path(os.path.join(ebtb, "report", "xlmrmaps"))
-            copy_xlmr_share_to_local(sharepath1, local_path)
+            destination_base_dir = local_path
+            text_file_path = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR\XLMR_Mapping.txt"
+            directory_path = ebtb
+            extract_and_copy_files(directory_path, text_file_path, destination_base_dir)
 
             local_path = Path(os.path.join(ebtb, "report", "xodrmaps"))
             copy_xodr_share_to_local(sharepath, local_path)
 
         except Exception as e:
-            print("except1")
             logger.error(f"An unexpected error occurred: {str(e)}")
             show_popup(f"An unexpected error occurred:\n{str(e)}", "Unexpected Error")
             sys.exit(1)
@@ -313,7 +378,7 @@ if __name__ == "__main__":
                 time.sleep(1)
 
     except Exception as e:
-        print("except")
+        print("excepts")
 
         #logger.error(f"An  occurred: {str(e)}")
         for xml_file in xml_file_path:

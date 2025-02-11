@@ -66,6 +66,7 @@ class Ego_Acts:
         self.ego_throttle_index = {}
         self.ego_pb_index = {}
         self.ego_sw_index = {}
+        self.ego_lane_index = {}
         self.ego_lateralref_index = {}
         self.ego_lateraldisp_index = {}
         # shared_data.obj_lane_init={}
@@ -244,7 +245,7 @@ class Ego_Acts:
         if value_throttle == "Hold":
             value_throttle = 5
         if value_throttle == "Kickdown":
-            value_throttle = 5
+            value_throttle = 100
 
         state_key = int(state_key)
 
@@ -276,6 +277,7 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         value_break = EBTB_API_data.ego_brake(self.ego_brake_index, self.states_analysis)
+        print("brake", value_break)
 
         state_key = int(state_key)
 
@@ -912,7 +914,7 @@ class Ego_Acts:
 
     def ego_Dri_SetCarwashMode(self, all_ego_events, state_key):
         for api in shared_data.res[state_key]:
-            if api['api_name'] == "Dri_SetCarWashMode":
+            if api['api_name'] == "Dri_SetCarwashMode":
                 event_count = api['event_count']
                 action_count = api['action_count']
                 event_name = f"event{event_count}"
@@ -2562,3 +2564,299 @@ class Ego_Acts:
             self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
                                                         event_name=event_name, action_name=action_name))
         shared_data.event_counter += 1
+
+    def Sen_SetCornerRadarFrontState(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sen_SetCornerRadarFrontState":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sen_SetCornerRadarFrontState")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Sen_SetCornerRadarRearState(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sen_SetCornerRadarRearState":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sen_SetCornerRadarRearState")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Sen_SetLongRangeRadarState(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sen_SetLongRangeRadarState":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sen_SetLongRangeRadarState")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Sen_SetMidRangeRadarState(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sen_SetMidRangeRadarState":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sen_SetMidRangeRadarState")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Sen_SetUltraSonicSensorState(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sen_SetUltraSonicSensorState":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sen_SetUltraSonicSensorState")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Sys_SetADASISv2Segment(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sys_SetADASISv2Segment":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetADASISv2Segment")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Sys_SetProductionAndTransportMode(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sys_SetProductionAndTransportMode":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetProductionAndTransportMode")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Dri_SetPTSMode(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Dri_SetPTSMode":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Dri_SetPTSMode")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Sys_SetOutsideTemperatureSensorState(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sys_SetOutsideTemperatureSensorState":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action(
+            "Signal add:Sys_SetOutsideTemperatureSensorState")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Sys_SetADASISv2LiveTraffic(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Sys_SetADASISv2LiveTraffic":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_custom_command_action("Signal add:Sys_SetADASISv2LiveTraffic")
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    def Dri_ChangeLane(self, all_ego_events, state_key):
+        for api in shared_data.res[state_key]:
+            if api['api_name'] == "Dri_ChangeLane":
+                event_count = api['event_count']
+                action_count = api['action_count']
+                event_name = f"event{event_count}"
+                action_name = f"SimOneDriver:action{action_count}"
+
+        state_key = int(state_key)
+
+        direction, count, target_disp = EBTB_API_data.dri_change_lane(self.ego_lane_index, self.states_analysis)
+        present_lane = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=self.paramlist_analysis)
+
+        if event_count == 1:
+            start_trig = self.VehicleDefines.create_ego_event(value=10)
+        else:
+            val = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[1]
+            target = shared_data.state_e_mapping.get(str(state_key - 1), (None, None))[2]
+            start_trig = self.VehicleDefines.create_storyboard_element_state_condition_trigger(
+                element_name=f"{target}:action{val}", delay=0)
+
+        start_action = self.VehicleDefines.create_lanechange_ego(present_lane, direction, count, target_disp)
+
+        all_ego_events.append(
+            self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
+                                                        event_name=event_name, action_name=action_name))
+        shared_data.event_counter += 1
+
+    # def SysP_EVCParameter(self, all_ego_events,state_key=1):
+    #     for api in shared_data.res[state_key]:
+    #         if api['api_name'] == "SysP_EVCParameter":
+    #             event_count = api['event_count']
+    #             action_count = api['action_count']
+    #             event_name = f"event{event_count}"
+    #             action_name = f"SimOneDriver:action{action_count}"
+    #
+    #     start_trig = self.VehicleDefines.create_ego_event(value=10)
+    #
+    #     start_action = self.VehicleDefines.create_custom_command_action("Signal add:SysP_EVCParameter")
+    #
+    #     all_ego_events.append(
+    #         self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,event_name=event_name, action_name=action_name))
+    #     shared_data.event_counter += 1
+

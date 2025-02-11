@@ -30,6 +30,7 @@ for root, dirs, files in os.walk(dir_path):
 
 
 class FuncScenario(ScenarioGenerator):
+
     def __init__(self, egoname, states_analysis, paramlist_analysis, state_events, param_events, esmini_path):
 
         super().__init__()
@@ -68,12 +69,16 @@ class FuncScenario(ScenarioGenerator):
         self.envp_landmark_offset = None
         self.obj_entities = None
         self.obj_list = None
+        self.sign_entities = None
+        self.sign_list = None
 
         self.all_ego_events = []
         self.all_target_events = []
 
-
-
+        FuncScenario.obj_flag = 0
+        FuncScenario.obj_error = None
+        FuncScenario.ego_flag = 0
+        FuncScenario.ego_error = None
 
 
         result = {}
@@ -83,9 +88,6 @@ class FuncScenario(ScenarioGenerator):
             for obj_actions in value.get("ObjectActions", {}).values():
                 actions.extend(action["Action"] for action in obj_actions)
             result[key] = actions
-
-            # print(result)
-
 
 
         shared_data.state_e_mapping = {}
@@ -158,6 +160,7 @@ class FuncScenario(ScenarioGenerator):
 
             # Store the list of dictionaries in the result
             shared_data.res[state_key] = state_actions
+
 
         shared_data.filtered_dict = {}
 
@@ -282,6 +285,10 @@ class FuncScenario(ScenarioGenerator):
             self.base_scenario.define_ego_entities(properties=default_properties.DEFAULT_EGO_PROPERTIES,
                                                    vehicle_entities=self.vehicle_entities)
 
+    def VehicleTrafficSignEntities(self):
+        self.sign_entities,self.sign_list = self.base_scenario.define_traffic_sign_entities(properties=default_properties.DEFAULT_OBJ_PROPERTIES,
+                                                        vehicle_entities=self.vehicle_entities,paramlist_analysis=self.paramlist_analysis)
+
     def VehicleObjEntities(self):
         # Define Target/Obj entities'
 
@@ -291,11 +298,10 @@ class FuncScenario(ScenarioGenerator):
             paramlist_analysis=self.paramlist_analysis)
 
     def GlobalEnvironment(self):
+
         # Global action with environment setting
         self.VehicleDefines.global_action(init=self.init)
 
-    ego_flag = 0
-    ego_error = None
     def EgoInitilize(self):
         # Initialize Ego
         result = self.base_scenario.Ego_initialize(paramlist_analysis=self.paramlist_analysis,
@@ -305,8 +311,13 @@ class FuncScenario(ScenarioGenerator):
             FuncScenario.ego_flag = 1
             FuncScenario.ego_error = "Parameters missing in EnvPRoadnetwork"
 
-    obj_flag = 0
-    obj_error = None
+    def SignTrafficInitialize(self):
+        if len(self.sign_list) > 0:
+            for i in self.sign_list:
+                self.base_scenario.SignTrafficInitalize(step_time=self.step_time, init=self.init,target_name = i,
+                                                     states_analysis=self.states_analysis,paramlist_analysis=self.paramlist_analysis)
+
+
     def ObjectInitialize(self):
         # Initialize Target/Objects
         if len(self.obj_list) > 0:
@@ -337,6 +348,7 @@ class FuncScenario(ScenarioGenerator):
                 self.act.add_maneuver_group(target_mnvgr)
 
     def scenario(self, **kwargs):
+
         """
         scenario create and define.
         Parameters
@@ -353,6 +365,7 @@ class FuncScenario(ScenarioGenerator):
         # Define ego and target entities
         self.VehicleEgoEntities()
         self.VehicleObjEntities()
+        self.VehicleTrafficSignEntities()
 
         # Global action with environment setting
         self.GlobalEnvironment()
@@ -360,6 +373,7 @@ class FuncScenario(ScenarioGenerator):
         # Initialize Ego and Target
         self.EgoInitilize()
         self.ObjectInitialize()
+        self.SignTrafficInitialize()
 
         # Ego and Obj Maneuver group
         self.EgoManeuverGroup()
@@ -388,6 +402,7 @@ def execute_sce_proc(xml_file_path, report_path, esmini_path):
     -------
 
     """
+    print("enter",xml_file_path)
     states_analysis, paramlist_analysis, state_events, param_events = EBTBAnalyzer.main(xml_file_path)
 
     Func_Sce = FuncScenario(egoname="Ego", states_analysis=states_analysis, paramlist_analysis=paramlist_analysis,
