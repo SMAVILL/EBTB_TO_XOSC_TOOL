@@ -341,7 +341,7 @@ if __name__ == "__main__":
 
             local_path = Path(os.path.join(ebtb, "report", "xlmrmaps"))
             destination_base_dir = local_path
-            text_file_path = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\5_Verification_Reports_by_Tools_Team\PR13\XLMR_Mapping.txt"
+            text_file_path = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR\XLMR_Mapping.txt"
             directory_path = ebtb
             extract_and_copy_files(directory_path, text_file_path, destination_base_dir)
 
