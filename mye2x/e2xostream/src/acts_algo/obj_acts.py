@@ -50,6 +50,7 @@ class Obj_Acts:
         self.last_index = {}
         self.last_processed_action = -1
         self.last_processed = None
+        self.demo_index = {}
 
 
     # def Obj_Accelration_act(self, all_target_events,state_key,target_name):
@@ -303,13 +304,14 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
-        shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased", action_count, target_name)
+        # shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased", action_count, target_name)
+        #EBTB_API_data.demo(self.demo_index,self.states_analysis,target_name)
 
         # Initialize tracking variables if not already done
-        if not hasattr(self, 'last_processed_key'):
-            self.last_processed = None
-        if not hasattr(self, 'last_processed_action_index'):
-            self.last_processed_action = -1
+        # if not hasattr(self, 'last_processed_key'):
+        #     self.last_processed = None
+        # if not hasattr(self, 'last_processed_action_index'):
+        #     self.last_processed_action = -1
 
         keys = list(self.states_analysis.keys())
         start_key_index = keys.index(self.last_processed) + 1 if self.last_processed else 0
@@ -332,36 +334,38 @@ class Obj_Acts:
                         reference_object = parameters[0].get("ReferenceObject")
                         object_id = parameters[0].get("ObjectID")
 
-                        if target_name == object_id:
+                        shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased", action_count, target_name)
+
+                        # if target_name == object_id:
+                        #     print("yo",target_name,object_id)
 
                         # Process the action
-                            if event_count == 1:
-                                start_trig = self.VehicleDefines.create_target_event(value=10)
-                            else:
-                                start_trig = self.VehicleDefines.create_relative_distance_condition_trigger(
+                        if event_count == 1:
+                            start_trig = self.VehicleDefines.create_target_event(value=10)
+                        else:
+                            start_trig = self.VehicleDefines.create_relative_distance_condition_trigger(
                                     distance_value, relational_operator, reference_object, object_id
                                 )
 
-                            start_action = self.VehicleDefines.create_custom_command_action(
-                                "Signal add:E_ObjectDistanceLaneBased"
-                            )
+                        start_action = self.VehicleDefines.create_custom_command_action(
+                                "Signal add:E_ObjectDistanceLaneBased")
 
-                            all_target_events.append(
+                        all_target_events.append(
                                 self.VehicleDefines.define_target_action_event(
                                     start_trig=start_trig,
                                     start_action=start_action,
                                     event_name=event_name,
-                                    action_name=action_name,
-                                )
-                            )
+                                    action_name=action_name))
 
                             # Update tracking variables
-                            shared_data.event_counter_obj += 1
-                            self.last_processed = key
-                            self.last_processed_action = idx
+                        shared_data.event_counter_obj += 1
+                        self.last_processed = key
+                        self.last_processed_action = idx
+                        return
 
             # Reset tracking variables if all actions are processed
-            self.last_processed = None
-            self.last_processed_action = -1
+        self.last_processed = None
+        self.last_processed_action = -1
+        return
 
 

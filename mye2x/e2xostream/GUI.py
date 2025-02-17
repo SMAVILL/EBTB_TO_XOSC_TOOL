@@ -35,7 +35,7 @@ def ebtb_GUI():
 
     # Main GUI setup
     root = tk.Tk()
-    root.title("EBTB_to_XOSC_Tool_ver:1.6")
+    root.title("EBTB_to_XOSC_Tool_ver1.1")
 
     # Input label and entry field
     tk.Label(root, text="Select EBTB_Folder:").grid(row=0, column=0, padx=10, pady=10)
@@ -659,19 +659,62 @@ button.custom-button {
         file.write(html_content)
 
     # import pandas as pd
-    # import webbrowser
+    # from openpyxl import load_workbook
+    # from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
     #
-    # dfs = pd.read_html(html_file_path)  # Read all tables from the HTML
+    # # File Paths
+    # html_file_path = os.path.join(report_folder, "EBTB_TO_XOSC_Conv_Status.html")
+    # excel_file_path = os.path.join(report_folder, "EBTB_TO_XOSC_Conv_Status.xlsx")
     #
-    # if dfs:  # Ensure tables were found
-    #     df = dfs[1]
-    #     print(df)
+    # # Convert HTML to DataFrame
+    # dfs = pd.read_html(html_file_path)
+    # if dfs:
+    #     df = dfs[1]  # Assuming only one table exists
+    #     df.to_excel(excel_file_path, index=False, engine="openpyxl")
     #
-    #     excel_file_path = os.path.join(report_folder, "EBTB_TO_XOSC_Conv_Status.xlsx")
-    #     df.to_excel(excel_file_path, index=False)
+    #     # Load the workbook and select the active worksheet
+    #     wb = load_workbook(excel_file_path)
+    #     ws = wb.active
     #
-    # # Step 5: Open the HTML file in the web browser
-    # full_path = os.path.abspath(os.path.join(report_folder, "EBTB_TO_XOSC_Conv_Status.html"))
+    #     # Set column widths
+    #     ws.column_dimensions["A"].width = 6  # "Status" column
+    #     ws.column_dimensions["B"].width = 50 # "Count" column
+    #     ws.column_dimensions["C"].width = 50
+    #     ws.column_dimensions["D"].width = 12
+    #     ws.column_dimensions["E"].width = 20
+    #     ws.column_dimensions["F"].width = 35
+    #
+    #
+    #     # Apply formatting
+    #     header_font = Font(bold=True, color="FFFFFF")  # White bold text
+    #     header_fill = PatternFill(start_color="9BBB59", end_color="4F81BD", fill_type="solid")  # Blue header
+    #     center_align = Alignment(horizontal="left")
+    #
+    #     thin_border = Border(
+    #         left=Side(style="thin"),
+    #         right=Side(style="thin"),
+    #         top=Side(style="thin"),
+    #         bottom=Side(style="thin"),
+    #     )
+    #
+    #     # Apply header formatting
+    #     for cell in ws[1]:  # First row (header)
+    #         cell.font = header_font
+    #         cell.fill = header_fill
+    #         cell.alignment = center_align
+    #         cell.border = thin_border
+    #
+    #     # Apply formatting for data rows
+    #     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=2):
+    #         for cell in row:
+    #             cell.alignment = center_align
+    #             cell.border = thin_border
+    #
+    #     # Save the formatted workbook
+    #     wb.save(excel_file_path)
+    #
+    # # Open the HTML file in the browser
+    # full_path = os.path.abspath(html_file_path)
     # webbrowser.open(f"file://{full_path}")
 
     import pandas as pd
@@ -686,24 +729,24 @@ button.custom-button {
     dfs = pd.read_html(html_file_path)
     if dfs:
         df = dfs[1]  # Assuming only one table exists
-        df.to_excel(excel_file_path, index=False, engine="openpyxl")
+        with pd.ExcelWriter(excel_file_path, engine="openpyxl") as writer:
+            df.to_excel(writer, index=False, sheet_name="EBTB_To_XOSC_Status")
 
-        # Load the workbook and select the active worksheet
+        # Load the workbook and select the worksheet
         wb = load_workbook(excel_file_path)
-        ws = wb.active
+        ws = wb["EBTB_To_XOSC_Status"]
 
         # Set column widths
         ws.column_dimensions["A"].width = 6  # "Status" column
-        ws.column_dimensions["B"].width = 50 # "Count" column
+        ws.column_dimensions["B"].width = 50  # "Count" column
         ws.column_dimensions["C"].width = 50
         ws.column_dimensions["D"].width = 12
         ws.column_dimensions["E"].width = 20
         ws.column_dimensions["F"].width = 35
 
-
         # Apply formatting
         header_font = Font(bold=True, color="FFFFFF")  # White bold text
-        header_fill = PatternFill(start_color="9BBB59", end_color="4F81BD", fill_type="solid")  # Blue header
+        header_fill = PatternFill(start_color="9BBB59", end_color="4F81BD", fill_type="solid")  # Green header
         center_align = Alignment(horizontal="left")
 
         thin_border = Border(
@@ -721,10 +764,13 @@ button.custom-button {
             cell.border = thin_border
 
         # Apply formatting for data rows
-        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=2):
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=ws.max_column):
             for cell in row:
                 cell.alignment = center_align
                 cell.border = thin_border
+
+        # Apply autofilter to the first row
+        ws.auto_filter.ref = ws.dimensions
 
         # Save the formatted workbook
         wb.save(excel_file_path)
@@ -732,6 +778,4 @@ button.custom-button {
     # Open the HTML file in the browser
     full_path = os.path.abspath(html_file_path)
     webbrowser.open(f"file://{full_path}")
-
-
 

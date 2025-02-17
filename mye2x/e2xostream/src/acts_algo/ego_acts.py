@@ -277,7 +277,6 @@ class Ego_Acts:
                 action_name = f"SimOneDriver:action{action_count}"
 
         value_break = EBTB_API_data.ego_brake(self.ego_brake_index, self.states_analysis)
-        print("brake", value_break)
 
         state_key = int(state_key)
 
