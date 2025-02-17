@@ -122,7 +122,7 @@ def process_entries(root, keywords, tag):
     events_data = {}
 
     for element in root.findall(f".//{tag}"):
-        element_id = element.attrib.get('id','Default')
+        element_id = element.attrib.get('id','Default').strip()
         info[element_id]["info"] = element.attrib
 
         for child in element:

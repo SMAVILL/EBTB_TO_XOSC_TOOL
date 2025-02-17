@@ -80,34 +80,45 @@ class FuncScenario(ScenarioGenerator):
         FuncScenario.ego_flag = 0
         FuncScenario.ego_error = None
 
-
+        # Step 1 : Initial result with white spaces removed
         result = {}
         for key, value in states_analysis.items():
+            clean_key = key.strip()  # Remove leading/trailing spaces from key
             actions = []
             actions.extend(action["Action"] for action in value.get("EgoActions", []))
+
             for obj_actions in value.get("ObjectActions", {}).values():
                 actions.extend(action["Action"] for action in obj_actions)
-            result[key] = actions
+
+            result[clean_key] = actions  # Use cleaned key
 
 
+        #Step 2 : Create state_e_mapping which has all E_ values in a dictionary
         shared_data.state_e_mapping = {}
-        # Iterate through the data and create the dictionary
-        for state_key in list(result.keys())[1:]:  # Start from the second key to access the previous state
+        normalized_result = {str(int(k.strip())): v for k, v in result.items() if k.strip().isdigit()}
+
+        # Iterate through the sorted state keys
+        for state_key in sorted(normalized_result.keys(), key=int):
             try:
                 previous_state_key = str(int(state_key) - 1)
-                current_e_names = result[state_key]
-                previous_e_names = result.get(previous_state_key, [])
+                current_e_names = normalized_result[state_key]
+
+                previous_e_names = normalized_result.get(previous_state_key, [])
+
+                # Capture only **one** 'E_' value from the previous state
                 e_name_from_previous = next((name for name in previous_e_names if name.startswith('E_')), None)
+
+                # Store only the first found 'E_' value (not as a list)
                 if e_name_from_previous:
                     shared_data.state_e_mapping[previous_state_key] = e_name_from_previous
+
             except ValueError:
                 print(f"Skipping invalid state_key: {state_key}")
 
         excluded_apis = {"Dri_PrepareVehicle", "Obj_Initialize"}
 
 
-
-        # Initialize the main dictionary
+        # Step 3 : Initialize the dictionary remove the filtered APIs
         dri_obj_mapping = {}
         for state_key, e_names in result.items():
             # Filter out the excluded APIs
@@ -121,9 +132,9 @@ class FuncScenario(ScenarioGenerator):
         event_count = 1
         action_count = 1
 
-        # Result dictionary
-        shared_data.res = {}
+        # Step 4 : Res dicitonary with all counts of action and events
 
+        shared_data.res = {}
         for state_key, actions in dri_obj_mapping.items():
             # Separate E_ values and non-E_ values
             e_values = [key for key in actions if key.startswith('E_')]
@@ -161,29 +172,43 @@ class FuncScenario(ScenarioGenerator):
             # Store the list of dictionaries in the result
             shared_data.res[state_key] = state_actions
 
-
+        # Step 5 : Filter for object events
         shared_data.filtered_dict = {}
 
         for key, actions in shared_data.res.items():
+            key = key.strip()  # Remove spaces from keys
+
             for action in actions:
-                api_name = action['api_name']
-                action_count = action['action_count']
-                # Filter based on api_name
+                api_name = action["api_name"]
+                action_count = action["action_count"]
+
+                # Filter relevant actions
                 if api_name.startswith("Obj_") or api_name == "E_ObjectDistanceLaneBased":
+                    print(f"\nProcessing: {api_name} in state {key}")
+
                     object_id = None
-                    # Retrieve ObjectId from states_analysis
+
                     if key in states_analysis:
-                        object_actions = states_analysis[key].get('ObjectActions', {})
+                        object_actions = states_analysis[key].get("ObjectActions", {})
+
                         for obj, obj_actions in object_actions.items():
                             for obj_action in obj_actions:
-                                if obj_action['Action'] == api_name:
-                                    object_id = obj_action['Parameters'][0].get('ObjectId') or obj_action['Parameters'][0].get('ObjectID')
-                                    break
-                    # Add to filtered dictionary
-                    if action_count not in shared_data.filtered_dict:
-                        shared_data.filtered_dict[action_count] = {'api_name': api_name, 'ObjectId': object_id}
 
-        # Modify state_e_mapping at the end
+                                if obj_action["Action"] == api_name:
+                                    parameters = obj_action.get("Parameters", [])
+
+                                    if parameters:
+                                        object_id = parameters[0].get("ObjectId") or parameters[0].get("ObjectID")
+                                        print(f"Found ObjectId: {object_id}")
+                                        break  # Stop searching if found
+
+                    if action_count not in shared_data.filtered_dict:
+                        shared_data.filtered_dict[action_count] = {
+                            "api_name": api_name,
+                            "ObjectId": object_id,
+                        }
+
+        # Step 6 : state_e_mapping event and action counts
         for state_key, api_name in shared_data.state_e_mapping.items():
             # Initialize variables for action_count and object_id
             action_count = None
@@ -205,6 +230,7 @@ class FuncScenario(ScenarioGenerator):
 
             # Update state_e_mapping to include [api_name, action_count, object_id]
             shared_data.state_e_mapping[state_key] = [api_name, action_count, object_id]
+
 
     def ego_maneuver_group_with_condition(self):
         """

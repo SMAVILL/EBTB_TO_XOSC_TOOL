@@ -243,7 +243,7 @@ class VehicleScenario:
 
         later_control_act = xosc.RelativeLaneOffsetAction(displacement, entity,
                                                              shape=xosc.DynamicsShapes.linear,
-                                                             maxlatacc=10, continuous=True)
+                                                             maxlatacc=10, continuous=False)
         return later_control_act
 
     def obj_relative_position(self,target_name,state_data,entity,distance):

@@ -965,6 +965,9 @@ def ego_brake(ego_brake_index,states_analysis):
             if brake_torque != "Not Available":
                 brake_torque = float(brake_torque)
                 brake = (0.00625*brake_torque)
+                brake = str(brake)
+                # if brake == 0.0:
+                #     brake = int(brake)
 
             elif value_break != "Not Available":
                 brake = value_break
@@ -1617,6 +1620,7 @@ def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
                 return road_id, relative_position
 
         print("x_value exceeds total road length.")
+        #return "Stop",None
     else:
         print(f"Xodr file not found: {xodr_file_path}")
 
@@ -1982,5 +1986,87 @@ def get_sign_entities_degree(paramlist_analysis, param_name, target_name):
     return None  # Return None if the key is not found
 
 
+def demo(ego_demo_index,states_analysis,target_name):
+    print("demo")
+    extracted_info_EDistLaneBased = {}
 
+    # Iterate over the states analysis dictionary
+    for k, v in states_analysis.items():
+        for obj_id, action in v.get('ObjectActions', {}).items():
+            print("acts",action)
+
+            if action.get('Action') == "E_ObjectDistanceLaneBased":
+                print("EObjDistLanebased")
+
+                for param in action.get('Parameters', []):
+                    print(param)
+                    distance_value = param['Distance']
+                    relational_operator = param['RelationalOperator']
+                    reference_object = param['ReferenceObject']
+                    object_id = param['ObjectID']
+
+                    # Append to the list of extracted information for Ego's speed and transition time
+                    if "E_ObjectDistanceLaneBased" not in extracted_info_EDistLaneBased:
+                        extracted_info_EDistLaneBased["E_ObjectDistanceLaneBased"] = []
+
+                    extracted_info_EDistLaneBased["E_ObjectDistanceLaneBased"].append(
+                        {'Distance': distance_value}
+                    )
+
+    print("extr",extracted_info_EDistLaneBased)
+    # Default values for speed and transition time
+    distance_value = 0
+    key = "E_ObjectDistanceLaneBased"
+
+    # Initialize last_index_ego for this action if not already initialized
+    if key not in ego_demo_index:
+        ego_demo_index[key] = 0
+
+    # If there are actions for Ego's longitudinal speed, access them sequentially
+    if key in extracted_info_EDistLaneBased:
+        actions = extracted_info_EDistLaneBased[key]
+
+        # Ensure that the index does not exceed the length of the actions list
+        if ego_demo_index[key] < len(actions):
+            current_action = actions[ego_demo_index[key]]
+
+            distance_value = current_action['Distance']
+            if distance_value != 'Not Available':
+                try:
+                    distance_value = distance_value
+                except ValueError:
+                    print(f"Invalid speed value: {distance_value}")
+                    distance_value = 0
+
+            # Increment the index for the next call
+            ego_demo_index[key] += 1
+
+        # Handle the case where all actions are processed
+        else:
+            pass
+    print("dist",distance_value)
+    return distance_value
+    # extracted_info = {}
+    # for k, v in states_analysis.items():
+    #     for obj_id, actions in v.get('ObjectActions', {}).items():
+    #         for action in actions:
+    #             if action.get('Action') == "E_ObjectDistanceLaneBased":
+    #                 print("yes found")
+    #                 for param in action.get('Parameters', []):
+    #                     distance_value = param['Distance']
+    #                     relational_operator = param['RelationalOperator']
+    #                     reference_object = param['ReferenceObject']
+    #                     object_id = param['ObjectID']
+    #
+    #                     # Append the object action information
+    #                     obj_key = f'{obj_id}E_ObjectDistanceLaneBased'
+    #                     if obj_key not in extracted_info:
+    #                         extracted_info[obj_key] = []
+    #                     extracted_info[obj_key].append(
+    #                         {'Distance': distance_value,'RelationalOperator': relational_operator, 'ReferenceObject':reference_object,'ObjectID':object_id})
+    #
+    #             print("extrrrrrr",extracted_info)
+    #
+    #
+    #
 

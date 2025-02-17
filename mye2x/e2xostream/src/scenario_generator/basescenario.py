@@ -533,6 +533,7 @@ class BaseScenario:
                 envp_landmark_offset = EBTB_API_data.get_landmark_offset_ego(paramlist_analysis=paramlist_analysis)
                 envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=paramlist_analysis)
                 offset = EBTB_API_data.get_ego_initialise(paramlist_analysis=paramlist_analysis)
+                print(landmark_start_value,envp_landmark_offset,envp_lane_selection,offset)
 
                 envp_landmark_offset = float(envp_landmark_offset)
 
@@ -547,11 +548,13 @@ class BaseScenario:
                     return "Stop"
 
                 road_id,x_value = EBTB_API_data.ego_road_id(paramlist_analysis,x_value,landmark_start_value,xlmr_file=None)
+                print(road_id,x_value)
 
                 if road_id != "Stop":
 
                     x_param = x_value
                     x_value = EBTB_API_data.ego_longitudinal_axis(paramlist_analysis,x_value)
+                    print(x_value)
 
                     lane_selection_dict = {
                         "Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
