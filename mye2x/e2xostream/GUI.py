@@ -21,7 +21,7 @@ def ebtb_GUI():
 
     # Create the main GUI window
     root = tk.Tk()
-    root.title("EBTB_to_XOSC_Tool_ver1.9")
+    root.title("EBTB_to_XOSC_Tool_ver :1.9")
 
     # Create StringVar after initializing root
     selected_option = tk.StringVar(root, value="VCAR")  # Default selection
