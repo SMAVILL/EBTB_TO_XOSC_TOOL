@@ -1,5 +1,6 @@
 import os
 import sys
+import xml.etree.ElementTree as ET
 
 from e2xostream.src.vehiclestream.ebtb_stream import EBTB_API_data
 from e2xostream.stk.vehicledynamics.DataControl import DataControls as datacontrol
@@ -29,8 +30,6 @@ class VehicleScenario:
         self.CM = VCM()
         self.processed_flags = {}
 
-        #print("EBTB_Data: ", self.KArgs)
-
     obj1_processed = False
     obj2_processed = False
 
@@ -52,6 +51,10 @@ class VehicleScenario:
     def ego_vehicle_and_entities(self, properties, model="car_white", egoname="Ego", VehicleWidth=2, VehicleLength=5,
                                  vehcilefile="../../resources/models/car_white.osgb"):
 
+        """
+        All the entities are mapped to XOSC part which reflects bounding box, axle length etc
+        """
+
         bb = xosc.BoundingBox(VehicleWidth, VehicleLength, 1.8, 1.48, 0, 0)
         fa = xosc.Axle(0.698, 0.678, 1.64, 2.92, 0.34)
         ba = xosc.Axle(0.698, 0.678, 1.64, 0, 0.34)
@@ -69,6 +72,9 @@ class VehicleScenario:
                                     default_cat=False, entity_type='Vehicle', target_name="RedCar",
                                     max_speed=70, max_acceleration=10, max_deceleration=10,
                                     vehcilefile="../../resources/models/car_red.osgb"):
+        """
+        All the entities are mapped to the XOSC which reflects properties of object,model,name etc
+        """
 
         factory = EntityFactory()
 
@@ -91,6 +97,9 @@ class VehicleScenario:
         return obj_entities
 
     def global_action(self, init):
+        """
+        All the environment conditions are defined here
+        """
         now = datetime.now()
         gloablAction = xosc.EnvironmentAction(xosc.Environment(name="sunny01",
                                                                timeofday=xosc.TimeOfDay(False, now.year, now.month,
@@ -112,11 +121,15 @@ class VehicleScenario:
         init.add_global_action(gloablAction)
 
     def ego_initialize(self, init, step_time, road_id, y=0, x=3.75,offset=0):
+        """
+        Initialise ego vehcle - Lane position
+
+        s - x_value
+        lane_id - y_value
+        offset - offset
+        """
         # Create a trajectory
         trajectory = xosc.Trajectory("example_trajectory", closed=False)
-        # Add a polyline to the trajectory (example)
-        # polyline = xosc.Polyline([0.0, 1.0], [xosc.LanePosition(5500, 0), xosc.LanePosition(10, 10)])
-        # trajectory.add_shape(polyline)
 
         # if statements for different positions based on EBTB API's
         initialize_position(init, "Ego", step_time,
@@ -132,6 +145,13 @@ class VehicleScenario:
                             trajectory=trajectory, latitude=0, longitude=0, height=0)
 
     def target_initialize(self, init, step_time,road_id, targetname="Obj1", x=10, y=-4.625,offset=0):
+        """
+        Initialise object - Lane position
+
+        s - x
+        lane_id = y
+        road_id = road_id
+        """
 
         # Create a trajectory
         trajectory = xosc.Trajectory("example_trajectory", closed=False)
@@ -150,6 +170,13 @@ class VehicleScenario:
                             trajectory=trajectory, latitude=0, longitude=0, height=0)
 
     def traffic_sign_initialize(self,init,step_time,road_id,t,s,towards,target_name = "TrafficSign1"):
+        """
+        Initialise traffic sign - Road position
+
+        s - s
+        t = t
+        road_id = road_id
+        """
 
         # Create a trajectory
         trajectory = xosc.Trajectory("example_trajectory", closed=False)
@@ -755,6 +782,13 @@ class VehicleScenario:
         sb.add_act(act)
         return sb
 
+    def create_storyboard_vcar(self, init, act):
+        sb = xosc.StoryBoard(init, xosc.ValueTrigger("end", 0, xosc.ConditionEdge.none,
+                                                     xosc.SimulationTimeCondition(666, xosc.Rule.greaterThan),
+                                                     "stop"))
+        sb.add_act(act)
+        return sb
+
     def assemble_scenario(self, catalog, road, paramdec, entities, storyboard, open_scenario_version):
         sce = xosc.Scenario("adapt_speed_example", "51SimeOne", paramdec, entities=entities, storyboard=storyboard,
                             roadnetwork=road, catalog=catalog, osc_minor_version=open_scenario_version)
@@ -768,6 +802,15 @@ class VehicleScenario:
             xosc.SimulationTimeCondition(time_delay, xosc.Rule.greaterThan),
         )
 
+        return starttrigger
+    def start_trigger_vcar(self, name="EgoPrepareCompleted", value=1):
+        print("start it here")
+        starttrigger = xosc.ValueTrigger(
+            "ParameterCondition",
+            0,
+            xosc.ConditionEdge.none,
+            xosc.UserDefinedValueCondition(name,value,xosc.Rule.equalTo),
+        )
         return starttrigger
 
     def ego_acceleration_actions(self, state_data=None, param_data=None,dict=None):

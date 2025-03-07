@@ -48,15 +48,17 @@ class EgoScnearioActs:
 
 
     def __call__(self, all_ego_events):
-        # if "SysP_EVCParameter" in str(self.param_events):
-        #     self.SysP_EVCParameter(all_ego_events, state_key=1)
-
+        """
+        Register and dispatch function calls
+        """
         self.maneuver_api_mapping()
         self.check_api_dispatch_function(all_ego_events)
 
     def maneuver_api_mapping(self):
-
-        #self.register_dispatch.register(EgoAPI.Dri_PrepareVehicle, self.prepare_vehicle)
+        """
+        Mapping of ego APIs - Parse through the dictionary and check for ego actions
+        Register all the ego APIs here
+        """
         self.register_dispatch.register(OtherAPI.E_PrepareVehicle,self.E_PrepareVehicle)
         self.register_dispatch.register(EgoAPI.Dri_SetLongitudinalSpeed,self.initial_acceleration)
         self.register_dispatch.register(EgoAPI.Dri_SetAccelerationPedal, self.throttle_acts)
@@ -154,10 +156,11 @@ class EgoScnearioActs:
         self.register_dispatch.register(EgoAPI.Sys_SetOutsideTemperatureSensorState,self.Sys_SetOutsideTemperatureSensorState)
         self.register_dispatch.register(EgoAPI.Dri_ChangeLane,self.Dri_ChangeLane)
         self.register_dispatch.register(EgoAPI.Sys_SetADASISv2LiveTraffic,self.Sys_SetADASISv2LiveTraffic)
-        #self.register_dispatch.register(EgoAPI.SysP_EVCParameter,self.SysP_EVCParameter)
-
 
     def check_api_dispatch_function(self, all_ego_events):
+        """
+        Used for dispatch action
+        """
         for statekey, statevalue in self.states_analysis.items():
             ego_actions = statevalue.get("EgoActions", [])
             if not ego_actions:

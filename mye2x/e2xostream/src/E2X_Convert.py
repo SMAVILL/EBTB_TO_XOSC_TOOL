@@ -21,30 +21,30 @@ class E2XOStream:
         """Constructor with kwargs."""
         self.Kwargs = kwargs
 
-    def XOSCStream(self, destination_directory, original_file_path, xml_file_path, report_path, esmini_path):
+    def XOSCStream(self, destination_directory, original_file_path, xml_file_path, report_path, esmini_path, option):
         E2XOStream.xml_file_path_ver1 = xml_file_path
 
         """
-        Define scenario streamline
+        Function call to XOSC scenario develop
+
         Parameters
         ----------
-        destination_directory
-        original_file_path
-        xml_file_path
-        report_path
+        destination_directory - output path
+        original_file_path - input path
+        new_file_path - Creates XOSC file with same name as EBTB file
 
-        Returns
+        Returns - destination path which is used in merging
         -------
 
         """
-        #original_file_path = Path(original_file_path)
 
         original_file_path = os.path.join(original_file_path, "XOSCScenarioDevelop0.xosc")
         new_file_path = str(Path(xml_file_path).stem) + ".xosc"
-        E2XOStream.new_file_path = report_path + "/" +new_file_path
+        E2XOStream.new_file_path = report_path + "/" + new_file_path
 
-        print("*********",new_file_path, E2XOStream.new_file_path)
-        XSD.execute_sce_proc(xml_file_path=xml_file_path, report_path=report_path, esmini_path=esmini_path)
+        XSD.execute_sce_proc(xml_file_path=xml_file_path, report_path=report_path, esmini_path=esmini_path,
+                             option=option)
+
         if not destination_directory.exists():
             destination_directory.mkdir(parents=True, exist_ok=True)
             destination_file_path = destination_directory / new_file_path

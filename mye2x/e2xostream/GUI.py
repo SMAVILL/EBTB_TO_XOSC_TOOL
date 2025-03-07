@@ -10,32 +10,39 @@ import re
 
 selected_path = ""
 
+import tkinter as tk
+from tkinter import filedialog
 
-# Function to create the GUI and return the selected path
+import tkinter as tk
+from tkinter import filedialog
+
 def ebtb_GUI():
     selected_path = ""  # Initialize variable to store the selected path
+
+    # Create the main GUI window
+    root = tk.Tk()
+    root.title("EBTB_to_XOSC_Tool_ver1.9")
+
+    # Create StringVar after initializing root
+    selected_option = tk.StringVar(root, value="VCAR")  # Default selection
 
     def get_swc(data_model):
         nonlocal selected_path
         selected_path = data_model
         print(f"Selected path stored: {selected_path}")
+        print(f"Selected Option: {selected_option.get()}")
 
-    # GUI Code
     def select_folder():
         folder_selected = filedialog.askdirectory()
         if folder_selected:
-            data_model_entry.delete(0, tk.END)  # Clear any existing text
+            data_model_entry.delete(0, tk.END)  # Clear existing text
             data_model_entry.insert(0, folder_selected)  # Insert selected path
 
     def run_get_swc():
         data_model = data_model_entry.get()
         if data_model:
             get_swc(data_model)
-            root.quit()  # End the Tkinter main loop to close the window
-
-    # Main GUI setup
-    root = tk.Tk()
-    root.title("EBTB_to_XOSC_Tool_ver:1.8")
+            root.quit()  # End Tkinter main loop to close the window
 
     # Input label and entry field
     tk.Label(root, text="Select EBTB_Folder:").grid(row=0, column=0, padx=10, pady=10)
@@ -46,15 +53,27 @@ def ebtb_GUI():
     browse_button = tk.Button(root, text="Browse", command=select_folder)
     browse_button.grid(row=0, column=2, padx=10, pady=10)
 
+    # Radio buttons for selecting between VCAR and 51Simone
+    selected_option = tk.StringVar(value="51Simone")
+
+    #tk.Label(root, text="Select Mode:").grid(row=1, column=0, padx=10, pady=5)
+    simone_radio = tk.Radiobutton(root, text="51Simone", variable=selected_option, value="51Simone")
+    vcar_radio = tk.Radiobutton(root, text="VCAR EA", variable=selected_option, value="VCAR")
+
+    simone_radio.select()
+
+    simone_radio.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+    vcar_radio.grid(row=1, column=1, padx=150, pady=5, sticky="w")
+
     # Button to run the function and store the path, then end the program
     run_button = tk.Button(root, text="Convert", command=run_get_swc)
-    run_button.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+    run_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
     # Start the GUI loop
     root.mainloop()
 
-    # Return the selected path
-    return selected_path
+    # Return the selected path and option
+    return selected_path, selected_option.get()
 
 
 # Function to create an HTML file
@@ -563,6 +582,9 @@ button.custom-button {
             details = list(error_set)[0]
             details = (f"Error - {details}")
             xosc_file = " -------------------------- "
+
+            if details == "Error - TBA_SetElectricalError":
+                details = "Error - Check in API EnvP_ParkingBay or EnvP_ParkingBayStyle"
         else:
             details = "All functions mapped for this EBTB"
 

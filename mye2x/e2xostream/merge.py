@@ -44,9 +44,41 @@ def process_file(input_folder, output_folder):
                 for merged_event in merged_events:
                     maneuver.append(merged_event)
 
-        # Define the output file path
+    # Apply stop condition using lxml
+    stop_condition(root)
+
+    # Define the output file path
     with open(output_file, "wb") as file:
         tree.write(file, pretty_print=True, encoding="utf-8")
 
     print(f"XML has been written to '{output_file}' successfully!")
 
+def stop_condition(root):
+    """Modify the XML tree by adding a stop condition if required."""
+    for parent in root.xpath(".//ConditionGroup/.."):  # Get parent elements of ConditionGroup
+        for condition_group in parent.findall("ConditionGroup"):
+            condition = condition_group.find("./Condition/ByValueCondition/SimulationTimeCondition")
+            if condition is not None and condition.get("value") == "666.0":
+                # Create a new ConditionGroup using lxml
+                new_condition_group = etree.Element("ConditionGroup")
+
+                new_condition = etree.SubElement(new_condition_group, "Condition", {
+                    "conditionEdge": "none",
+                    "delay": "0",
+                    "name": "StopParameterCondition"
+                })
+
+                by_value_condition = etree.SubElement(new_condition, "ByValueCondition")
+                etree.SubElement(by_value_condition, "UserDefinedValueCondition", {
+                    "name": "EndTheCase",
+                    "rule": "equalTo",
+                    "value": "1"
+                })
+
+                # Insert the new ConditionGroup **immediately after** the found one
+                index = list(parent).index(condition_group) + 1
+                parent.insert(index, new_condition_group)
+
+                break  # Stop after inserting once
+
+    print("Stop condition applied successfully.")

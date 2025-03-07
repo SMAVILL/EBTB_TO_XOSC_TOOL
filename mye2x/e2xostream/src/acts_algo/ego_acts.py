@@ -69,7 +69,6 @@ class Ego_Acts:
         self.ego_lane_index = {}
         self.ego_lateralref_index = {}
         self.ego_lateraldisp_index = {}
-        # shared_data.obj_lane_init={}
         shared_data.latest_lane_ego_ref = None
 
     def prepare_vehicle(self, all_ego_events, state_key):

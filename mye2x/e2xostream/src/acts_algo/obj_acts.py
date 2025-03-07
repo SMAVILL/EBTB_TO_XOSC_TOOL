@@ -48,6 +48,7 @@ class Obj_Acts:
         self.lane = 0
         shared_data.event_counter_obj = 1
         self.last_index = {}
+        self.last_index_disp = {}
         self.last_processed_action = -1
         self.last_processed = None
         self.demo_index = {}
@@ -106,7 +107,7 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
-        dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name)
+        dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name,last_index_disp=self.last_index_disp)
         abs_or_rel,entity = EBTB_API_data.obj_lateral_ref(self.states_analysis,target_name)
 
         state_key = int(state_key)
@@ -146,8 +147,7 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
-        dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name)
-
+        dispvalue = EBTB_API_data.obj_lateral_disp(self.states_analysis, target_name,last_index_disp=self.last_index_disp)
         state_key = int(state_key)
 
         if event_count == 1:
@@ -304,15 +304,6 @@ class Obj_Acts:
                 event_name = f"event{event_count}"
                 action_name = f"{target_name}:action{action_count}"
 
-        # shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased", action_count, target_name)
-        #EBTB_API_data.demo(self.demo_index,self.states_analysis,target_name)
-
-        # Initialize tracking variables if not already done
-        # if not hasattr(self, 'last_processed_key'):
-        #     self.last_processed = None
-        # if not hasattr(self, 'last_processed_action_index'):
-        #     self.last_processed_action = -1
-
         keys = list(self.states_analysis.keys())
         start_key_index = keys.index(self.last_processed) + 1 if self.last_processed else 0
 
@@ -335,9 +326,6 @@ class Obj_Acts:
                         object_id = parameters[0].get("ObjectID")
 
                         shared_data.state_e_mapping[state_key] = ("E_ObjectDistanceLaneBased", action_count, target_name)
-
-                        # if target_name == object_id:
-                        #     print("yo",target_name,object_id)
 
                         # Process the action
                         if event_count == 1:

@@ -93,8 +93,6 @@ def get_ego_speed_transition_time(last_index_ego,states_analysis):
     return speed, transition_time,transition_distance,transition_acceleration
 
 
-
-
 def get_obj_speed_transition_time(target_name,last_index,states_analysis):
     extracted_info = {}
 
@@ -117,8 +115,6 @@ def get_obj_speed_transition_time(target_name,last_index,states_analysis):
                             {'TargetSpeed': target_speed, 'TransitionTime': transition_time, 'TransitionAcceleration':transition_acceleration,'TransitionDistance': transition_distance })
 
     key_to_access = f"{target_name}_Obj_SetLongitudinalSpeed"
-
-    #global last_index  # Use global dictionary to retain state across calls
 
     if key_to_access not in last_index:
         last_index[key_to_access] = 0
@@ -161,6 +157,14 @@ def get_obj_speed_transition_time(target_name,last_index,states_analysis):
 
 
 def xlmr_to_xodr_mapping(paramlist_analysis):
+    """
+    Input is param analysis
+
+    Parse the EBTB to detect XLMR file
+
+    From XLMR get the XODR map name
+
+    """
     from e2xostream.src.E2X_Convert import E2XOStream
 
     current_directory = os.getcwd()
@@ -168,17 +172,7 @@ def xlmr_to_xodr_mapping(paramlist_analysis):
     subdirectory = E2XOStream.xml_file_path_ver1
     subdirectory = os.path.splitext(os.path.basename(subdirectory))[0]
     xlmr_paths = Path(os.path.join(current_directory, subdirectory_new, subdirectory))
-    print("xlmr path",xlmr_paths)
 
-    """
-    Mapping xlmr to xodr
-    Parameters
-    ----------
-    paramlist_analysis
-
-    Returns
-    -------
-    """
     for key, value in paramlist_analysis.items():
         ego_actions = value.get('EgoActions', [])
         for action in ego_actions:
@@ -265,8 +259,6 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                     return ds_value_float, landmark_offset, obj_ref
                 else:
                     return None,None, None
-
-
 
 def extract_lenthoflane(paramlist_analysis, xlmr_file=None):
     current_directory = os.getcwd()
@@ -370,10 +362,18 @@ def extract_lenthoflane(paramlist_analysis, xlmr_file=None):
 
 
 def getroadnetwork(paramlist_analysis):
+    """
+    This is a function call for the xlmr_to_xodr mapping
+    """
     xodr_path = xlmr_to_xodr_mapping(paramlist_analysis)
     return xodr_path
 
 def get_sign_entities(paramlist_analysis):
+    """
+    Parse the EBTB -> identify EnvP_TrafficSignClusterSetup
+    Asset_ID - gives the ID from EBTB
+    Compare the asset ID with pre-defined assets and retrieve physical properties
+    """
     sign_list = []  # List to store sign IDs
     sign_count = 0  # Counter for unique sign IDs
     sign_details = {}
@@ -410,10 +410,9 @@ def get_sign_entities(paramlist_analysis):
 
 def get_obj_entities(paramlist_analysis):
     """
-    Get the Object entities
-    Returns
-    -------
-
+    Parse the EBTB -> identify ObjP_Setup
+    Asset_ID - gives the ID from EBTB
+    Compare the asset ID with pre-defined assets and retrieve physical properties
     """
     obj_details = {}
     obj_list = []
@@ -632,12 +631,9 @@ def get_TBA_key_value(states_analysis):
 
 
 def get_landmark_offset_ego(paramlist_analysis):
-    # """
-    # Get the Landmark offset of Ego
-    # Returns
-    # -------
-    #
-    # """
+    """
+    Extract Landmark_Offset value from EnvP_RoadNetwork
+    """
     envp_landmark_offset = 0
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
@@ -649,9 +645,7 @@ def get_landmark_offset_ego(paramlist_analysis):
 
 def get_lane_selection_ego(paramlist_analysis):
     """
-    Get the Landmark offset of Ego
-    Returns
-    -------
+    Extract Lane Selection value from EnvP_RoadNetwork
 
     """
     ego_actions = paramlist_analysis['Default']['EgoActions']
@@ -663,13 +657,16 @@ def get_lane_selection_ego(paramlist_analysis):
     return envp_lane_selection
 
 def get_lane_selection_object(states_analysis, target_name):
+    """
+    Extract Lane Selection value from _Obj_Initialize
+
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
             for action in actions:
                 if action.get('Action') == ObjAPI.Obj_Initialize:
                     for param in action.get('Parameters', []):
-                        #lane_selection = param['LaneSelection']
                         lane_selection = param.get('LaneSelection',0)
 
                         # Append the object action information
@@ -687,6 +684,9 @@ def get_lane_selection_object(states_analysis, target_name):
 
 
 def get_landmark_offset(states_analysis, target_name):
+    """
+    Extract Landmark_Offset value from Obj_Initialize
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -713,6 +713,9 @@ def get_landmark_offset(states_analysis, target_name):
         return 0
 
 def get_obj_intialise(states_analysis,target_name):
+    """
+    Extract DistanceLongitudinal,DistanceLateral,ReferenceObject from _Obj_Initialize
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -740,6 +743,9 @@ def get_obj_intialise(states_analysis,target_name):
     return Longitudinal,Lateral,ref_obj
 
 def get_obj_initialise_ver1(states_analysis,target_name):
+    """
+    Get Lane offset value from Obj_Initialise
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -765,6 +771,9 @@ def get_obj_initialise_ver1(states_analysis,target_name):
         return 0
 
 def get_ref_axis(states_analysis,target_name):
+    """
+    From Obj_Initialize get ReferenceSystem - Abs/Rel
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -787,6 +796,9 @@ def get_ref_axis(states_analysis,target_name):
     return ref_axis
 
 def get_ego_initialise(paramlist_analysis):
+    """
+    Extract Lane offset value from EnvP_RoadNetwork
+    """
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
         if ego_action['Action'] == 'EnvP_RoadNetwork':  # Check for specific action
@@ -798,6 +810,12 @@ def get_ego_initialise(paramlist_analysis):
 
 
 def ego_landmark_start_init(paramlist_analysis):
+    """
+    Extract Landmark_Start from EnvP_RoadNetwork
+    Parse the EBTB get XLMR
+    Check the report folder if XLMR is present or not
+    Parse the XLMR and get the landmark_start int value
+    """
     global landmark_type
 
     ego_actions = paramlist_analysis['Default']['EgoActions']
@@ -853,6 +871,12 @@ def ego_landmark_start_init(paramlist_analysis):
     return ds_value_float
 
 def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
+    """
+    Extract Landmark_Start from Obj_initialise
+    Parse the EBTB get XLMR
+    Check the report folder if XLMR is present or not
+    Parse the XLMR and get the landmark_start int value
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -914,7 +938,6 @@ def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
                         ds_value = landmark.get('ds')
                         road_id = landmark.get('roadId')
                         ds_value_float = float(ds_value)
-                        print("ds val float",ds_value_float)
 
     if ds_value_float:
         return ds_value_float
@@ -1376,7 +1399,8 @@ def obj_change_lane_details(states_analysis,target_name):
         value_of_dist = extracted_value[0]['TransitionDistance']
     return Direction,value_of_dist
 
-def obj_lateral_disp(states_analysis,target_name):
+def obj_lateral_disp(states_analysis,target_name,last_index_disp):
+
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -1393,9 +1417,22 @@ def obj_lateral_disp(states_analysis,target_name):
                             {'TargetDisplacement': dispvalue})
 
     key_to_access = f"{target_name}Obj_SetLateralDisplacement"
+
+    if key_to_access not in last_index_disp:
+        last_index_disp[key_to_access] = 0
+
     if key_to_access in extracted_info:
         extracted_value = extracted_info[key_to_access]
-        dispvalue = extracted_value[0]['TargetDisplacement']
+        if last_index_disp[key_to_access] < len(extracted_value):
+            current_value = extracted_value[last_index_disp[key_to_access]]
+            dispvalue = current_value['TargetDisplacement']
+            last_index_disp[key_to_access] += 1
+        else:
+            dispvalue = 0
+            last_index_disp[key_to_access] = 0
+    else:
+        dispvalue = 0
+
     return dispvalue
 
 def obj_lateral_ref(states_analysis,target_name):
@@ -1489,6 +1526,15 @@ import xml.etree.ElementTree as ET
 import re
 
 def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
+    """
+    Extract Route string value from EnvP_RoadNetwork
+    Parse the EBTB get XLMR
+    Parse the XLMR and store the road_ids for the route
+    Go to the XODR -> parse through -> calculate total length of all road_ids
+    For straight road/circular, if x_value < length the respective road id is taken
+    For Junction roads, keep calculating cumulative sum to get road id
+
+    """
 
     # Step 1: Extract route name from paramlist_analysis
     route_name = None
@@ -1504,8 +1550,6 @@ def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
     if not route_name:
         print("Route name not found in paramlist_analysis.")
         return
-
-    # Define directories
 
     from e2xostream.src.E2X_Convert import E2XOStream
 
@@ -1609,6 +1653,19 @@ def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
 
         # Step 5: Calculate cumulative road lengths and determine position
         cumulative_length = 0.0
+        total_road_length = sum(road_lengths.values())
+
+        if len(road_ids) == 1:  # If only one road exists, assume it's circular
+            road_id = list(road_lengths.keys())[0]  # Get the single road_id
+            road_length = road_lengths[road_id]
+
+            # Use modulo to cycle through the road continuously
+            relative_position = x_value % road_length
+
+            print(f"Circular Road Detected!")
+            print(f"Road ID: {road_id}, Relative Position: {relative_position}")
+            return road_id, relative_position
+
         for road_id in road_ids:
             road_length = road_lengths.get(road_id, 0.0)
             cumulative_length += road_length
@@ -1620,12 +1677,20 @@ def ego_road_id(paramlist_analysis, x_value,landmark_start, xlmr_file=None):
                 return road_id, relative_position
 
         print("x_value exceeds total road length.")
-        #return "Stop",None
     else:
         print(f"Xodr file not found: {xodr_file_path}")
 
 
+
 def obj_road_id(states_analysis,paramlist_analysis, target_name,x_value, landmark_start):
+    """
+    Extract Route string value from Obj_Initialize
+    Parse the EBTB get XLMR
+    Parse the XLMR and store the road_ids for the route
+    Go to the XODR -> parse through -> calculate total length of all road_ids
+    For straight road/circular, if x_value < length the respective road id is taken
+    For Junction roads, keep calculating cumulative sum to get road id
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -1645,7 +1710,6 @@ def obj_road_id(states_analysis,paramlist_analysis, target_name,x_value, landmar
     if key_to_access in extracted_info:
         extracted_value = extracted_info[key_to_access]
         route_name = (extracted_value[0]['Route'])
-
 
     # Define directories
     from e2xostream.src.E2X_Convert import E2XOStream
@@ -1750,6 +1814,19 @@ def obj_road_id(states_analysis,paramlist_analysis, target_name,x_value, landmar
 
         # Step 5: Calculate cumulative road lengths and determine position
         cumulative_length = 0.0
+        total_road_length = sum(road_lengths.values())
+
+        if len(road_ids) == 1:  # If only one road exists, assume it's circular
+            road_id = list(road_lengths.keys())[0]  # Get the single road_id
+            road_length = road_lengths[road_id]
+
+            # Use modulo to cycle through the road continuously
+            relative_position = x_value % road_length
+
+            print(f"Circular Road Detected!")
+            print(f"Road ID: {road_id}, Relative Position: {relative_position}")
+            return road_id, relative_position
+
         for road_id in road_ids:
             road_length = road_lengths.get(road_id, 0.0)
             cumulative_length += road_length
@@ -1767,6 +1844,11 @@ def obj_road_id(states_analysis,paramlist_analysis, target_name,x_value, landmar
 import os
 
 def ego_xlmr_map(paramlist_analysis):
+    """
+    Extract Landmark_Start from EnvP_RoadNetwork
+    Parse the EBTB get XLMR
+    Check the report folder if XLMR is present or not
+    """
     global landmark_type
 
     ego_actions = paramlist_analysis['Default']['EgoActions']
@@ -1817,6 +1899,10 @@ def ego_xlmr_map(paramlist_analysis):
 
 
 def ego_longitudinal_axis(paramlist_analysis,x_value):
+    """
+    Extract Longitudinal axis from EnvP_RoadNetwork
+    Modify x_value based on Front/Middle/Rear
+    """
     ego_longitudinal_axis = None
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
@@ -1836,6 +1922,10 @@ def ego_longitudinal_axis(paramlist_analysis,x_value):
     return x_value
 
 def obj_longitudinal_axis(states_analysis,target_name,x_value):
+    """
+    Extract Longitudinal axis from Obj_Initialize
+    Modify x_value based on Front/Middle/Rear
+    """
     extracted_info = {}
     Longitudinal_axis = None
     for k, v in states_analysis.items():
@@ -1869,6 +1959,13 @@ def obj_longitudinal_axis(states_analysis,target_name,x_value):
 
 
 def traffic_sign_generator(paramlist_analysis, param_name, target_name):
+    """
+    Extract parameters from EnvP_TrafficSignClusterPosition
+    Store in a dictionary by incrementing values
+
+    parameter name = LongitudinalOffset
+    """
+
     values = {}  # Use a dictionary instead of a list
     sign_count = 0  # Initialize sign counter
 
@@ -1891,9 +1988,13 @@ def traffic_sign_generator(paramlist_analysis, param_name, target_name):
     return None  # Return None if the key is not found
 
 
-
-
 def traffic_sign_generator_lm_start(paramlist_analysis, param_name, target_name):
+    """
+    Extract parameters from EnvP_TrafficSignClusterPosition
+    Store in a dictionary by incrementing values
+
+    parameter name = TrafficSignAnchor string value  * start value *
+    """
     values = {}  # Use a dictionary instead of a list
     sign_count = 0  # Initialize sign counter
 
@@ -1916,6 +2017,12 @@ def traffic_sign_generator_lm_start(paramlist_analysis, param_name, target_name)
     return None  # Return None if the key is not found
 
 def lm_start_val(lm_start,paramlist_analysis):
+    """
+    lm_start is a string value of Anchor
+    Extract XLMR value from EnvP_RoadNetwork
+    Parse through it and get lm_start integer value
+
+    """
     current_directory = os.getcwd()
 
     from e2xostream.src.E2X_Convert import E2XOStream
@@ -1964,6 +2071,12 @@ def lm_start_val(lm_start,paramlist_analysis):
 
 
 def get_sign_entities_degree(paramlist_analysis, param_name, target_name):
+    """
+    Extract parameters from EnvP_TrafficSignClusterPosition
+    Store in a dictionary by incrementing values
+
+    parameter name = HeadingOffset
+    """
     values = {}  # Use a dictionary instead of a list
     sign_count = 0  # Initialize sign counter
 
@@ -1984,89 +2097,4 @@ def get_sign_entities_degree(paramlist_analysis, param_name, target_name):
         return long_offset_gen  # Return extracted float value
 
     return None  # Return None if the key is not found
-
-
-def demo(ego_demo_index,states_analysis,target_name):
-    print("demo")
-    extracted_info_EDistLaneBased = {}
-
-    # Iterate over the states analysis dictionary
-    for k, v in states_analysis.items():
-        for obj_id, action in v.get('ObjectActions', {}).items():
-            print("acts",action)
-
-            if action.get('Action') == "E_ObjectDistanceLaneBased":
-                print("EObjDistLanebased")
-
-                for param in action.get('Parameters', []):
-                    print(param)
-                    distance_value = param['Distance']
-                    relational_operator = param['RelationalOperator']
-                    reference_object = param['ReferenceObject']
-                    object_id = param['ObjectID']
-
-                    # Append to the list of extracted information for Ego's speed and transition time
-                    if "E_ObjectDistanceLaneBased" not in extracted_info_EDistLaneBased:
-                        extracted_info_EDistLaneBased["E_ObjectDistanceLaneBased"] = []
-
-                    extracted_info_EDistLaneBased["E_ObjectDistanceLaneBased"].append(
-                        {'Distance': distance_value}
-                    )
-
-    print("extr",extracted_info_EDistLaneBased)
-    # Default values for speed and transition time
-    distance_value = 0
-    key = "E_ObjectDistanceLaneBased"
-
-    # Initialize last_index_ego for this action if not already initialized
-    if key not in ego_demo_index:
-        ego_demo_index[key] = 0
-
-    # If there are actions for Ego's longitudinal speed, access them sequentially
-    if key in extracted_info_EDistLaneBased:
-        actions = extracted_info_EDistLaneBased[key]
-
-        # Ensure that the index does not exceed the length of the actions list
-        if ego_demo_index[key] < len(actions):
-            current_action = actions[ego_demo_index[key]]
-
-            distance_value = current_action['Distance']
-            if distance_value != 'Not Available':
-                try:
-                    distance_value = distance_value
-                except ValueError:
-                    print(f"Invalid speed value: {distance_value}")
-                    distance_value = 0
-
-            # Increment the index for the next call
-            ego_demo_index[key] += 1
-
-        # Handle the case where all actions are processed
-        else:
-            pass
-    print("dist",distance_value)
-    return distance_value
-    # extracted_info = {}
-    # for k, v in states_analysis.items():
-    #     for obj_id, actions in v.get('ObjectActions', {}).items():
-    #         for action in actions:
-    #             if action.get('Action') == "E_ObjectDistanceLaneBased":
-    #                 print("yes found")
-    #                 for param in action.get('Parameters', []):
-    #                     distance_value = param['Distance']
-    #                     relational_operator = param['RelationalOperator']
-    #                     reference_object = param['ReferenceObject']
-    #                     object_id = param['ObjectID']
-    #
-    #                     # Append the object action information
-    #                     obj_key = f'{obj_id}E_ObjectDistanceLaneBased'
-    #                     if obj_key not in extracted_info:
-    #                         extracted_info[obj_key] = []
-    #                     extracted_info[obj_key].append(
-    #                         {'Distance': distance_value,'RelationalOperator': relational_operator, 'ReferenceObject':reference_object,'ObjectID':object_id})
-    #
-    #             print("extrrrrrr",extracted_info)
-    #
-    #
-    #
 
