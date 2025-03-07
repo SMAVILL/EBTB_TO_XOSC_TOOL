@@ -349,7 +349,7 @@ if __name__ == "__main__":
             extract_and_copy_files(directory_path, text_file_path, destination_base_dir)
 
             local_path = Path(os.path.join(ebtb, "report", "xodrmaps"))
-            # copy_xodr_share_to_local(sharepath, local_path)
+            copy_xodr_share_to_local(sharepath, local_path)
 
         except Exception as e:
             logger.error(f"An unexpected error occurred: {str(e)}")
