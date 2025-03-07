@@ -1,74 +1,77 @@
-
 import os
 import sys
 import argparse
-import time
 import logging
 from e2xostream.src import E2X_Convert
 import platform
 import getpass
 from e2xostream import GUI
-import subprocess
 import shutil
-import re
-from pathlib import Path
 import tkinter as tk
 from tkinter import messagebox
+import subprocess
+import re
+import time
+from pathlib import Path
 from e2xostream.src.E2X_Convert import E2XOStream
 from e2xostream.src.vehiclestream.xosc_stream.ego_mapping_acts import EgoScnearioActs
 from e2xostream.src.vehiclestream.ebtb_stream import EBTBAnalyzer
 from e2xostream.src.vehiclestream.xosc_stream.XOSCScenarioDevelop import FuncScenario
 
-
-
+"""
+To Know id of the user is using the tool
+"""
 username = getpass.getuser()
 print("Username:", username)
 
-# Initialize ebtb path
-print("Initializing GUI")
-ebtb = GUI.ebtb_GUI()
-print("GUI Initialized")
+"""
+To get the EBTB path browsed and 51Simone/VCAR option selected
 
+To create a report path
+"""
 
-
+ebtb, option = GUI.ebtb_GUI()
 reports_path = os.path.join(ebtb, 'report')
 
-# Set the working directory to the report directory within EBTB
+"""
+Check if directory exists/change the working dir
+"""
 os.makedirs(reports_path, exist_ok=True)
 os.chdir(reports_path)
 
-# Clear previous files in the report directory if needed
+"""
+Clear previous files in the report directory if needed
+"""
 for file in os.listdir(reports_path):
     file_path = os.path.join(reports_path, file)
     if os.path.isfile(file_path):
         os.remove(file_path)
         print(f"Deleted old file: {file_path}")
 
-# Configure logging
+"""
+Configure logging &  Remove any existing log file to ensure a fresh start
+"""
 log_file_path = os.path.join(reports_path, 'EBTB_TO_XOSC_Conv_Status.log')
 
-# Remove any existing log file to ensure a fresh start
 if os.path.exists(log_file_path):
     os.remove(log_file_path)
 
-# Set up logger
+'''Set up logger'''
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
-# Remove any pre-existing handlers (important if this code runs multiple times)
+'''Remove any pre-existing handlers (important if this code runs multiple times)'''
 for handler in logger.handlers[:]:
     handler.close()
     logger.removeHandler(handler)
 
-# File handler to write logs to a file in the EBTB report directory
+'''File handler to write logs to a file in the EBTB report directory'''
 file_handler = logging.FileHandler(log_file_path, mode='w')
 file_handler.setLevel(logging.DEBUG)
 
-# Console handler to also log to the console
+"""Console handler to also log to the console & Formatter for both handlers"""
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.DEBUG)
-
-# Formatter for both handlers
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 file_handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
@@ -94,7 +97,7 @@ for root, dirs, files in os.walk(dir_path):
 
 def create_path_if_not_exists(path):
     """
-    Create the path if not exists
+    Create the directory path if not exists
     """
     if not os.path.exists(path):
         os.makedirs(path)
@@ -104,9 +107,8 @@ def create_path_if_not_exists(path):
 
 
 def find_and_read_xebtb_files(directory):
-
     """
-    Find the EBTB files and read the content
+    Find the EBTB files from path and read the content
     """
 
     ebtb_files = []
@@ -122,8 +124,6 @@ def find_and_read_xebtb_files(directory):
 
     logger.debug(f"Found {len(ebtb_files)} .xebtb files in directory '{directory}'.")
     return ebtb_files
-
-
 
 
 def args_data():
@@ -156,6 +156,9 @@ def args_data():
 
     create_path_if_not_exists(args.report)
 
+    """ 
+    Checking if EBTB path/dir is valid or not
+    """
     if os.path.isfile(args.ebtb) and args.ebtb.endswith('.xebtb'):
         logger.info(f"Provided path is a single .xebtb file: {args.ebtb}")
         return args.ebtb, args.function, args.report, esmini_tool_path
@@ -168,6 +171,9 @@ def args_data():
 
 
 def copy_xodr_share_to_local(sharepath, local_path):
+    """
+    Copy the XODR files from shared drive
+    """
     files_list = []
     if not os.path.isdir(local_path):
         os.makedirs(local_path, exist_ok=True)
@@ -189,7 +195,6 @@ def copy_xodr_share_to_local(sharepath, local_path):
                         print(f"Error copying file {name}: {e}")  # Log specific errors
         else:
             print(f"Skipping directory: {dir1}")  # Debug: Log skipped directories
-
 
 
 def list_files_in_directory(directory_path):
@@ -215,7 +220,7 @@ def resolve_relative_path(base_path, relative_path):
     # Remove "../" occurrences to get the actual filename
     cleaned_filename = relative_path.replace("../", "").strip("/")
 
-    # Traverse up in the directory hierarchy
+    # Traverse up in the directory hierarchy. Gives parent directory of the path
     for _ in range(level_up_count):
         base_path = os.path.dirname(base_path)
 
@@ -223,6 +228,9 @@ def resolve_relative_path(base_path, relative_path):
 
 
 def extract_and_copy_files(directory_path, text_file_path, destination_base_dir):
+    """
+    Go to EBTB file location -> Check for the particular XLMR -> create a folder in reports with filename -> copy the XLMR
+    """
     filenames = list_files_in_directory(directory_path)
     joined_paths = []
 
@@ -230,48 +238,49 @@ def extract_and_copy_files(directory_path, text_file_path, destination_base_dir)
         with open(text_file_path, 'r') as file:
             lines = file.readlines()
 
-        for line in lines:
-            parts = line.strip().split('=:=')
-            if len(parts) == 2:
-                part1, part2 = parts
+        batch_size = 500  # Process in smaller batches
+        for i in range(0, len(lines), batch_size):
+            batch = lines[i:i + batch_size]
+            print(f"Processing batch {i // batch_size + 1}/{len(lines) // batch_size + 1}")
 
-                # Extract the filename from part1
-                file_name_in_part1 = os.path.basename(part1)
+            for line in batch:
+                parts = line.strip().split('=:=')
+                if len(parts) == 2:
+                    part1, part2 = parts
+                    file_name_in_part1 = os.path.basename(part1)
 
-                if file_name_in_part1 in filenames:
-                    print(file_name_in_part1)
+                    if file_name_in_part1 in filenames:
+                        directory_path_part1 = os.path.dirname(part1)
+                        resolved_xlmr_path = resolve_relative_path(directory_path_part1, part2)
+                        joined_paths.append(resolved_xlmr_path)
 
-                    # Determine the base directory from part1
-                    directory_path_part1 = os.path.dirname(part1)
-                    print("Base Directory:", directory_path_part1)
+                        new_dir = os.path.join(destination_base_dir, os.path.splitext(file_name_in_part1)[0])
+                        os.makedirs(new_dir, exist_ok=True)
 
-                    # Resolve the correct path for the .xlmr file
-                    resolved_xlmr_path = resolve_relative_path(directory_path_part1, part2)
-                    print("Resolved XLMR Path:", resolved_xlmr_path)
+                        if resolved_xlmr_path.startswith(r"\\"):
+                            resolved_xlmr_path = r"\\?\UNC" + resolved_xlmr_path[1:]
 
-                    joined_paths.append(resolved_xlmr_path)
+                        resolved_xlmr_path = resolved_xlmr_path.strip()
+                        resolved_xlmr_path = resolved_xlmr_path.encode("utf-8").decode("utf-8")
 
-                    # Create a new directory for the .xebtb file
-                    new_dir = os.path.join(destination_base_dir, os.path.splitext(file_name_in_part1)[0])
-                    os.makedirs(new_dir, exist_ok=True)
+                        # Safe copy with retries
+                        def safe_copy(src, dest, retries=3):
+                            for attempt in range(retries):
+                                try:
+                                    if os.path.exists(src):
+                                        shutil.copy(src, dest)
+                                        return
+                                except PermissionError:
+                                    print(f"Retrying copy ({attempt + 1}/{retries}) for {src}...")
+                                    time.sleep(2)
 
-                    if resolved_xlmr_path.startswith(r"\\"):
-                        resolved_xlmr_path = r"\\?\UNC" + resolved_xlmr_path[1:]
-
-                    resolved_xlmr_path = resolved_xlmr_path.strip()
-                    resolved_xlmr_path = resolved_xlmr_path.encode("utf-8").decode("utf-8")
-
-                    # Copy the .xlmr file to the new directory
-                    if os.path.exists(resolved_xlmr_path):
+                        safe_copy(resolved_xlmr_path, new_dir)
                         print(f"✅ File found: {resolved_xlmr_path}")
-                        shutil.copy(resolved_xlmr_path, new_dir)
-                    else:
-                        print(f"❌ File does NOT exist: '{resolved_xlmr_path}'")
 
     except FileNotFoundError:
-        print(f"The file {text_file_path} does not exist.")
+        print(f"❌ The file {text_file_path} does not exist.")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"⚠️ An error occurred: {e}")
 
     return joined_paths
 
@@ -280,7 +289,6 @@ import os
 import getpass
 import tkinter as tk
 from tkinter import messagebox
-
 
 
 def show_popup(message, title="Access Error"):
@@ -297,7 +305,7 @@ def show_popup(message, title="Access Error"):
 username = getpass.getuser()
 print(f"Username: {username}")
 
-# Check access to the shared path
+
 def check_shared_path_access(path):
     """
     Check if the user has access to the shared path.
@@ -315,29 +323,24 @@ def check_shared_path_access(path):
 if __name__ == "__main__":
     """
     Execute the main script
+
+    Collect input/output directory paths and call E2XConcert file
     """
     try:
         print("try")
 
         sharepath = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
-        #sharepath1 = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
-        # logger.info("Script execution started.")
         try:
             print("try1")
 
             xml_file_path, function, report_path, esmini_path = args_data()
 
             sharepath = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XODR"
-            #sharepath1 = r"\\srtif007\RDI-IAZ\01_Projects\02_IDC6\03_DigitalValidation\02_Pangu_Project\2_TestCase_development\1_EBTB_To_XOSC_Study\_EBTB_Assets\XLMR"
 
-
-            #Check access for both shared paths
+            # Check access for both shared paths
             if not check_shared_path_access(sharepath):
                 sys.exit(1)  # Exit if access to the first path is denied
-
-            # if not check_shared_path_access(sharepath1):
-            #     sys.exit(1)  # Exit if access to the second path is denied
 
             local_path = Path(os.path.join(ebtb, "report", "xlmrmaps"))
             destination_base_dir = local_path
@@ -346,7 +349,7 @@ if __name__ == "__main__":
             extract_and_copy_files(directory_path, text_file_path, destination_base_dir)
 
             local_path = Path(os.path.join(ebtb, "report", "xodrmaps"))
-            copy_xodr_share_to_local(sharepath, local_path)
+            # copy_xodr_share_to_local(sharepath, local_path)
 
         except Exception as e:
             logger.error(f"An unexpected error occurred: {str(e)}")
@@ -379,22 +382,24 @@ if __name__ == "__main__":
 
     except Exception as e:
         print("excepts")
+        """
+        All paths are collected
+        We check for flags which reflect error in code and these are updated in logs
+        """
 
-        #logger.error(f"An  occurred: {str(e)}")
         for xml_file in xml_file_path:
             try:
-                destination_file_path =E2XObj.XOSCStream(destination_directory=destination_directory,
-                                  original_file_path=original_file_path,
-                                  xml_file_path=xml_file,
-                                  report_path=report_path,
-                                  esmini_path=esmini_path)
+                destination_file_path = E2XObj.XOSCStream(destination_directory=destination_directory,
+                                                          original_file_path=original_file_path,
+                                                          xml_file_path=xml_file,
+                                                          report_path=report_path,
+                                                          esmini_path=esmini_path, option=option)
 
                 if EgoScnearioActs.flag == 1:
                     os.remove(E2XOStream.new_file_path)
                     EgoScnearioActs.flag = 0
                     logger.error(f"Check in API {EgoScnearioActs.error_name}  - {E2XOStream.new_file_path}")
                     EgoScnearioActs.error_name = None
-
 
                 if EBTBAnalyzer.parking_flag == 1:
                     os.remove(E2XOStream.new_file_path)
@@ -414,8 +419,8 @@ if __name__ == "__main__":
                     logger.error(f"{FuncScenario.obj_error} - {E2XOStream.new_file_path}")
                     FuncScenario.obj_error = None
 
-
                 from e2xostream import merge
+
                 merge.process_file(destination_file_path, destination_file_path)
 
                 logger.info(f"Processed file in exception handler - {xml_file}")
@@ -424,17 +429,21 @@ if __name__ == "__main__":
                 logger.error(f"{str(ex)} - {xml_file} ")
                 logger.info(f"Processed file in exception handler - {xml_file}")
 
+    """
+    Remove unwanted folders
+    """
     import shutil
 
     unwanted_folders = ["xosc", "xodr"]
-
     for folder in unwanted_folders:
         folder_path = os.path.join(report_path, folder)
         if os.path.exists(folder_path):
             shutil.rmtree(folder_path)
             logger.info(f"Removed unwanted folder: {folder_path}")
 
-
+    """
+    GUI display
+    """
     GUI.create_html(ebtb)
 
     logger.info("Script execution finished.")

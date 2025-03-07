@@ -31,7 +31,7 @@ for root, dirs, files in os.walk(dir_path):
 
 class FuncScenario(ScenarioGenerator):
 
-    def __init__(self, egoname, states_analysis, paramlist_analysis, state_events, param_events, esmini_path):
+    def __init__(self, egoname, states_analysis, paramlist_analysis, state_events, param_events, esmini_path, option):
 
         super().__init__()
 
@@ -43,17 +43,17 @@ class FuncScenario(ScenarioGenerator):
 
         self.egoname = egoname
         self.open_scenario_version = 0
-
-        # self.ego_speed, self.obj_speed, self.ego_transition_time, self.obj_transition_time = EBTB_API_data.get_ego_obj_speed_transition_time(
-        #     states_analysis=self.states_analysis)
-
+        self.option = option
         self.VehicleControls = vehiclecontrol()
         self.Data_Controls = datacontrol()
         self.VehicleDefines = VehicleScenario()
 
         # Initialized Entities, Act, Init, step_time
         self.vehicle_entities = xosc.Entities()
-        self.act = xosc.Act("act", self.VehicleDefines.start_trigger(time_delay=10))
+        if option == "51Simone":
+            self.act = xosc.Act("act", self.VehicleDefines.start_trigger(time_delay=10))
+        elif option == "VCAR":
+            self.act = xosc.Act("act", self.VehicleDefines.start_trigger_vcar(name="EgoPrepareCompleted", value=1))
         self.init = xosc.Init()
         self.step_time = xosc.TransitionDynamics(xosc.DynamicsShapes.step, xosc.DynamicsDimension.rate, 0)
 
@@ -61,7 +61,6 @@ class FuncScenario(ScenarioGenerator):
 
         self.EgoManeuverActs = ego_mapping_acts.EgoScnearioActs(egoname, states_analysis, paramlist_analysis,
                                                                 state_events, param_events, esmini_path)
-
 
         self.ObjManeuverActs = obj_mapping_acts.ObjScnearioActs(egoname, states_analysis, paramlist_analysis,
                                                                 state_events, param_events, esmini_path)
@@ -80,7 +79,11 @@ class FuncScenario(ScenarioGenerator):
         FuncScenario.ego_flag = 0
         FuncScenario.ego_error = None
 
-        # Step 1 : Initial result with white spaces removed
+        """
+        Step 1 : Initial result with white spaces removed
+
+        result[state_key] = action
+        """
         result = {}
         for key, value in states_analysis.items():
             clean_key = key.strip()  # Remove leading/trailing spaces from key
@@ -92,8 +95,12 @@ class FuncScenario(ScenarioGenerator):
 
             result[clean_key] = actions  # Use cleaned key
 
+        """
+        Step 2 : Create state_e_mapping dictionary which has all E_ values in a dictionary
 
-        #Step 2 : Create state_e_mapping which has all E_ values in a dictionary
+        This is used for keeping all triggers in a dict in order to know the previous state_key trigger for next action
+
+        """
         shared_data.state_e_mapping = {}
         normalized_result = {str(int(k.strip())): v for k, v in result.items() if k.strip().isdigit()}
 
@@ -115,10 +122,16 @@ class FuncScenario(ScenarioGenerator):
             except ValueError:
                 print(f"Skipping invalid state_key: {state_key}")
 
+        """
+        # Step 3 : Initialize the dictionary remove the filtered APIs
+
+        We have excluded 2 APIs as they do not have any internal function and should not reflect in GUI
+
+        The result dictionary is filtered to remove the excluded APIs
+
+        """
         excluded_apis = {"Dri_PrepareVehicle", "Obj_Initialize"}
 
-
-        # Step 3 : Initialize the dictionary remove the filtered APIs
         dri_obj_mapping = {}
         for state_key, e_names in result.items():
             # Filter out the excluded APIs
@@ -132,7 +145,16 @@ class FuncScenario(ScenarioGenerator):
         event_count = 1
         action_count = 1
 
+        """
         # Step 4 : Res dicitonary with all counts of action and events
+
+        We have the dictionary to which we are assigning event and action counts
+
+        If Obj_SetLateralReference and Obj_SetLateralDisplacement both are present we consider them as one event as we are mapping to single API
+
+        First all actions are given values followed by triggers
+
+        """
 
         shared_data.res = {}
         for state_key, actions in dri_obj_mapping.items():
@@ -172,7 +194,14 @@ class FuncScenario(ScenarioGenerator):
             # Store the list of dictionaries in the result
             shared_data.res[state_key] = state_actions
 
+        """
+        Steps 5 & 6 are for identifying Object/Ego names of APIs to apply to E_ APIs
+
         # Step 5 : Filter for object events
+
+        All object actions are identified and Object ID is extracted
+
+        """
         shared_data.filtered_dict = {}
 
         for key, actions in shared_data.res.items():
@@ -208,7 +237,14 @@ class FuncScenario(ScenarioGenerator):
                             "ObjectId": object_id,
                         }
 
+        """
         # Step 6 : state_e_mapping event and action counts
+
+        Assign count and object_id for state_e_mapping
+
+        This is used for creating story board trigger for all Ego/Object actions
+
+        """
         for state_key, api_name in shared_data.state_e_mapping.items():
             # Initialize variables for action_count and object_id
             action_count = None
@@ -231,22 +267,12 @@ class FuncScenario(ScenarioGenerator):
             # Update state_e_mapping to include [api_name, action_count, object_id]
             shared_data.state_e_mapping[state_key] = [api_name, action_count, object_id]
 
-
     def ego_maneuver_group_with_condition(self):
         """
-        Create manuever group with condition
-        Returns
-        -------
-
+        Create ego manuever group with condition
         """
-        ## create an event for the ego
-        # start_trig = self.VehicleDefines.create_ego_event(value=5)
-        # start_action = self.VehicleDefines.create_ego_action(speed=5)
-        ## ego_start_event = self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action)
-        # all_events.append(self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action))
 
         self.EgoManeuverActs(all_ego_events=self.all_ego_events)
-        # print("self.all_ego_events: ", self.all_ego_events)
         ego_mangr = self.base_scenario.ego_startevent_maneuver_group(total_events=self.all_ego_events,
                                                                      egoname=self.egoname)
         return ego_mangr
@@ -271,6 +297,10 @@ class FuncScenario(ScenarioGenerator):
         return target_mangr
 
     def VehicleCatlog_RoadNetwork(self):
+
+        """
+        It retrieves the XLMR map that we are using for that EBTB
+        """
         # Define the Vehicle Catalog and RoadNetwork
         catalog = self.VehicleDefines.create_catalogs(VehicleCatalog="")
 
@@ -293,8 +323,10 @@ class FuncScenario(ScenarioGenerator):
 
         return catalog, road, paramdec
 
-
     def VehicleEgoEntities(self):
+        """
+        Define the ego entities * Physical properties *
+        """
         # Define ego and target entities
 
         if self.paramlist_analysis["Default"]["EgoActions"][0]["Action"] == EgoAPI.SysP_Vehicle:
@@ -312,11 +344,17 @@ class FuncScenario(ScenarioGenerator):
                                                    vehicle_entities=self.vehicle_entities)
 
     def VehicleTrafficSignEntities(self):
-        self.sign_entities,self.sign_list = self.base_scenario.define_traffic_sign_entities(properties=default_properties.DEFAULT_OBJ_PROPERTIES,
-                                                        vehicle_entities=self.vehicle_entities,paramlist_analysis=self.paramlist_analysis)
+        """
+        Define the traffic sign entities * Physical properties *
+        """
+        self.sign_entities, self.sign_list = self.base_scenario.define_traffic_sign_entities(
+            properties=default_properties.DEFAULT_OBJ_PROPERTIES,
+            vehicle_entities=self.vehicle_entities, paramlist_analysis=self.paramlist_analysis)
 
     def VehicleObjEntities(self):
-        # Define Target/Obj entities'
+        """
+        Define the object entities * Physical properties *
+        """
 
         self.obj_entities, self.obj_list = self.base_scenario.define_target_entities(
             properties=default_properties.DEFAULT_OBJ_PROPERTIES,
@@ -324,40 +362,52 @@ class FuncScenario(ScenarioGenerator):
             paramlist_analysis=self.paramlist_analysis)
 
     def GlobalEnvironment(self):
+        """
+        Defines the environment conditions - default values
+        """
 
         # Global action with environment setting
         self.VehicleDefines.global_action(init=self.init)
 
     def EgoInitilize(self):
-        # Initialize Ego
+        """
+        Ego initialise
+        """
         result = self.base_scenario.Ego_initialize(paramlist_analysis=self.paramlist_analysis,
-                                          step_time=self.step_time,
-                                          init=self.init)
+                                                   step_time=self.step_time,
+                                                   init=self.init)
         if result == "Stop":
             FuncScenario.ego_flag = 1
             FuncScenario.ego_error = "Parameters missing in EnvPRoadnetwork"
 
     def SignTrafficInitialize(self):
+        """
+        Traffic sign initialise
+        """
         if len(self.sign_list) > 0:
             for i in self.sign_list:
-                self.base_scenario.SignTrafficInitalize(step_time=self.step_time, init=self.init,target_name = i,
-                                                     states_analysis=self.states_analysis,paramlist_analysis=self.paramlist_analysis)
-
+                self.base_scenario.SignTrafficInitalize(step_time=self.step_time, init=self.init, target_name=i,
+                                                        states_analysis=self.states_analysis,
+                                                        paramlist_analysis=self.paramlist_analysis)
 
     def ObjectInitialize(self):
-        # Initialize Target/Objects
+        """
+        Object initialise
+        """
         if len(self.obj_list) > 0:
             for i in self.obj_list:
                 res = self.base_scenario.Target_initialize(step_time=self.step_time, init=self.init, target_name=i,
-                                                     states_analysis=self.states_analysis,paramlist_analysis=self.paramlist_analysis)
+                                                           states_analysis=self.states_analysis,
+                                                           paramlist_analysis=self.paramlist_analysis)
 
                 if res == "Stop":
                     FuncScenario.obj_flag = 1
                     FuncScenario.obj_error = "Parameters missing in Object Initialise"
 
-
-
     def EgoManeuverGroup(self):
+        """
+        Ego Maneuver starts
+        """
         # Ego Maneuver group
         ego_mnvgr = self.ego_maneuver_group_with_condition()
         self.act.add_maneuver_group(ego_mnvgr)
@@ -368,7 +418,7 @@ class FuncScenario(ScenarioGenerator):
         # Dictionary to store processed maneuvers for each object
         if len(self.obj_list) > 0:
             for i in self.obj_list:
-                self.all_target_events=[]
+                self.all_target_events = []
                 shared_data.event_counter_obj = 1
                 target_mnvgr = self.target_maneuver_group_with_condition(target_name=i)
                 self.act.add_maneuver_group(target_mnvgr)
@@ -406,7 +456,10 @@ class FuncScenario(ScenarioGenerator):
         self.ObjManeuverGroup()
 
         # Scenario Init, storyboard and Start
-        storyboard = self.VehicleDefines.create_storyboard(init=self.init, act=self.act)
+        if self.option == "51Simone":
+            storyboard = self.VehicleDefines.create_storyboard(init=self.init, act=self.act)
+        elif self.option == "VCAR":
+            storyboard = self.VehicleDefines.create_storyboard_vcar(init=self.init, act=self.act)
 
         aeb_sce = self.VehicleDefines.assemble_scenario(catalog=catalog, road=road, paramdec=paramdec,
                                                         entities=self.vehicle_entities, storyboard=storyboard,
@@ -415,8 +468,7 @@ class FuncScenario(ScenarioGenerator):
         return aeb_sce
 
 
-def execute_sce_proc(xml_file_path, report_path, esmini_path):
-
+def execute_sce_proc(xml_file_path, report_path, esmini_path, option):
     """
     execute scenario procedure
     Parameters
@@ -428,11 +480,11 @@ def execute_sce_proc(xml_file_path, report_path, esmini_path):
     -------
 
     """
-    print("enter",xml_file_path)
     states_analysis, paramlist_analysis, state_events, param_events = EBTBAnalyzer.main(xml_file_path)
 
     Func_Sce = FuncScenario(egoname="Ego", states_analysis=states_analysis, paramlist_analysis=paramlist_analysis,
-                            state_events=state_events, param_events=param_events, esmini_path=esmini_path)
+                            state_events=state_events, param_events=param_events, esmini_path=esmini_path,
+                            option=option)
 
     Func_Sce.generate(report_path)
 

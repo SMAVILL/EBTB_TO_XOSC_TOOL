@@ -82,8 +82,6 @@ class BaseScenario:
         ego_man = xosc.Maneuver("EgoManeuver")
         for te in total_events:
             ego_man.add_event(te)
-        # ego_man.add_event(ego_event)
-        # ego_man.add_event(egothrottle_event)
 
         ego_mangr = xosc.ManeuverGroup("Ego")
         ego_mangr.add_actor(egoname)
@@ -119,17 +117,13 @@ class BaseScenario:
     def define_ego_entities(self, properties, vehicle_entities, width=2.0, length=5.0, egoname="Ego"):
         """
         Define the Ego entities
-        Parameters
+        Physical Parameters
         ----------
-        properties
-        width
-        length
-
-        Returns
+        properties - width, length, height
+        vehicle entities - Simone Driver(Ego)
         -------
 
         """
-        # properties["model_id"] = "0"
         properties = {"Ego": properties}
 
         ego_veh = self.VehicleDefines.ego_vehicle_and_entities(egoname=egoname,
@@ -143,11 +137,10 @@ class BaseScenario:
     def define_traffic_sign_entities(self,properties,vehicle_entities,paramlist_analysis):
         """
         Define traffic sign entities
-        Parameters
+        Physical Parameters
         ----------
-        properties
-
-        Returns
+        properties - height of pole, width etc
+        entites - pole/barricade
         -------
 
         """
@@ -155,7 +148,6 @@ class BaseScenario:
             sign_entities, sign_list = EBTB_API_data.get_sign_entities(paramlist_analysis=paramlist_analysis)
 
             for obj, value in sign_entities.items():
-                print(obj)
                 property_traffic = properties.get('pole')
 
                 pro1 = property_traffic.get('Obj3')
@@ -177,12 +169,13 @@ class BaseScenario:
 
     def define_target_entities(self, properties, paramlist_analysis, vehicle_entities):
         """
-        Define target entities
-        Parameters
+        Define object entities
+        Physical Parameters
         ----------
-        properties
+        properties - height, length, width of object
+        vehicle entities - car/truck/2 wheeler etc
 
-        Returns
+        **Note : As object names are not matching with names in 51Simone we have hard coded for each object**
         -------
 
         """
@@ -517,10 +510,15 @@ class BaseScenario:
         return obj_entities, obj_list
 
     def Ego_initialize(self, init, step_time, paramlist_analysis):
-
         """
-        Ego Initialize
-        Returns
+        Ego Initialize:
+
+        Landmark_start - Start position
+        Landmark offset - Distance vehicle should be from start point
+        Lane offset - Offset within a lane
+        Road ID - value of road
+        xlmr_file - XLMR map
+        Longitudinal Axis - Front/rear/middle
         -------
 
         """
@@ -533,7 +531,6 @@ class BaseScenario:
                 envp_landmark_offset = EBTB_API_data.get_landmark_offset_ego(paramlist_analysis=paramlist_analysis)
                 envp_lane_selection = EBTB_API_data.get_lane_selection_ego(paramlist_analysis=paramlist_analysis)
                 offset = EBTB_API_data.get_ego_initialise(paramlist_analysis=paramlist_analysis)
-                print(landmark_start_value,envp_landmark_offset,envp_lane_selection,offset)
 
                 envp_landmark_offset = float(envp_landmark_offset)
 
@@ -548,13 +545,11 @@ class BaseScenario:
                     return "Stop"
 
                 road_id,x_value = EBTB_API_data.ego_road_id(paramlist_analysis,x_value,landmark_start_value,xlmr_file=None)
-                print(road_id,x_value)
 
                 if road_id != "Stop":
 
                     x_param = x_value
                     x_value = EBTB_API_data.ego_longitudinal_axis(paramlist_analysis,x_value)
-                    print(x_value)
 
                     lane_selection_dict = {
                         "Right1": -1, "Right2": -2, "Right3": -3, "Right4": -4, "Right5": -5, "Right6": -6,
@@ -576,11 +571,15 @@ class BaseScenario:
         except:
             print("err")
 
-    # def traffic_sign_initialize(self,init,step_time,paramlist_analysis):
     def SignTrafficInitalize(self,init, step_time,target_name,states_analysis, paramlist_analysis):
         """
-        Sign traffic initialize
-        Returns
+        Traffic sign Initialize
+
+        Lm_start - Start position string
+        lma_start_value - Start position value
+        Degree - Angle of position
+        Road ID - value of road
+        Longitudinal offset - Offset value
         -------
 
         """
@@ -605,13 +604,28 @@ class BaseScenario:
 
 
     def Target_initialize(self, init, step_time, target_name, states_analysis, paramlist_analysis, overlap_data=None):
-        from e2xostream.src.vehiclestream.xosc_stream.XOSCScenarioDevelop import FuncScenario as funcscenario
-        """
-        Target initialize
-        Returns
-        -------
 
         """
+        Object Initialize:
+        Ref_axis - Absolute/Relative Sys Lane
+
+        Absolute :
+        Landmark_start - Start position
+        Landmark offset - Distance vehicle should be from start point
+        Lane offset - Offset within a lane
+        Road ID - value of road
+        Longitudinal Axis - Front/rear/middle
+        Lane Selection - Select the lane which is y-parameter
+
+        Relative:
+        Reference object - Either ego or object vehicle w.r.t. which we are calculating
+        Longitudinal Axis - Front/rear/middle
+        Longitudinal offset - Offset from start value
+        Lateral offset - offset in a lane
+        Lane Selection - Select the lane which is y-parameter
+
+        """
+        from e2xostream.src.vehiclestream.xosc_stream.XOSCScenarioDevelop import FuncScenario as funcscenario
         try:
             ref_axis = EBTB_API_data.get_ref_axis(states_analysis=states_analysis,target_name=target_name)
 
@@ -687,7 +701,6 @@ class BaseScenario:
 
                 x_val = EBTB_API_data.obj_longitudinal_axis(states_analysis,target_name,x_val)
 
-                # Dictionary mapping obj_lane_selection to corresponding y values
                 lane_selection_map = {
                     "Right1": -1,
                     "Right2": -2,
@@ -703,10 +716,8 @@ class BaseScenario:
                     "Left6": 6
                 }
 
-                # Get the corresponding y value from the dictionary, defaulting to -4.625 if no match
                 y_val = lane_selection_map.get(obj_lane_selection, -4.625)
 
-                # Single call to target_initialize with the determined y value
                 self.VehicleDefines.target_initialize(init=init, step_time=step_time, road_id=road_id,
                                                       targetname=target_name, x=x_val, y=y_val, offset=offset)
                 shared_data.obj_lane_init[target_name] = obj_lane_selection

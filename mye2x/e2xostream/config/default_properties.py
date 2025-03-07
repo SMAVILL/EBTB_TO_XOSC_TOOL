@@ -19,7 +19,9 @@ def defualt_properties_info():
     """
     pass
 
-
+"""
+Model/name/colour and other properties of Ego vehicle
+"""
 DEFAULT_EGO_PROPERTIES = {"model": "simonedriver",
                           "category": "Ego",
                           "name": "SimOne Driver",
@@ -27,6 +29,10 @@ DEFAULT_EGO_PROPERTIES = {"model": "simonedriver",
                           "obu_enabled": "false",
                           "color": "#63BA3C"}
 
+
+"""
+Model/name/colour and other properties of objects
+"""
 DEFAULT_OBJ_PROPERTIES = {
             'car': {'Obj1':{
                     "asset_id": "1000064",
@@ -444,7 +450,9 @@ DEFAULT_OBJ_PROPERTIES = {
 
 
 
-
+"""
+Size properties of any vehicle or object
+"""
 DEFAULT_SIZE_PROPERTIES = {
         'car': {'width': 1.73, 'length': 4.03, 'height': 1.43},
         'van': {'width': 2.0, 'length': 5.0, 'height': 2.0},

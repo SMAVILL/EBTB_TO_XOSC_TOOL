@@ -320,6 +320,7 @@ class ConditionGroup(_TriggerType):
     """
 
     def __init__(self, triggeringpoint="start"):
+        print("enter",triggeringpoint)
         """initalize the ConditionGroup
 
         Parameters

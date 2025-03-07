@@ -63,6 +63,9 @@ XLMR = {
     "scene_loop_merge_v2.xlmr": "scene_loop_merge_v2.xodr"
 }
 
+"""
+Vehcile categories are mapped EBTB -> XOSC
+"""
 VEHICLE_CATEGORIES = {'car': 'car',
                       'cars': 'car',
                       'van': 'van',
@@ -90,7 +93,9 @@ VEHICLE_CATEGORIES = {'car': 'car',
                       'roadsideobject' : 'obstacle',
                       'trafficsign' : 'pole'
                       }
-
+"""
+Vehicle names are mapped EBTB -> XOSC
+"""
 VEHICLE_NAME = {'car': 'ENCAP_GVT01',
                 'bicycle': 'Bike01',
                 'pedestrian': 'Ped00',

@@ -4,6 +4,10 @@ import sys
 import logging
 
 class FunctionRegisterDispatcher:
+    """
+    Register - Store in a dictionary with key value as api name and function name as value
+    Dispatch - Call each function one by one and pass the required args
+    """
     def __init__(self):
         self.function_map = {}
 
@@ -12,7 +16,6 @@ class FunctionRegisterDispatcher:
 
     def dispatch(self, key,state_key, *args, **kwargs):
         if key in self.function_map:
-            #logging.info(f"Dispatching function for key: {key}")
             return self.function_map[key](state_key,*args, **kwargs)
         else:
             message = f"No function mapped to {key}"
