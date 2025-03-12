@@ -53,13 +53,14 @@ class Obj_Acts:
         self.last_processed = None
         self.demo_index = {}
 
-
-    # def Obj_Accelration_act(self, all_target_events,state_key,target_name):
-    #     pass
-
-
     def obj_changelane(self, all_target_events,state_key,target_name):
-
+        """
+        Obj_ChangeLane - obj_changelane API
+        Args:
+            all_target_events
+            state_key
+            target_name
+        """
         try:
             for api in shared_data.res[state_key]:
                 if api['api_name'] == "Obj_ChangeLane":
@@ -100,6 +101,13 @@ class Obj_Acts:
 
 
     def obj_setlateralref(self,all_target_events,state_key,target_name):
+        """
+        Obj_SetLateralReference - obj_setlateralref API
+        Args:
+            all_target_events
+            state_key
+            target_name
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Obj_SetLateralReference":
                 event_count = api['event_count']
@@ -134,6 +142,13 @@ class Obj_Acts:
         shared_data.event_counter_obj += 1
 
     def obj_setlateraldisplacement(self, all_target_events, state_key, target_name):
+        """
+        Obj_SetLateralDisplacement - obj_setlateraldisplacement API
+        Args:
+            all_target_events
+            state_key
+            target_name
+        """
         # Check if Obj_SetLateralReference exists in the same state_key
         if any(api['api_name'] == "Obj_SetLateralReference" for api in shared_data.res[state_key]):
             # Skip execution if Obj_SetLateralReference is found
@@ -173,7 +188,13 @@ class Obj_Acts:
         shared_data.event_counter_obj += 1
 
     def obj_set_longitudinal_speed(self, all_target_events,state_key, target_name):
-
+        """
+        Obj_SetLongitudinalSpeed - speed action API
+        Args:
+            all_target_events
+            state_key
+            target_name
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Obj_SetLongitudinalSpeed":
                 event_count = api['event_count']
@@ -206,6 +227,13 @@ class Obj_Acts:
         shared_data.event_counter_obj += 1
 
     def Obj_SetLongitudinalRelativePosition(self,all_target_events, state_key, target_name):
+        """
+        Obj_SetLongitudinalRelativePosition - Obj_SetLongitudinalRelativePosition API
+        Args:
+            all_target_events
+            state_key
+            target_name
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Obj_SetLongitudinalRelativePosition":
                 event_count = api['event_count']
@@ -237,6 +265,13 @@ class Obj_Acts:
         shared_data.event_counter_obj += 1
 
     def obj_setlateral_relative_position(self, all_target_events, state_key, target_name):
+        """
+        Obj_SetLateralRelativePosition - obj_setlateral_relative_position API
+        Args:
+            all_target_events
+            state_key
+            target_name
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Obj_SetLateralRelativePosition":
                 event_count = api['event_count']
@@ -267,6 +302,13 @@ class Obj_Acts:
         shared_data.event_counter_obj += 1
 
     def obj_deactivate(self, all_target_events, state_key, target_name):
+        """
+        Obj_Deactivate - obj_deactivate API
+        Args:
+            all_target_events
+            state_key
+            target_name
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Obj_Deactivate":
                 event_count = api['event_count']
@@ -295,8 +337,13 @@ class Obj_Acts:
         shared_data.event_counter_obj += 1
 
     def obj_E_ObjectDistanceLaneBased(self, all_target_events, state_key, target_name):
-
-        # Define event and action names
+        """
+        E_ObjectDistanceLaneBased - obj_E_ObjectDistanceLaneBased API
+        Args:
+            all_target_events
+            state_key
+            target_name
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ObjectDistanceLaneBased":
                 event_count = api['event_count']

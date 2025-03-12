@@ -5,6 +5,9 @@ from collections import defaultdict
 
 
 def merge_events(events):
+    """
+    For merging the events with same trigger so that multiple actions can be triggered using a single trigger
+    """
     merged_events = {}
     for event in events:
         event_name = event.get("name")
@@ -26,6 +29,14 @@ def merge_events(events):
 
 
 def process_file(input_folder, output_folder):
+    """
+    Args:
+        input_folder: Report path
+        output_folder: XOSC path
+
+    Returns: Process the entire XOSC to identify common triggers
+
+    """
     input_file = os.path.basename(input_folder)
     output_file = os.path.basename(output_folder)
     parser = etree.XMLParser(remove_blank_text=True)
@@ -54,7 +65,9 @@ def process_file(input_folder, output_folder):
     print(f"XML has been written to '{output_file}' successfully!")
 
 def stop_condition(root):
-    """Modify the XML tree by adding a stop condition if required."""
+    """
+    Modify the XML tree by adding a stop condition if required when VCAR option is selected
+    """
     for parent in root.xpath(".//ConditionGroup/.."):  # Get parent elements of ConditionGroup
         for condition_group in parent.findall("ConditionGroup"):
             condition = condition_group.find("./Condition/ByValueCondition/SimulationTimeCondition")

@@ -15,7 +15,6 @@ from e2xostream.config.api_constants import api_methods_constants as AMC
 def EBTB_anlyses_info(paramlist_analysis, states_analysis):
     """
     EBTB Anlyzed information display
-    Returns
     -------
 
     """
@@ -30,6 +29,15 @@ def EBTB_anlyses_info(paramlist_analysis, states_analysis):
         print(v)
 
 def get_ego_speed_transition_time(last_index_ego,states_analysis):
+    """
+
+    Args:
+        last_index_ego:
+        states_analysis:
+
+    To get the parameters for calculating Ego speed
+
+    """
     extracted_info = {}
 
     # Iterate over the states analysis dictionary
@@ -94,6 +102,16 @@ def get_ego_speed_transition_time(last_index_ego,states_analysis):
 
 
 def get_obj_speed_transition_time(target_name,last_index,states_analysis):
+    """
+
+    Args:
+        target_name: Object ID
+        last_index
+        states_analysis
+
+    Extract parameters to calculate object speed
+
+    """
     extracted_info = {}
 
     for k, v in states_analysis.items():
@@ -205,6 +223,15 @@ def xlmr_to_xodr_mapping(paramlist_analysis):
 
 
 def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
+    """
+
+    Args:
+        states_analysis
+        paramlist_analysis
+
+    Extract LandmarkOffset parameter from EBTB - used in ego init
+
+    """
 
     global landmark_type
     for key, value in states_analysis.items():
@@ -261,6 +288,13 @@ def xlmr_mapping_landmark(states_analysis,paramlist_analysis):
                     return None,None, None
 
 def extract_lenthoflane(paramlist_analysis, xlmr_file=None):
+    """
+    Args:
+        paramlist_analysis
+        xlmr_file
+
+    To calculate length of lane from XLMR map
+    """
     current_directory = os.getcwd()
 
     subdirectory2 = "xodrmaps"
@@ -511,10 +545,7 @@ def get_obj_entities(paramlist_analysis):
 
 def get_landmark_offset_obj(states_analysis):
     """
-    Get the landmark offset for Obj
-    Returns
-    -------
-
+    Get the landmark offset for Object
     """
     landmark_offsets = {}
     for entity_id, entity_data in states_analysis.items():
@@ -533,6 +564,12 @@ def get_landmark_offset_obj(states_analysis):
 
 
 def get_Obj_set_lateral_relative(states_analysis):
+    """
+    Args:
+        states_analysis
+
+    Extracts all parameters from Obj_SetLateralRelativePosition
+    """
     result = []
 
     for key, value in states_analysis.items():
@@ -548,13 +585,6 @@ def get_Obj_set_lateral_relative(states_analysis):
 def get_vehicle_braking_info(TBA_eval_key, states_analysis):
     """
     Get the vehicle braking info
-    Parameters
-    ----------
-    TBA_eval_key
-
-    Returns
-    -------
-
     """
     driver_set_brake = {"Brake": 0}
     # TBA_eval_key = -1
@@ -579,13 +609,6 @@ def get_vehicle_braking_info(TBA_eval_key, states_analysis):
 def get_vehicle_throttle_info(TBA_eval_key, states_analysis):
     """
     Get the vehicle throttle info
-    Parameters
-    ----------
-    TBA_eval_key
-
-    Returns
-    -------
-
     """
     driver_set_acc = {"Throttle": 0}
 
@@ -610,9 +633,6 @@ def get_vehicle_throttle_info(TBA_eval_key, states_analysis):
 def get_TBA_key_value(states_analysis):
     """
     Get the TBA key value
-    Returns
-    -------
-
     """
     TBA_eval_key = -1
     for k, v in states_analysis.items():
@@ -646,7 +666,6 @@ def get_landmark_offset_ego(paramlist_analysis):
 def get_lane_selection_ego(paramlist_analysis):
     """
     Extract Lane Selection value from EnvP_RoadNetwork
-
     """
     ego_actions = paramlist_analysis['Default']['EgoActions']
     for ego_action in ego_actions:
@@ -659,7 +678,6 @@ def get_lane_selection_ego(paramlist_analysis):
 def get_lane_selection_object(states_analysis, target_name):
     """
     Extract Lane Selection value from _Obj_Initialize
-
     """
     extracted_info = {}
     for k, v in states_analysis.items():
@@ -714,7 +732,7 @@ def get_landmark_offset(states_analysis, target_name):
 
 def get_obj_intialise(states_analysis,target_name):
     """
-    Extract DistanceLongitudinal,DistanceLateral,ReferenceObject from _Obj_Initialize
+    Extract DistanceLongitudinal,DistanceLateral,ReferenceObject from Obj_Initialize
     """
     extracted_info = {}
     for k, v in states_analysis.items():
@@ -946,6 +964,14 @@ def obj_landmark_start_init(states_analysis,target_name,paramlist_analysis):
 
 
 def ego_brake(ego_brake_index,states_analysis):
+    """
+
+    Args:
+        ego_brake_index
+        states_analysis
+
+    Extract position value from Dri_SetBrakePedal
+    """
     extracted_info_brake = {}
 
     # Iterate over the states analysis dictionary
@@ -1004,6 +1030,14 @@ def ego_brake(ego_brake_index,states_analysis):
     return brake
 
 def ego_throttle(ego_throttle_index,states_analysis):
+    """
+    Args:
+        ego_throttle_index:
+        states_analysis:
+
+    Extract position parameter from Dri_SetAccelerationPedal
+
+    """
     extracted_info_throttle = {}
 
     # Iterate over the states analysis dictionary
@@ -1056,6 +1090,13 @@ def ego_throttle(ego_throttle_index,states_analysis):
     return value_throttle
 
 def ego_switchgear(ego_gear_index,states_analysis):
+    """
+    Args:
+        ego_gear_index
+        states_analysis
+
+    Extract position value from Dri_SwitchGear
+    """
     extracted_info_gear = {}
 
     # Iterate over the states analysis dictionary
@@ -1106,9 +1147,14 @@ def ego_switchgear(ego_gear_index,states_analysis):
             pass
     return value_gear
 
-
-
 def dri_change_lane(ego_lane_index,states_analysis):
+    """
+    Args:
+        ego_lane_index
+        states_analysis
+
+    Count and TargetDisplacement are extracted from Dri_ChangeLane API
+    """
     extracted_info_lanechange = {}
 
     # Iterate over the states analysis dictionary
@@ -1170,6 +1216,14 @@ def dri_change_lane(ego_lane_index,states_analysis):
     return direction,count,target_disp
 
 def ego_parkingbrake(ego_pb_index,states_analysis):
+    """
+    Args:
+        ego_pb_index
+        states_analysis
+
+    Extracts position parameter from Dri_SetParkingBrake API
+
+    """
     extracted_info_pb = {}
 
     # Iterate over the states analysis dictionary
@@ -1222,6 +1276,13 @@ def ego_parkingbrake(ego_pb_index,states_analysis):
 
 
 def ego_steeringwheel_angle(ego_sw_index,states_analysis):
+    """
+    Args:
+        ego_sw_index
+        states_analysis
+
+    Extract Angle parameter from Dri_SetSteeringWheelAngle API
+    """
     extracted_info_sw = {}
 
     # Iterate over the states analysis dictionary
@@ -1273,6 +1334,13 @@ def ego_steeringwheel_angle(ego_sw_index,states_analysis):
     return value_sw
 
 def ego_set_lateral_ref(ego_lateralref_index,states_analysis):
+    """
+    Args:
+        ego_lateralref_index
+        states_analysis
+
+    Extracts Lane Selection parameter from Dri_SetLateralReference API
+    """
     extracted_info_setlateralref = {}
 
     # Iterate over the states analysis dictionary
@@ -1323,8 +1391,14 @@ def ego_set_lateral_ref(ego_lateralref_index,states_analysis):
             pass
     return lane_value_str
 
-
 def ego_set_lateral_disp(ego_lateraldisp_index,states_analysis):
+    """
+    Args:
+        ego_lateraldisp_index
+        states_analysis
+
+    Extract TargetDisplacement from Dri_SetLateralDisplacement API
+    """
     extracted_info_setlateraldisp = {}
 
     # Iterate over the states analysis dictionary
@@ -1376,6 +1450,13 @@ def ego_set_lateral_disp(ego_lateraldisp_index,states_analysis):
     return dispvalue
 
 def obj_change_lane_details(states_analysis,target_name):
+    """
+    Args:
+        states_analysis
+        target_name
+
+    Extract Direction,TransitionDistance from Obj_ChangeLane API
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -1400,6 +1481,14 @@ def obj_change_lane_details(states_analysis,target_name):
     return Direction,value_of_dist
 
 def obj_lateral_disp(states_analysis,target_name,last_index_disp):
+    """
+    Args:
+        states_analysis
+        target_name
+        last_index_disp
+
+    Extracts TargetDisplacement from Obj_SetLateralDisplacement API
+    """
 
     extracted_info = {}
     for k, v in states_analysis.items():
@@ -1436,6 +1525,13 @@ def obj_lateral_disp(states_analysis,target_name,last_index_disp):
     return dispvalue
 
 def obj_lateral_ref(states_analysis,target_name):
+    """
+    Args:
+        states_analysis
+        target_name
+
+    Extracts ReferenceSystem, ReferenceObject from Obj_SetLateralReference API
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -1462,6 +1558,13 @@ def obj_lateral_ref(states_analysis,target_name):
     return abs_or_rel,entity
 
 def obj_set_lateral_relative(states_analysis,target_name):
+    """
+    Args:
+        states_analysis
+        target_name
+
+    Extracts Distance, ReferenceObject from Obj_SetLongitudinalRelativePosition API
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -1488,6 +1591,13 @@ def obj_set_lateral_relative(states_analysis,target_name):
     return entity,distance
 
 def obj_set_lateral_relative_position(states_analysis,target_name):
+    """
+    Args:
+        states_analysis
+        target_name
+
+    Extract Displacement, ReferenceObject from Obj_SetLateralRelativePosition API
+    """
     extracted_info = {}
     for k, v in states_analysis.items():
         for obj_id, actions in v.get('ObjectActions', {}).items():
@@ -1518,8 +1628,6 @@ def obj_set_lateral_relative_position(states_analysis,target_name):
         units = extracted_value[0]['Unit']
 
     return entity,displacement,units
-
-
 
 import os
 import xml.etree.ElementTree as ET

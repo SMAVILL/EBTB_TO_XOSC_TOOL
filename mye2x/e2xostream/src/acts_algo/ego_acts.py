@@ -72,10 +72,21 @@ class Ego_Acts:
         shared_data.latest_lane_ego_ref = None
 
     def prepare_vehicle(self, all_ego_events, state_key):
+        """
+        prepare_vehicle - pass as defined at initialize
+        Args:
+            all_ego_events:
+            state_key:
+        """
         pass
 
     def e_time(self, all_ego_events, state_key):
-
+        """
+        e_time API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_Time":
                 event_count = api['event_count']
@@ -149,7 +160,12 @@ class Ego_Acts:
             self.last_processed_action_index5 = -1
 
     def ego_accelration_act(self, all_ego_events, state_key):
-
+        """
+        ego_accelration_act - speed action API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetLongitudinalSpeed":
                 event_count = api['event_count']
@@ -176,7 +192,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_E_SysVehicleVelocity(self, all_ego_events, state_key):
-
+        """
+        ego_E_SysVehicleVelocity API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_SysVehicleVelocity":
                 event_count = api['event_count']
@@ -232,7 +253,12 @@ class Ego_Acts:
         self.last_processed_action_index = -1
 
     def ego_throttle_act(self, all_ego_events, state_key):
-
+        """
+        Dri_SetAccelerationPedal - ego_throttle_act API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetAccelerationPedal":
                 event_count = api['event_count']
@@ -267,7 +293,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_brake_act(self, all_ego_events, state_key):
-
+        """
+        Dri_SetBrakePedal - ego_brake_act API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetBrakePedal":
                 event_count = api['event_count']
@@ -299,7 +330,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def E_landmark(self, all_ego_events, state_key):
-
+        """
+        E_landmark API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_Landmark":
                 event_count = api['event_count']
@@ -339,7 +375,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetLateralDisplacement(self, all_ego_events, state_key):
-
+        """
+        Dri_SetLateralDisplacement - ego_Dri_SetLateralDisplacement API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetLateralDisplacement":
                 event_count = api['event_count']
@@ -367,6 +408,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetLateralReference(self, all_ego_events, state_key):
+        """
+        Dri_SetLateralReference - ego_Dri_SetLateralReference API
+        Args:
+            all_ego_events:
+            state_key:
+        """
 
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetLateralReference":
@@ -454,6 +501,12 @@ class Ego_Acts:
             shared_data.event_counter += 1
 
     def ego_E_ObjectCollision(self, all_ego_events, state_key):
+        """
+        ego_E_ObjectCollision API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ObjectCollision":
                 event_count = api['event_count']
@@ -495,6 +548,12 @@ class Ego_Acts:
         self.last_processed_action_index3 = -1
 
     def ego_Dri_SwitchGear(self, all_ego_events, state_key):
+        """
+        ego_Dri_SwitchGear API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SwitchGear":
                 event_count = api['event_count']
@@ -525,6 +584,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_ethernet_setsignal(self, all_ego_events, state_key):
+        """
+        ego_ethernet_setsignal - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Ethernet_SetSignal":
                 event_count = api['event_count']
@@ -550,6 +615,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_ethernet_invalidateE2E(self, all_ego_events, state_key):
+        """
+        ego_ethernet_invalidateE2E - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Ethernet_InvalidateE2EProtection":
                 event_count = api['event_count']
@@ -574,6 +645,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_ethernet_setsignalinvalid(self, all_ego_events, state_key):
+        """
+        ego_ethernet_setsignalinvalid - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Ethernet_SetSignalInvalid":
                 event_count = api['event_count']
@@ -598,6 +675,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_ethernet_suspendPDUTriggering(self, all_ego_events, state_key):
+        """
+        ego_ethernet_suspendPDUTriggering - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Ethernet_SuspendPduTriggering":
                 event_count = api['event_count']
@@ -622,6 +705,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_dri_AcknowledgeCPMToastMessage(self, all_ego_events, state_key):
+        """
+        ego_dri_AcknowledgeCPMToastMessage - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_AcknowledgeCPMToastMessage":
                 event_count = api['event_count']
@@ -646,6 +735,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_ChangeACCSpeed(self, all_ego_events, state_key):
+        """
+        ego_Dri_ChangeACCSpeed - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_ChangeACCSpeed":
                 event_count = api['event_count']
@@ -670,6 +765,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_ChangeVSLSpeed(self, all_ego_events, state_key):
+        """
+        ego_Dri_ChangeVSLSpeed - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_ChangeVSLSpeed":
                 event_count = api['event_count']
@@ -694,6 +795,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_ConfigureCollisionAvoidanceFunction(self, all_ego_events, state_key):
+        """
+        ego_Dri_ConfigureCollisionAvoidanceFunction - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_ConfigureCollisionAvoidanceFunction":
                 event_count = api['event_count']
@@ -719,6 +826,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_ConfigureDrivingFunction(self, all_ego_events, state_key):
+        """
+        ego_Dri_ConfigureDrivingFunction - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_ConfigureDrivingFunction":
                 event_count = api['event_count']
@@ -743,6 +856,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_ConfigureParkingFunction(self, all_ego_events, state_key):
+        """
+        ego_Dri_ConfigureParkingFunction - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_ConfigureParkingFunction":
                 event_count = api['event_count']
@@ -767,6 +886,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_PlaceHandCloseToDoorHandle(self, all_ego_events, state_key):
+        """
+        ego_Dri_PlaceHandCloseToDoorHandle - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_PlaceHandCloseToDoorHandle":
                 event_count = api['event_count']
@@ -791,6 +916,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_PressAPASoftKey(self, all_ego_events, state_key):
+        """
+        ego_Dri_PressAPASoftKey - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_PressAPASoftKey":
                 event_count = api['event_count']
@@ -815,6 +946,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_PressRMASoftKey(self, all_ego_events, state_key):
+        """
+        ego_Dri_PressRMASoftKey - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_PressRMASoftKey":
                 event_count = api['event_count']
@@ -839,6 +976,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_PressSteeringWheelButton(self, all_ego_events, state_key):
+        """
+        ego_Dri_PressSteeringWheelButton - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_PressSteeringWheelButton":
                 event_count = api['event_count']
@@ -863,6 +1006,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetACCDistance(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetACCDistance - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetACCDistance":
                 event_count = api['event_count']
@@ -887,6 +1036,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetBeltState(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetBeltState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetBeltState":
                 event_count = api['event_count']
@@ -911,6 +1066,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetCarwashMode(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetCarwashMode - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetCarwashMode":
                 event_count = api['event_count']
@@ -935,6 +1096,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetDrivingProgram(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetDrivingProgram - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetDrivingProgram":
                 event_count = api['event_count']
@@ -959,6 +1126,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetElectricalTrailerHitchPosition(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetElectricalTrailerHitchPosition - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetElectricalTrailerHitchPosition":
                 event_count = api['event_count']
@@ -984,6 +1157,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetESPMode(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetESPMode - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetESPMode":
                 event_count = api['event_count']
@@ -1008,6 +1187,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetHazardWarningLights(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetHazardWarningLights - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetHazardWarningLights":
                 event_count = api['event_count']
@@ -1032,6 +1217,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetLockState(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetLockState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetLockState":
                 event_count = api['event_count']
@@ -1056,6 +1247,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetMirrorPosition(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetMirrorPosition - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetMirrorPosition":
                 event_count = api['event_count']
@@ -1080,6 +1277,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetParkDisplayView(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetParkDisplayView - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetParkDisplayView":
                 event_count = api['event_count']
@@ -1104,6 +1307,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetParkSwitchState(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetParkSwitchState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetParkSwitchState":
                 event_count = api['event_count']
@@ -1128,6 +1337,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetVehicleSpeedUnit(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetVehicleSpeedUnit - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetVehicleSpeedUnit":
                 event_count = api['event_count']
@@ -1152,6 +1367,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetWinterTireSpeedLimiter(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetWinterTireSpeedLimiter - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetWinterTireSpeedLimiter":
                 event_count = api['event_count']
@@ -1176,6 +1397,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SwitchACCVSLMode(self, all_ego_events, state_key):
+        """
+        ego_Dri_SwitchACCVSLMode - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SwitchACCVSLMode":
                 event_count = api['event_count']
@@ -1200,6 +1427,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SwitchToACCDriving(self, all_ego_events, state_key):
+        """
+        ego_Dri_SwitchToACCDriving - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SwitchToACCDriving":
                 event_count = api['event_count']
@@ -1224,6 +1457,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SwitchToVSLDriving(self, all_ego_events, state_key):
+        """
+        ego_Dri_SwitchToVSLDriving - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SwitchToVSLDriving":
                 event_count = api['event_count']
@@ -1248,6 +1487,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_TakeHandsOff(self, all_ego_events, state_key):
+        """
+        ego_Dri_TakeHandsOff - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_TakeHandsOff":
                 event_count = api['event_count']
@@ -1272,6 +1517,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_ReleaseAcceleratorPedalRequest(self, all_ego_events, state_key):
+        """
+        ego_Sys_ReleaseAcceleratorPedalRequest - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_ReleaseAcceleratorPedalRequest":
                 event_count = api['event_count']
@@ -1296,6 +1547,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetADASISv2Attribute(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetADASISv2Attribute - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetADASISv2Attribute":
                 event_count = api['event_count']
@@ -1320,6 +1577,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetAttentionAssist(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetAttentionAssist - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetAttentionAssist":
                 event_count = api['event_count']
@@ -1344,6 +1607,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetECOAssistRequest(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetECOAssistRequest - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetECOAssistRequest":
                 event_count = api['event_count']
@@ -1368,6 +1637,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetELVIRARecommendation(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetELVIRARecommendation - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetELVIRARecommendation":
                 event_count = api['event_count']
@@ -1392,6 +1667,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetEPSHandsOffDetection(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetEPSHandsOffDetection - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetEPSHandsOffDetection":
                 event_count = api['event_count']
@@ -1416,6 +1697,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetESPState(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetESPState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetESPState":
                 event_count = api['event_count']
@@ -1440,6 +1727,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetHandsOnCapacitiveSteeringDetection(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetHandsOnCapacitiveSteeringDetection - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetHandsOnCapacitiveSteeringDetection":
                 event_count = api['event_count']
@@ -1465,6 +1758,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetIgnitionState(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetIgnitionState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetIgnitionState":
                 event_count = api['event_count']
@@ -1489,6 +1788,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetProductionMode(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetProductionMode - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetProductionMode":
                 event_count = api['event_count']
@@ -1513,6 +1818,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetSnowChainMode(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetSnowChainMode - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetSnowChainMode":
                 event_count = api['event_count']
@@ -1537,6 +1848,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetTireFriction(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetTireFriction - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetTireFriction":
                 event_count = api['event_count']
@@ -1561,6 +1878,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetTireState(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetTireState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetTireState":
                 event_count = api['event_count']
@@ -1585,6 +1908,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetTrailerPlugState(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetTrailerPlugState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetTrailerPlugState":
                 event_count = api['event_count']
@@ -1609,6 +1938,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Sys_SetTransportMode(self, all_ego_events, state_key):
+        """
+        ego_Sys_SetTransportMode - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetTransportMode":
                 event_count = api['event_count']
@@ -1633,6 +1968,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_TBA_RunDiagnosticService(self, all_ego_events, state_key):
+        """
+        ego_TBA_RunDiagnosticService - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "TBA_RunDiagnosticService":
                 event_count = api['event_count']
@@ -1657,6 +1998,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_TBA_WriteEvaluationEvent(self, all_ego_events, state_key):
+        """
+        ego_TBA_WriteEvaluationEvent - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
 
         for api in shared_data.res[state_key]:
             if api['api_name'] == "TBA_WriteEvaluationEvent":
@@ -1683,6 +2030,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def E_PrepareVehicle(self, all_ego_events, state_key):
+        """
+        E_PrepareVehicle - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_PrepareVehicle":
                 event_count = api['event_count']
@@ -1715,6 +2068,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_E_DistanceTimeBased(self, all_ego_events, state_key):
+        """
+        ego_E_DistanceTimeBased - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_DistanceTimeBased":
                 event_count = api['event_count']
@@ -1762,6 +2121,12 @@ class Ego_Acts:
                 self.last_processed_action_index2 = -1
 
     def ego_Dri_SetParkingBrake(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetParkingBrake API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetParkingBrake":
                 event_count = api['event_count']
@@ -1797,6 +2162,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetSteeringWheelAngle(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetSteeringWheelAngle API
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetSteeringWheelAngle":
                 event_count = api['event_count']
@@ -1825,10 +2196,14 @@ class Ego_Acts:
                                                                           action_name=action_name))
         shared_data.event_counter += 1
 
-    # def ego_Env_SetTrafficLightState(self, all_ego_events,state_key):
-    #     pass
 
     def ego_E_Timetocollision(self, all_ego_events, state_key):
+        """
+        ego_E_Timetocollision - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_TimeToCollision":
                 event_count = api['event_count']
@@ -1873,6 +2248,12 @@ class Ego_Acts:
         self.last_processed_action_index4 = -1
 
     def Dri_SetIndicatorState(self, all_ego_events, state_key):
+        """
+        Dri_SetIndicatorState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetIndicatorState":
                 event_count = api['event_count']
@@ -1897,6 +2278,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def ego_Dri_SetVehicleDoor(self, all_ego_events, state_key):
+        """
+        ego_Dri_SetVehicleDoor - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetVehicleDoor":
                 event_count = api['event_count']
@@ -1921,6 +2308,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_adas(self, all_ego_events, state_key):
+        """
+        e_adas - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ADASState":
                 event_count = api['event_count']
@@ -1954,6 +2347,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_change_acc_speed(self, all_ego_events, state_key):
+        """
+        e_change_acc_speed - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ChangeACCSpeed":
                 event_count = api['event_count']
@@ -1987,6 +2386,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_change_vsl_speed(self, all_ego_events, state_key):
+        """
+        e_change_vsl_speed - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ChangeVSLSpeed":
                 event_count = api['event_count']
@@ -2020,6 +2425,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_compare_signal(self, all_ego_events, state_key):
+        """
+        e_compare_signal - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_CompareSignal":
                 event_count = api['event_count']
@@ -2053,6 +2464,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_configuration_collision_avoidance(self, all_ego_events, state_key):
+        """
+        e_configuration_collision_avoidance - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ConfigurationCollisionAvoidanceFunction":
                 event_count = api['event_count']
@@ -2088,6 +2505,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_configuration_drivingfunc(self, all_ego_events, state_key):
+        """
+        e_configuration_drivingfunc - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ConfigurationDrivingFunction":
                 event_count = api['event_count']
@@ -2121,6 +2544,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_diagnostic_result(self, all_ego_events, state_key):
+        """
+        e_diagnostic_result - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_DiagnosticResult":
                 event_count = api['event_count']
@@ -2154,6 +2583,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_IDC_Systemstate(self, all_ego_events, state_key):
+        """
+        e_IDC_Systemstate - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_IDCSystemState":
                 event_count = api['event_count']
@@ -2187,6 +2622,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_parking_space_detected(self, all_ego_events, state_key):
+        """
+        e_parking_space_detected - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ParkingSpaceDetected":
                 event_count = api['event_count']
@@ -2220,6 +2661,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_park_appactionfinished(self, all_ego_events, state_key):
+        """
+        e_park_appactionfinished - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ParkAppActionFinished":
                 event_count = api['event_count']
@@ -2253,6 +2700,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_parking_finished(self, all_ego_events, state_key):
+        """
+        e_parking_finished - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_ParkingFinished":
                 event_count = api['event_count']
@@ -2286,6 +2739,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_set_belt_state(self, all_ego_events, state_key):
+        """
+        e_set_belt_state - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_SetBeltState":
                 event_count = api['event_count']
@@ -2319,6 +2778,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_stepout(self, all_ego_events, state_key):
+        """
+        e_stepout - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_StepOut":
                 event_count = api['event_count']
@@ -2352,6 +2817,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_switchtoACCdriving(self, all_ego_events, state_key):
+        """
+        e_switchtoACCdriving - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_SwitchToACCDriving":
                 event_count = api['event_count']
@@ -2386,6 +2857,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def e_switchtoVSLDriving(self, all_ego_events, state_key):
+        """
+        e_switchtoVSLDriving - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "E_SwitchToVSLDriving":
                 event_count = api['event_count']
@@ -2419,6 +2896,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def dri_SetIndicatorState(self, all_ego_events, state_key):
+        """
+        dri_SetIndicatorState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetIndicatorState":
                 event_count = api['event_count']
@@ -2443,6 +2926,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def dri_SetVehicleDoor(self, all_ego_events, state_key):
+        """
+        dri_SetVehicleDoor - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetVehicleDoor":
                 event_count = api['event_count']
@@ -2467,6 +2956,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def dri_StepOut(self, all_ego_events, state_key):
+        """
+        dri_StepOut - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_StepOut":
                 event_count = api['event_count']
@@ -2491,6 +2986,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def dri_SetSteeringWheelForce(self, all_ego_events, state_key):
+        """
+        dri_SetSteeringWheelForce - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetSteeringWheelForce":
                 event_count = api['event_count']
@@ -2515,6 +3016,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def dri_SetSteeringWheelTorque(self, all_ego_events, state_key):
+        """
+        dri_SetSteeringWheelTorque - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetSteeringWheelTorque":
                 event_count = api['event_count']
@@ -2539,6 +3046,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def sys_setdriver_responsivesness(self, all_ego_events, state_key):
+        """
+        sys_setdriver_responsivesness - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetDriverResponsiveness":
                 event_count = api['event_count']
@@ -2564,6 +3077,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sen_SetCornerRadarFrontState(self, all_ego_events, state_key):
+        """
+        Sen_SetCornerRadarFrontState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sen_SetCornerRadarFrontState":
                 event_count = api['event_count']
@@ -2589,6 +3108,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sen_SetCornerRadarRearState(self, all_ego_events, state_key):
+        """
+        Sen_SetLongRangeRadarState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sen_SetCornerRadarRearState":
                 event_count = api['event_count']
@@ -2614,6 +3139,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sen_SetLongRangeRadarState(self, all_ego_events, state_key):
+        """
+        Sen_SetLongRangeRadarState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sen_SetLongRangeRadarState":
                 event_count = api['event_count']
@@ -2639,6 +3170,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sen_SetMidRangeRadarState(self, all_ego_events, state_key):
+        """
+        Sen_SetMidRangeRadarState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sen_SetMidRangeRadarState":
                 event_count = api['event_count']
@@ -2664,6 +3201,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sen_SetUltraSonicSensorState(self, all_ego_events, state_key):
+        """
+        Sen_SetUltraSonicSensorState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sen_SetUltraSonicSensorState":
                 event_count = api['event_count']
@@ -2689,6 +3232,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sys_SetADASISv2Segment(self, all_ego_events, state_key):
+        """
+        Sys_SetADASISv2Segment - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetADASISv2Segment":
                 event_count = api['event_count']
@@ -2714,6 +3263,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sys_SetProductionAndTransportMode(self, all_ego_events, state_key):
+        """
+        Sys_SetProductionAndTransportMode - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetProductionAndTransportMode":
                 event_count = api['event_count']
@@ -2739,6 +3294,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Dri_SetPTSMode(self, all_ego_events, state_key):
+        """
+        Dri_SetPTSMode - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_SetPTSMode":
                 event_count = api['event_count']
@@ -2764,6 +3325,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sys_SetOutsideTemperatureSensorState(self, all_ego_events, state_key):
+        """
+        Sys_SetOutsideTemperatureSensorState - custom command
+        Args:
+            all_ego_events:
+            state_key:
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetOutsideTemperatureSensorState":
                 event_count = api['event_count']
@@ -2790,6 +3357,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Sys_SetADASISv2LiveTraffic(self, all_ego_events, state_key):
+        """
+        Sys_SetADASISv2LiveTraffic - custom command
+        Args:
+            all_ego_events
+            state_key
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Sys_SetADASISv2LiveTraffic":
                 event_count = api['event_count']
@@ -2815,6 +3388,12 @@ class Ego_Acts:
         shared_data.event_counter += 1
 
     def Dri_ChangeLane(self, all_ego_events, state_key):
+        """
+        Dri_ChangeLane API
+        Args:
+            all_ego_events
+            state_key
+        """
         for api in shared_data.res[state_key]:
             if api['api_name'] == "Dri_ChangeLane":
                 event_count = api['event_count']
@@ -2841,20 +3420,4 @@ class Ego_Acts:
             self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,
                                                         event_name=event_name, action_name=action_name))
         shared_data.event_counter += 1
-
-    # def SysP_EVCParameter(self, all_ego_events,state_key=1):
-    #     for api in shared_data.res[state_key]:
-    #         if api['api_name'] == "SysP_EVCParameter":
-    #             event_count = api['event_count']
-    #             action_count = api['action_count']
-    #             event_name = f"event{event_count}"
-    #             action_name = f"SimOneDriver:action{action_count}"
-    #
-    #     start_trig = self.VehicleDefines.create_ego_event(value=10)
-    #
-    #     start_action = self.VehicleDefines.create_custom_command_action("Signal add:SysP_EVCParameter")
-    #
-    #     all_ego_events.append(
-    #         self.VehicleDefines.define_ego_action_event(start_trig=start_trig, start_action=start_action,event_name=event_name, action_name=action_name))
-    #     shared_data.event_counter += 1
 

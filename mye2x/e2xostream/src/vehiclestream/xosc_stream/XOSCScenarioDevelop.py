@@ -408,14 +408,15 @@ class FuncScenario(ScenarioGenerator):
         """
         Ego Maneuver starts
         """
-        # Ego Maneuver group
         ego_mnvgr = self.ego_maneuver_group_with_condition()
         self.act.add_maneuver_group(ego_mnvgr)
 
     def ObjManeuverGroup(self):
         from e2xostream.src.acts_algo.shared_data import event_counter_obj
 
-        # Dictionary to store processed maneuvers for each object
+        """
+        Object Maneuver starts
+        """
         if len(self.obj_list) > 0:
             for i in self.obj_list:
                 self.all_target_events = []

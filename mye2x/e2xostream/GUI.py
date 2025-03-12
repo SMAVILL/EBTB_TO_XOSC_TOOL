@@ -10,13 +10,11 @@ import re
 
 selected_path = ""
 
-import tkinter as tk
-from tkinter import filedialog
-
-import tkinter as tk
-from tkinter import filedialog
-
 def ebtb_GUI():
+    """
+    This module gives a pop up where we can browse the EBTB path
+    Select option VCAR/51Simone
+    """
     selected_path = ""  # Initialize variable to store the selected path
 
     # Create the main GUI window
@@ -56,7 +54,6 @@ def ebtb_GUI():
     # Radio buttons for selecting between VCAR and 51Simone
     selected_option = tk.StringVar(value="51Simone")
 
-    #tk.Label(root, text="Select Mode:").grid(row=1, column=0, padx=10, pady=5)
     simone_radio = tk.Radiobutton(root, text="51Simone", variable=selected_option, value="51Simone")
     vcar_radio = tk.Radiobutton(root, text="VCAR EA", variable=selected_option, value="VCAR")
 
@@ -78,6 +75,14 @@ def ebtb_GUI():
 
 # Function to create an HTML file
 def create_html(selected_path):
+    """
+
+    Args:
+        selected_path: Path of report
+
+    Returns: A GUI and excel report with entire data of conversion statistics
+
+    """
     current_datetime = datetime.now()
     formatted_datetime = current_datetime.strftime("%d-%m-%Y %H:%M:%S")
 
@@ -679,65 +684,6 @@ button.custom-button {
 
     with open(os.path.join(report_folder, "EBTB_TO_XOSC_Conv_Status.html"), "w") as file:
         file.write(html_content)
-
-    # import pandas as pd
-    # from openpyxl import load_workbook
-    # from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
-    #
-    # # File Paths
-    # html_file_path = os.path.join(report_folder, "EBTB_TO_XOSC_Conv_Status.html")
-    # excel_file_path = os.path.join(report_folder, "EBTB_TO_XOSC_Conv_Status.xlsx")
-    #
-    # # Convert HTML to DataFrame
-    # dfs = pd.read_html(html_file_path)
-    # if dfs:
-    #     df = dfs[1]  # Assuming only one table exists
-    #     df.to_excel(excel_file_path, index=False, engine="openpyxl")
-    #
-    #     # Load the workbook and select the active worksheet
-    #     wb = load_workbook(excel_file_path)
-    #     ws = wb.active
-    #
-    #     # Set column widths
-    #     ws.column_dimensions["A"].width = 6  # "Status" column
-    #     ws.column_dimensions["B"].width = 50 # "Count" column
-    #     ws.column_dimensions["C"].width = 50
-    #     ws.column_dimensions["D"].width = 12
-    #     ws.column_dimensions["E"].width = 20
-    #     ws.column_dimensions["F"].width = 35
-    #
-    #
-    #     # Apply formatting
-    #     header_font = Font(bold=True, color="FFFFFF")  # White bold text
-    #     header_fill = PatternFill(start_color="9BBB59", end_color="4F81BD", fill_type="solid")  # Blue header
-    #     center_align = Alignment(horizontal="left")
-    #
-    #     thin_border = Border(
-    #         left=Side(style="thin"),
-    #         right=Side(style="thin"),
-    #         top=Side(style="thin"),
-    #         bottom=Side(style="thin"),
-    #     )
-    #
-    #     # Apply header formatting
-    #     for cell in ws[1]:  # First row (header)
-    #         cell.font = header_font
-    #         cell.fill = header_fill
-    #         cell.alignment = center_align
-    #         cell.border = thin_border
-    #
-    #     # Apply formatting for data rows
-    #     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=2):
-    #         for cell in row:
-    #             cell.alignment = center_align
-    #             cell.border = thin_border
-    #
-    #     # Save the formatted workbook
-    #     wb.save(excel_file_path)
-    #
-    # # Open the HTML file in the browser
-    # full_path = os.path.abspath(html_file_path)
-    # webbrowser.open(f"file://{full_path}")
 
     import pandas as pd
     from openpyxl import load_workbook

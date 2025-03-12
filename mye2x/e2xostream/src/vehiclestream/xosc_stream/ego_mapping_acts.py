@@ -182,6 +182,11 @@ class EgoScnearioActs:
     flag = 0
     error_name = None
 
+    """
+    All function calls for ego actions and triggers 
+    Functions mapped to ego actions file
+    """
+
     def initial_acceleration(self, all_ego_events,state_key):
         if EgoScnearioActs.flag == 0:
         # initial Acceleration act
@@ -603,10 +608,7 @@ class EgoScnearioActs:
         if EgoScnearioActs.flag == 0:
             self.EGO_algo_acts.Sys_SetADASISv2LiveTraffic(all_ego_events, state_key)
 
-    # def SysP_EVCParameter(self, all_ego_events,state_key=1):
-    #     print("sysp")
-    #     if EgoScnearioActs.flag == 0:
-    #         self.EGO_algo_acts.SysP_EVCParameter(all_ego_events, state_key =1)
+
 
 
 
