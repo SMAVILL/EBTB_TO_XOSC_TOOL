@@ -49,17 +49,10 @@ class ObjScnearioActs:
 
         self.register_dispatch = FunctionRegisterDispatcher()
 
-
-
-        # Register the functions
-        # dispatcher.register('a', func_a)
-        # Dispatch the function
-        # dispatcher.dispatch('a', 'Hello', 'World')
-        # dispatcher.dispatch('b', 'Test', kwarg1='Optional')
-        # dispatcher.dispatch('c', 1, 2, 3)
-
-
     def __call__(self, all_target_events,target_name):
+        """
+        Register and dispatch function calls
+        """
         self.all_target_events = all_target_events
         self.target_name = target_name
         self.maneuver_api_mapping()
@@ -67,9 +60,10 @@ class ObjScnearioActs:
 
 
     def maneuver_api_mapping(self):
-
-        # self.register_dispatch.register(ObjAPI.Obj_Initialize,
-        #                                 self.initial_acceleration_acts)
+        """
+        Mapping of object APIs - Parse through the dictionary and check for obj actions
+        Register all the obj APIs here
+        """
 
         self.register_dispatch.register(ObjAPI.Obj_SetLongitudinalSpeed,
                                         self.obj_setlongitudinalspeed)
@@ -86,6 +80,9 @@ class ObjScnearioActs:
 
 
     def check_api_dispatch_function(self,all_target_events,target_name):
+        """
+        Used for dispatch action
+        """
         for statekey, statevalue in self.states_analysis.items():
             obj_actions = statevalue.get("ObjectActions", {})
             for k_objID, value_Objv in obj_actions.items():
@@ -112,7 +109,10 @@ class ObjScnearioActs:
                                 print(f"Error dispatching action {action}: {e}")
                                 continue
 
-
+    """
+    All function calls for object actions and triggers 
+    Functions mapped to obj actions file
+    """
 
     def initial_acceleration_acts(self, all_target_events,state_key,target_name):
         self.Obj_algo_acts.Obj_Accelration_act(all_target_events,state_key,target_name)
